@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryan Villa ROI Simulator</title>
+    <title>KVertex Properties Group - ROI Simulator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,17 +78,19 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--gold);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
             text-transform: uppercase;
-            letter-spacing: 6px;
+            letter-spacing: 3px;
             margin-bottom: 16px;
             display: inline-block;
-            padding: 8px 24px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 4px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
 
         .header h1 {
@@ -800,13 +802,12 @@
         }
 
         .footer .brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            font-weight: 600;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 2px;
+            text-transform: uppercase;
             margin-bottom: 12px;
         }
 
@@ -867,10 +868,11 @@
 
         .pdf-optimized .header .logo {
             font-size: 9px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             margin-bottom: 4px;
             padding: 4px 12px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.1);
         }
 
         .pdf-optimized .header h1 {
@@ -1121,8 +1123,11 @@
         }
 
         .pdf-optimized .footer .brand {
-            font-size: 11px;
+            font-size: 10px;
             margin-bottom: 2px;
+            letter-spacing: 1px;
+            color: var(--navy);
+            -webkit-text-fill-color: var(--navy);
         }
 
         .pdf-optimized .footer .developer {
@@ -1365,7 +1370,7 @@
     <div class="container" id="pdfContent">
         <!-- Header -->
         <div class="header">
-            <div class="logo">Ryan Villa</div>
+            <div class="logo">KVertex Properties Group</div>
             <h1 data-i18n="title">ROI Simulator</h1>
             <p class="subtitle" data-i18n="subtitle">Villa Investment Return Calculator</p>
         </div>
@@ -1628,7 +1633,7 @@
         </div>
 
         <div class="footer">
-            <div class="brand">Ryan Villa ROI Simulator</div>
+            <div class="brand">KVertex Properties Group</div>
             <div class="developer">
                 <span data-i18n="developedBy">Developed by</span>
                 <a href="mailto:ryan@nuklabs.com">ryan@nuklabs.com</a>
@@ -1806,7 +1811,7 @@
 
             const opt = {
                 margin: [5, 5, 5, 5],
-                filename: `Ryan_Villa_ROI_${villaName}_${date}.pdf`,
+                filename: `KVertex_ROI_${villaName}_${date}.pdf`,
                 image: { type: 'jpeg', quality: 0.95 },
                 html2canvas: {
                     scale: 1.5,
@@ -2238,11 +2243,12 @@
                 const input = document.getElementById(id);
                 if (!input) return;
 
-                // Store raw value
-                input.setAttribute('data-raw', input.value);
+                // Store raw value (remove commas first)
+                const rawValue = input.value.replace(/,/g, '');
+                input.setAttribute('data-raw', rawValue);
 
                 // Format on load
-                const num = parseFloat(input.value);
+                const num = parseFloat(rawValue);
                 if (!isNaN(num)) {
                     input.value = num.toLocaleString('en-US');
                 }
