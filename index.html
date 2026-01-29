@@ -623,11 +623,15 @@
         }
 
         .summary-table tr.net-income td {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
             font-weight: 700;
-            color: #047857;
+            color: var(--white);
             font-size: 20px;
             border-bottom: none;
+        }
+
+        .summary-table tr.net-income td:not(:first-child) {
+            color: var(--gold);
         }
 
         /* Premium Results */
@@ -743,26 +747,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 24px;
+            gap: 28px;
             margin-top: 28px;
-            padding: 32px;
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 36px 48px;
+            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
             border-radius: 20px;
-            border: 2px solid #86efac;
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: var(--shadow-lg);
         }
 
         .bep-indicator .icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+            width: 64px;
+            height: 64px;
+            background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--navy);
             font-size: 28px;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+            box-shadow: var(--shadow-gold);
         }
 
         .bep-indicator .text {
@@ -771,16 +775,19 @@
 
         .bep-indicator .text .label {
             font-size: 12px;
-            color: #047857;
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
         .bep-indicator .text .value {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
-            color: #065f46;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -0.5px;
         }
 
@@ -1025,6 +1032,12 @@
 
         .pdf-optimized .summary-table tr.net-income td {
             font-size: 12px;
+            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+        }
+
+        .pdf-optimized .summary-table tr.net-income td:not(:first-child) {
+            color: #d4af37;
         }
 
         .pdf-optimized .results-grid {
@@ -1079,9 +1092,11 @@
 
         .pdf-optimized .bep-indicator {
             margin-top: 8px;
-            padding: 10px;
+            padding: 12px 16px;
             gap: 10px;
             border-radius: 8px;
+            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .pdf-optimized .bep-indicator .icon {
@@ -1092,10 +1107,13 @@
 
         .pdf-optimized .bep-indicator .text .label {
             font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .pdf-optimized .bep-indicator .text .value {
             font-size: 13px;
+            color: #d4af37;
+            -webkit-text-fill-color: #d4af37;
         }
 
         .pdf-optimized .footer {
@@ -1286,13 +1304,13 @@
             .bep-indicator {
                 flex-direction: column;
                 text-align: center;
-                padding: 24px 20px;
+                padding: 28px 24px;
             }
             .bep-indicator .text {
                 text-align: center;
             }
             .bep-indicator .text .value {
-                font-size: 22px;
+                font-size: 24px;
             }
             .footer {
                 padding: 36px 16px 24px;
@@ -1386,11 +1404,11 @@
                 </div>
                 <div class="exchange-item">
                     <label>1 USD = IDR</label>
-                    <input type="number" id="usdToIdr" value="16500" onchange="calculate()">
+                    <input type="text" id="usdToIdr" value="16,500" inputmode="numeric" onchange="calculate()">
                 </div>
                 <div class="exchange-item">
                     <label>1 USD = KRW</label>
-                    <input type="number" id="usdToKrw" value="1480" onchange="calculate()">
+                    <input type="text" id="usdToKrw" value="1,480" inputmode="numeric" onchange="calculate()">
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 20px;">
@@ -1424,7 +1442,7 @@
                 </div>
                 <div class="form-group">
                     <label data-i18n="buyingPrice">Purchase Price (USD)</label>
-                    <input type="number" id="buyingPrice" value="300000" onchange="calculate()">
+                    <input type="text" id="buyingPrice" value="300,000" inputmode="numeric" onchange="calculate()">
                     <div class="helper" id="buyingPriceMulti"></div>
                 </div>
                 <div class="form-group">
@@ -1595,7 +1613,7 @@
                     <span data-i18n="initialInvestment">Initial Investment</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-dot" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);"></div>
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #f4e4bc 0%, #d4af37 50%, #a68b2c 100%);"></div>
                     <span data-i18n="bepPoint">Break-Even Point (BEP)</span>
                 </div>
             </div>
@@ -1832,8 +1850,12 @@
                 exchangeRates.IDR = Math.round(data.rates.IDR);
                 exchangeRates.KRW = Math.round(data.rates.KRW);
 
-                document.getElementById('usdToIdr').value = exchangeRates.IDR;
-                document.getElementById('usdToKrw').value = exchangeRates.KRW;
+                const idrInput = document.getElementById('usdToIdr');
+                const krwInput = document.getElementById('usdToKrw');
+                idrInput.value = exchangeRates.IDR.toLocaleString('en-US');
+                idrInput.setAttribute('data-raw', exchangeRates.IDR);
+                krwInput.value = exchangeRates.KRW.toLocaleString('en-US');
+                krwInput.setAttribute('data-raw', exchangeRates.KRW);
 
                 const now = new Date();
                 const timeStr = now.toLocaleString(currentLang === 'en' ? 'en-US' : 'ko-KR', {
@@ -1853,8 +1875,12 @@
                     exchangeRates.IDR = Math.round(altData.rates.IDR);
                     exchangeRates.KRW = Math.round(altData.rates.KRW);
 
-                    document.getElementById('usdToIdr').value = exchangeRates.IDR;
-                    document.getElementById('usdToKrw').value = exchangeRates.KRW;
+                    const idrInput2 = document.getElementById('usdToIdr');
+                    const krwInput2 = document.getElementById('usdToKrw');
+                    idrInput2.value = exchangeRates.IDR.toLocaleString('en-US');
+                    idrInput2.setAttribute('data-raw', exchangeRates.IDR);
+                    krwInput2.value = exchangeRates.KRW.toLocaleString('en-US');
+                    krwInput2.setAttribute('data-raw', exchangeRates.KRW);
 
                     const now = new Date();
                     const timeStr = now.toLocaleString(currentLang === 'en' ? 'en-US' : 'ko-KR', {
