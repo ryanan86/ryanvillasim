@@ -339,15 +339,16 @@
         }
 
         .legend-dot {
-            width: 14px;
+            width: 20px;
             height: 14px;
-            border-radius: 50%;
+            border-radius: 4px;
+            opacity: 0.7;
         }
 
-        .legend-dot.low { background: var(--risk-low); }
-        .legend-dot.medium { background: var(--risk-medium); }
-        .legend-dot.high { background: var(--risk-high); }
-        .legend-dot.critical { background: var(--risk-critical); }
+        .legend-dot.low { background: var(--risk-low); opacity: 0.5; }
+        .legend-dot.medium { background: var(--risk-medium); opacity: 0.6; }
+        .legend-dot.high { background: var(--risk-high); opacity: 0.7; }
+        .legend-dot.critical { background: var(--risk-critical); opacity: 0.75; }
 
         /* Sidebar */
         .sidebar {
@@ -792,10 +793,13 @@
                 resultWarningDesc: "Some flooding history in this area",
                 resultDanger: "High Flood Risk Area",
                 resultDangerDesc: "Significant flood events recorded nearby",
-                nearestZone: "Nearest Risk Zone",
+                nearestZone: "Nearest Area",
                 distanceToRisk: "Distance to Risk",
-                floodFrequency: "Flood Frequency",
-                recommendation: "Recommendation"
+                floodFrequency: "Area Flood Frequency",
+                recommendation: "Recommendation",
+                elevation: "Elevation",
+                coordinates: "Coordinates",
+                inFloodZone: "In Documented Flood Zone"
             },
             ko: {
                 subtitle: "빌라 투자 위험 평가 도구",
@@ -824,55 +828,30 @@
                 resultWarningDesc: "이 지역에 일부 침수 이력이 있습니다",
                 resultDanger: "침수 위험 높은 지역",
                 resultDangerDesc: "인근에 상당한 침수 사건이 기록되어 있습니다",
-                nearestZone: "가장 가까운 위험 구역",
+                nearestZone: "가장 가까운 지역",
                 distanceToRisk: "위험 지역까지 거리",
-                floodFrequency: "침수 빈도",
-                recommendation: "권고사항"
+                floodFrequency: "지역 침수 빈도",
+                recommendation: "권고사항",
+                elevation: "해발 고도",
+                coordinates: "좌표",
+                inFloodZone: "침수 피해 이력 지역"
             }
         };
 
-        // Flood risk zones with polygon data - Based on BNPB historical flood data 2020-2025
-        // Flood zones expanded to reflect actual affected areas along river corridors and lowlands
+        // Region data - Based on BNPB historical flood data 2020-2024
+        // Note: Most areas are safe. Only specific low-lying spots have documented issues.
         const regions = [
             {
                 id: 'canggu',
                 name: 'Canggu',
                 nameKo: '짱구',
                 coords: [-8.6478, 115.1385],
-                risk: 'high',
-                riskScore: 75,
-                frequency: '2-3/year',
-                floodZones: [
-                    // Tukad Petanu River corridor - major flooding area
-                    { name: 'Tukad Petanu Corridor', coords: [
-                        [-8.6300, 115.1250], [-8.6350, 115.1200], [-8.6450, 115.1180],
-                        [-8.6550, 115.1220], [-8.6650, 115.1280], [-8.6700, 115.1350],
-                        [-8.6680, 115.1450], [-8.6600, 115.1500], [-8.6500, 115.1480],
-                        [-8.6400, 115.1420], [-8.6320, 115.1350]
-                    ]},
-                    // Berawa lowlands - frequent flooding
-                    { name: 'Berawa Lowlands', coords: [
-                        [-8.6550, 115.1480], [-8.6580, 115.1520], [-8.6620, 115.1580],
-                        [-8.6680, 115.1650], [-8.6720, 115.1700], [-8.6700, 115.1780],
-                        [-8.6620, 115.1750], [-8.6550, 115.1680], [-8.6500, 115.1600],
-                        [-8.6480, 115.1520]
-                    ]},
-                    // Batu Bolong area - coastal flooding
-                    { name: 'Batu Bolong', coords: [
-                        [-8.6480, 115.1300], [-8.6520, 115.1280], [-8.6580, 115.1320],
-                        [-8.6620, 115.1380], [-8.6600, 115.1450], [-8.6550, 115.1420],
-                        [-8.6500, 115.1380], [-8.6470, 115.1340]
-                    ]},
-                    // Cemagi rice fields - seasonal flooding
-                    { name: 'Cemagi', coords: [
-                        [-8.6200, 115.1100], [-8.6280, 115.1080], [-8.6380, 115.1120],
-                        [-8.6420, 115.1200], [-8.6380, 115.1280], [-8.6300, 115.1260],
-                        [-8.6220, 115.1200], [-8.6180, 115.1150]
-                    ]}
-                ],
+                risk: 'medium',
+                riskScore: 45,
+                frequency: '1-2/year (localized)',
                 recommendation: {
-                    en: 'High flood risk along Tukad Petanu river. Avoid Berawa lowlands and Batu Bolong coastal areas. North Canggu highlands safer.',
-                    ko: '뚜깟 쁘따누 강 유역 홍수 위험 높음. 베라와 저지대와 바투볼롱 해안 지역 피하세요. 북부 짱구 고지대가 안전.'
+                    en: 'Most of Canggu is safe. Avoid low-lying areas near Semat River. Check elevation - above 10m is good.',
+                    ko: '짱구 대부분은 안전. 세맛 강 인근 저지대만 주의. 해발 10m 이상이면 양호.'
                 }
             },
             {
@@ -880,36 +859,12 @@
                 name: 'Seminyak',
                 nameKo: '스미냑',
                 coords: [-8.6913, 115.1683],
-                risk: 'high',
-                riskScore: 70,
-                frequency: '2-3/year',
-                floodZones: [
-                    // Sunset Road corridor - notorious flooding
-                    { name: 'Sunset Road Corridor', coords: [
-                        [-8.6900, 115.1550], [-8.6950, 115.1520], [-8.7020, 115.1560],
-                        [-8.7080, 115.1620], [-8.7100, 115.1700], [-8.7050, 115.1750],
-                        [-8.6980, 115.1720], [-8.6920, 115.1680], [-8.6880, 115.1620]
-                    ]},
-                    // Tukad Mati drainage basin
-                    { name: 'Tukad Mati Basin', coords: [
-                        [-8.6780, 115.1700], [-8.6850, 115.1680], [-8.6920, 115.1720],
-                        [-8.6980, 115.1800], [-8.6950, 115.1880], [-8.6880, 115.1850],
-                        [-8.6800, 115.1800], [-8.6750, 115.1750]
-                    ]},
-                    // Petitenget to Oberoi stretch
-                    { name: 'Petitenget-Oberoi', coords: [
-                        [-8.6820, 115.1580], [-8.6880, 115.1550], [-8.6950, 115.1600],
-                        [-8.6920, 115.1680], [-8.6850, 115.1650], [-8.6800, 115.1620]
-                    ]},
-                    // Southern Seminyak lowlands
-                    { name: 'South Seminyak', coords: [
-                        [-8.7000, 115.1650], [-8.7080, 115.1620], [-8.7150, 115.1680],
-                        [-8.7120, 115.1780], [-8.7050, 115.1750], [-8.6980, 115.1700]
-                    ]}
-                ],
+                risk: 'medium',
+                riskScore: 50,
+                frequency: '1-2/year (specific streets)',
                 recommendation: {
-                    en: 'Sunset Road floods almost every rainy season. Tukad Mati area prone to drainage overflow. Upper Petitenget relatively safer.',
-                    ko: '선셋 로드는 거의 매 우기 침수. 뚜깟 마띠 지역 배수 범람 잦음. 상부 쁘띠뗑엣이 상대적으로 안전.'
+                    en: 'Sunset Road junction has drainage issues. Most of Seminyak is fine. Check specific street history.',
+                    ko: '선셋 로드 교차로에 배수 문제 있음. 스미냑 대부분은 양호. 구체적인 도로 이력 확인.'
                 }
             },
             {
@@ -917,31 +872,12 @@
                 name: 'Ubud',
                 nameKo: '우붓',
                 coords: [-8.5069, 115.2625],
-                risk: 'medium',
-                riskScore: 45,
-                frequency: '1-2/year',
-                floodZones: [
-                    // Campuhan River valley
-                    { name: 'Campuhan Valley', coords: [
-                        [-8.4950, 115.2500], [-8.5020, 115.2480], [-8.5100, 115.2520],
-                        [-8.5180, 115.2600], [-8.5150, 115.2700], [-8.5080, 115.2680],
-                        [-8.5000, 115.2620], [-8.4950, 115.2560]
-                    ]},
-                    // Tjampuhan ridge lowlands
-                    { name: 'Tjampuhan', coords: [
-                        [-8.5050, 115.2580], [-8.5120, 115.2550], [-8.5180, 115.2620],
-                        [-8.5150, 115.2720], [-8.5080, 115.2700], [-8.5030, 115.2650]
-                    ]},
-                    // Ubud rice terrace valleys
-                    { name: 'Tegallalang Valley', coords: [
-                        [-8.4300, 115.2750], [-8.4380, 115.2720], [-8.4450, 115.2780],
-                        [-8.4480, 115.2880], [-8.4400, 115.2900], [-8.4320, 115.2850],
-                        [-8.4280, 115.2800]
-                    ]}
-                ],
+                risk: 'low',
+                riskScore: 25,
+                frequency: 'Rare (valley floors only)',
                 recommendation: {
-                    en: 'River valleys flood during heavy rain. Hillside and ridge properties are safe. Avoid properties in valley floors.',
-                    ko: '폭우시 강 계곡 침수. 언덕/능선 매물은 안전. 계곡 바닥 매물 피하세요.'
+                    en: 'Very safe overall. Only valley floor properties near rivers have minor risk. Hillside villas are excellent.',
+                    ko: '전반적으로 매우 안전. 강 근처 계곡 바닥만 경미한 위험. 언덕 빌라는 우수.'
                 }
             },
             {
@@ -950,19 +886,11 @@
                 nameKo: '사누르',
                 coords: [-8.7089, 115.2621],
                 risk: 'low',
-                riskScore: 30,
-                frequency: '0.5-1/year',
-                floodZones: [
-                    // Coastal strip - minor tidal flooding
-                    { name: 'Sanur Beach Road', coords: [
-                        [-8.6950, 115.2620], [-8.7000, 115.2650], [-8.7100, 115.2680],
-                        [-8.7200, 115.2700], [-8.7180, 115.2750], [-8.7080, 115.2720],
-                        [-8.6980, 115.2680], [-8.6940, 115.2650]
-                    ]}
-                ],
+                riskScore: 20,
+                frequency: 'Very rare',
                 recommendation: {
-                    en: 'Generally safe. Minor coastal flooding possible during king tides. Good drainage infrastructure.',
-                    ko: '대체로 안전. 대조시 해안 경미한 침수 가능. 배수 인프라 양호.'
+                    en: 'Excellent drainage infrastructure. Very safe for villa investment.',
+                    ko: '배수 인프라 우수. 빌라 투자에 매우 안전.'
                 }
             },
             {
@@ -971,12 +899,11 @@
                 nameKo: '울루와투',
                 coords: [-8.8291, 115.0849],
                 risk: 'low',
-                riskScore: 20,
-                frequency: '<0.5/year',
-                floodZones: [],
+                riskScore: 5,
+                frequency: 'None recorded',
                 recommendation: {
-                    en: 'Clifftop location = virtually zero flood risk. Premium location for luxury villas.',
-                    ko: '절벽 위치 = 침수 위험 사실상 제로. 럭셔리 빌라 프리미엄 위치.'
+                    en: 'Clifftop location - zero flood risk. Premium investment location.',
+                    ko: '절벽 위치 - 침수 위험 제로. 프리미엄 투자 위치.'
                 }
             },
             {
@@ -985,18 +912,11 @@
                 nameKo: '누사두아',
                 coords: [-8.8005, 115.2316],
                 risk: 'low',
-                riskScore: 25,
-                frequency: '<0.5/year',
-                floodZones: [
-                    // Minor lowland area
-                    { name: 'Tanjung Benoa', coords: [
-                        [-8.7550, 115.2280], [-8.7620, 115.2250], [-8.7700, 115.2300],
-                        [-8.7680, 115.2380], [-8.7600, 115.2350], [-8.7540, 115.2320]
-                    ]}
-                ],
+                riskScore: 15,
+                frequency: 'Very rare',
                 recommendation: {
-                    en: 'Resort-grade infrastructure with excellent drainage. Tanjung Benoa slightly lower-lying.',
-                    ko: '리조트급 인프라로 배수 우수. 딴중 브노아만 약간 저지대.'
+                    en: 'Resort-grade infrastructure. Excellent for investment.',
+                    ko: '리조트급 인프라. 투자에 우수.'
                 }
             },
             {
@@ -1004,37 +924,12 @@
                 name: 'Kuta/Legian',
                 nameKo: '꾸따/레기안',
                 coords: [-8.7180, 115.1690],
-                risk: 'critical',
-                riskScore: 85,
-                frequency: '3-4/year',
-                floodZones: [
-                    // Central Kuta - chronic flooding
-                    { name: 'Kuta Center', coords: [
-                        [-8.7050, 115.1650], [-8.7120, 115.1600], [-8.7200, 115.1650],
-                        [-8.7280, 115.1720], [-8.7320, 115.1820], [-8.7280, 115.1900],
-                        [-8.7180, 115.1880], [-8.7100, 115.1800], [-8.7050, 115.1720]
-                    ]},
-                    // Legian beach strip
-                    { name: 'Legian', coords: [
-                        [-8.6950, 115.1680], [-8.7020, 115.1650], [-8.7100, 115.1700],
-                        [-8.7080, 115.1800], [-8.7000, 115.1780], [-8.6940, 115.1720]
-                    ]},
-                    // Airport road corridor
-                    { name: 'Airport Road', coords: [
-                        [-8.7200, 115.1750], [-8.7280, 115.1700], [-8.7400, 115.1780],
-                        [-8.7500, 115.1900], [-8.7450, 115.1980], [-8.7350, 115.1920],
-                        [-8.7250, 115.1850], [-8.7200, 115.1800]
-                    ]},
-                    // Tuban area near airport
-                    { name: 'Tuban', coords: [
-                        [-8.7350, 115.1650], [-8.7420, 115.1600], [-8.7520, 115.1680],
-                        [-8.7550, 115.1800], [-8.7480, 115.1850], [-8.7400, 115.1780],
-                        [-8.7350, 115.1720]
-                    ]}
-                ],
+                risk: 'high',
+                riskScore: 65,
+                frequency: '2-3/year (central area)',
                 recommendation: {
-                    en: 'Most flood-prone area in South Bali. Poor drainage, flat terrain, high water table. NOT recommended for villa investment.',
-                    ko: '남부 발리 최다 침수 지역. 배수 불량, 평지, 지하수위 높음. 빌라 투자 비추천.'
+                    en: 'Central Kuta has documented flooding. Consider other areas for villa investment. Street-level flooding mainly affects shops.',
+                    ko: '꾸따 중심부 침수 기록 있음. 빌라 투자는 다른 지역 고려. 도로 침수는 주로 상가에 영향.'
                 }
             },
             {
@@ -1042,37 +937,12 @@
                 name: 'Denpasar',
                 nameKo: '덴파사르',
                 coords: [-8.6705, 115.2126],
-                risk: 'high',
-                riskScore: 72,
-                frequency: '2-3/year',
-                floodZones: [
-                    // Tukad Badung river corridor
-                    { name: 'Tukad Badung Corridor', coords: [
-                        [-8.6500, 115.2000], [-8.6580, 115.1950], [-8.6680, 115.2020],
-                        [-8.6780, 115.2120], [-8.6850, 115.2250], [-8.6800, 115.2350],
-                        [-8.6700, 115.2300], [-8.6600, 115.2200], [-8.6520, 115.2100]
-                    ]},
-                    // City center lowlands
-                    { name: 'Denpasar Center', coords: [
-                        [-8.6600, 115.2100], [-8.6700, 115.2050], [-8.6800, 115.2120],
-                        [-8.6850, 115.2220], [-8.6800, 115.2300], [-8.6700, 115.2280],
-                        [-8.6620, 115.2200]
-                    ]},
-                    // Southern Denpasar
-                    { name: 'Renon-Sanglah', coords: [
-                        [-8.6750, 115.2200], [-8.6850, 115.2150], [-8.6950, 115.2220],
-                        [-8.6980, 115.2350], [-8.6900, 115.2400], [-8.6800, 115.2350],
-                        [-8.6750, 115.2280]
-                    ]},
-                    // Sesetan area
-                    { name: 'Sesetan', coords: [
-                        [-8.6900, 115.2100], [-8.6980, 115.2050], [-8.7080, 115.2120],
-                        [-8.7100, 115.2250], [-8.7020, 115.2300], [-8.6920, 115.2220]
-                    ]}
-                ],
+                risk: 'medium',
+                riskScore: 40,
+                frequency: '1-2/year (urban drainage)',
                 recommendation: {
-                    en: 'Urban flooding common along Tukad Badung. Dense development, inadequate drainage. Residential area, not ideal for tourist villas.',
-                    ko: '뚜깟 바둥 따라 도시 침수 잦음. 고밀도 개발, 배수 부족. 주거지역으로 관광 빌라에 부적합.'
+                    en: 'Urban area with some drainage issues. Not typically a villa investment zone anyway.',
+                    ko: '일부 배수 문제 있는 도시 지역. 일반적으로 빌라 투자 지역 아님.'
                 }
             }
         ];
@@ -1122,55 +992,44 @@
         }
 
         function initMap() {
-            map = L.map('map').setView([-8.65, 115.2], 10);
+            map = L.map('map').setView([-8.65, 115.2], 11);
 
-            // Use CartoDB light tiles
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            // Base map layer
+            const baseLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; OpenStreetMap &copy; CARTO',
                 subdomains: 'abcd',
                 maxZoom: 19
             }).addTo(map);
 
-            // Add BNPB flood hazard layer (WMS)
-            try {
-                const bnpbLayer = L.tileLayer.wms('https://gis.bnpb.go.id/server/services/inarisk/layer_bahaya_banjir_30/MapServer/WMSServer', {
-                    layers: '0',
-                    format: 'image/png',
-                    transparent: true,
-                    opacity: 0.4
-                });
-                // Uncomment to enable: bnpbLayer.addTo(map);
-            } catch(e) {
-                console.log('BNPB layer not available');
-            }
+            // Satellite layer option
+            const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; Esri'
+            });
 
-            // Add region markers and flood zones
+            // BNPB Flood Hazard WMS Layer
+            const bnpbFloodLayer = L.tileLayer.wms('https://gis.bnpb.go.id/server/services/inarisk/layer_bahaya_banjir_30/MapServer/WMSServer', {
+                layers: '0',
+                format: 'image/png',
+                transparent: true,
+                opacity: 0.5,
+                attribution: 'BNPB inaRISK'
+            });
+
+            // Add major flood-prone area overlays with smooth, natural shapes
+            addFloodOverlays();
+
+            // Add region markers
             regions.forEach(region => {
                 const color = getRiskColor(region.risk);
 
-                // Add flood zone polygons
-                region.floodZones.forEach(zone => {
-                    if (zone.coords && zone.coords.length > 0) {
-                        const polygon = L.polygon(zone.coords, {
-                            color: color,
-                            fillColor: color,
-                            fillOpacity: 0.3,
-                            weight: 2
-                        }).addTo(map);
-
-                        polygon.bindPopup(`<b>${zone.name}</b><br>High flood risk zone`);
-                        floodZones.push({ polygon, region, zone });
-                    }
-                });
-
                 // Add region marker
                 const marker = L.circleMarker(region.coords, {
-                    radius: 18,
+                    radius: 16,
                     fillColor: color,
                     color: '#ffffff',
                     weight: 3,
                     opacity: 1,
-                    fillOpacity: 0.8
+                    fillOpacity: 0.9
                 }).addTo(map);
 
                 const name = currentLang === 'ko' ? region.nameKo : region.name;
@@ -1185,8 +1044,272 @@
                 `);
 
                 marker.on('click', () => {
-                    map.flyTo(region.coords, 13);
+                    map.flyTo(region.coords, 14);
                 });
+            });
+
+            // Layer control
+            const baseMaps = {
+                "Map": baseLayer,
+                "Satellite": satelliteLayer
+            };
+            const overlays = {
+                "BNPB Flood Hazard": bnpbFloodLayer
+            };
+            L.control.layers(baseMaps, overlays, { position: 'topright' }).addTo(map);
+        }
+
+        // Add flood overlays based on documented flood events 2020-2024
+        function addFloodOverlays() {
+
+            // ===========================================
+            // KUTA/LEGIAN/TUBAN: Highest flood frequency area
+            // ===========================================
+            // Central Kuta - main flood zone
+            const kutaCentral = L.polygon([
+                [-8.7100, 115.1650], [-8.7080, 115.1700], [-8.7100, 115.1760],
+                [-8.7150, 115.1800], [-8.7220, 115.1820], [-8.7280, 115.1800],
+                [-8.7320, 115.1750], [-8.7300, 115.1680], [-8.7250, 115.1640],
+                [-8.7180, 115.1630], [-8.7130, 115.1640]
+            ], {
+                color: '#dc2626',
+                fillColor: '#dc2626',
+                fillOpacity: 0.35,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            kutaCentral.bindPopup('<b>Central Kuta</b><br>Flood frequency: 2-3x/year<br>Street flooding 30-80cm reported');
+            floodZones.push({ polygon: kutaCentral, region: regions.find(r => r.id === 'kuta') });
+
+            // Legian area
+            const legianArea = L.polygon([
+                [-8.6980, 115.1660], [-8.6960, 115.1710], [-8.6980, 115.1770],
+                [-8.7030, 115.1800], [-8.7090, 115.1790], [-8.7120, 115.1740],
+                [-8.7100, 115.1680], [-8.7050, 115.1650], [-8.7010, 115.1650]
+            ], {
+                color: '#dc2626',
+                fillColor: '#dc2626',
+                fillOpacity: 0.3,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            legianArea.bindPopup('<b>Legian</b><br>Recurring street flooding<br>Drainage issues documented');
+            floodZones.push({ polygon: legianArea, region: regions.find(r => r.id === 'kuta') });
+
+            // Tuban near airport
+            const tubanArea = L.polygon([
+                [-8.7350, 115.1620], [-8.7320, 115.1680], [-8.7350, 115.1750],
+                [-8.7420, 115.1800], [-8.7500, 115.1780], [-8.7530, 115.1720],
+                [-8.7500, 115.1650], [-8.7430, 115.1610], [-8.7380, 115.1610]
+            ], {
+                color: '#dc2626',
+                fillColor: '#dc2626',
+                fillOpacity: 0.28,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            tubanArea.bindPopup('<b>Tuban Area</b><br>Near airport road flooding<br>Low-lying terrain');
+            floodZones.push({ polygon: tubanArea, region: regions.find(r => r.id === 'kuta') });
+
+            // ===========================================
+            // SEMINYAK: Sunset Road corridor
+            // ===========================================
+            const sunsetRoad = L.polygon([
+                [-8.6920, 115.1580], [-8.6900, 115.1640], [-8.6920, 115.1710],
+                [-8.6970, 115.1760], [-8.7040, 115.1780], [-8.7100, 115.1750],
+                [-8.7120, 115.1680], [-8.7080, 115.1620], [-8.7020, 115.1580],
+                [-8.6970, 115.1570]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.32,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            sunsetRoad.bindPopup('<b>Sunset Road Area</b><br>Annual monsoon flooding<br>50-100cm documented');
+            floodZones.push({ polygon: sunsetRoad, region: regions.find(r => r.id === 'seminyak') });
+
+            // Tukad Mati corridor
+            const tukadMati = L.polygon([
+                [-8.6800, 115.1720], [-8.6780, 115.1780], [-8.6820, 115.1850],
+                [-8.6880, 115.1890], [-8.6950, 115.1880], [-8.6980, 115.1820],
+                [-8.6950, 115.1760], [-8.6890, 115.1720], [-8.6840, 115.1710]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.3,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            tukadMati.bindPopup('<b>Tukad Mati Basin</b><br>River overflow during heavy rain<br>Properties near river affected');
+            floodZones.push({ polygon: tukadMati, region: regions.find(r => r.id === 'seminyak') });
+
+            // Petitenget low area
+            const petitenget = L.polygon([
+                [-8.6720, 115.1600], [-8.6700, 115.1660], [-8.6730, 115.1720],
+                [-8.6790, 115.1740], [-8.6850, 115.1710], [-8.6860, 115.1650],
+                [-8.6820, 115.1600], [-8.6770, 115.1590]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.25,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            petitenget.bindPopup('<b>Petitenget</b><br>Occasional flooding<br>Lower risk than Sunset Road');
+            floodZones.push({ polygon: petitenget, region: regions.find(r => r.id === 'seminyak') });
+
+            // ===========================================
+            // CANGGU: River and rice field areas
+            // ===========================================
+            // Berawa lowlands
+            const berawa = L.polygon([
+                [-8.6550, 115.1520], [-8.6520, 115.1590], [-8.6550, 115.1670],
+                [-8.6620, 115.1730], [-8.6700, 115.1750], [-8.6760, 115.1710],
+                [-8.6780, 115.1640], [-8.6740, 115.1570], [-8.6680, 115.1530],
+                [-8.6610, 115.1510]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.3,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            berawa.bindPopup('<b>Berawa Lowlands</b><br>Rice field drainage issues<br>Ground floor flooding risk');
+            floodZones.push({ polygon: berawa, region: regions.find(r => r.id === 'canggu') });
+
+            // Batu Bolong / Echo Beach corridor
+            const batuBolong = L.polygon([
+                [-8.6430, 115.1280], [-8.6400, 115.1350], [-8.6430, 115.1430],
+                [-8.6500, 115.1490], [-8.6570, 115.1480], [-8.6620, 115.1420],
+                [-8.6600, 115.1340], [-8.6540, 115.1280], [-8.6480, 115.1270]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.28,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            batuBolong.bindPopup('<b>Batu Bolong Area</b><br>Coastal + river flooding<br>2021, 2022 events documented');
+            floodZones.push({ polygon: batuBolong, region: regions.find(r => r.id === 'canggu') });
+
+            // Semat River corridor
+            const sematRiver = L.polygon([
+                [-8.6350, 115.1180], [-8.6320, 115.1250], [-8.6360, 115.1330],
+                [-8.6420, 115.1380], [-8.6490, 115.1370], [-8.6520, 115.1300],
+                [-8.6480, 115.1220], [-8.6420, 115.1180], [-8.6380, 115.1170]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.28,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            sematRiver.bindPopup('<b>Semat River Area</b><br>River overflow zone<br>Avoid properties near riverbank');
+            floodZones.push({ polygon: sematRiver, region: regions.find(r => r.id === 'canggu') });
+
+            // ===========================================
+            // DENPASAR: Urban drainage issues
+            // ===========================================
+            // City center
+            const denpasarCenter = L.polygon([
+                [-8.6620, 115.2080], [-8.6600, 115.2150], [-8.6640, 115.2220],
+                [-8.6720, 115.2270], [-8.6800, 115.2260], [-8.6850, 115.2200],
+                [-8.6830, 115.2120], [-8.6770, 115.2070], [-8.6700, 115.2060]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.28,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            denpasarCenter.bindPopup('<b>Denpasar Center</b><br>Urban drainage overflow<br>Street flooding during monsoon');
+            floodZones.push({ polygon: denpasarCenter, region: regions.find(r => r.id === 'denpasar') });
+
+            // Sesetan area
+            const sesetan = L.polygon([
+                [-8.6900, 115.2100], [-8.6880, 115.2170], [-8.6920, 115.2240],
+                [-8.6990, 115.2280], [-8.7060, 115.2250], [-8.7080, 115.2180],
+                [-8.7040, 115.2110], [-8.6970, 115.2080]
+            ], {
+                color: '#f97316',
+                fillColor: '#f97316',
+                fillOpacity: 0.25,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            sesetan.bindPopup('<b>Sesetan</b><br>Low-lying urban area<br>Occasional flooding');
+            floodZones.push({ polygon: sesetan, region: regions.find(r => r.id === 'denpasar') });
+
+            // ===========================================
+            // UBUD: Valley areas
+            // ===========================================
+            // Campuhan valley
+            const campuhan = L.polygon([
+                [-8.5020, 115.2550], [-8.5000, 115.2620], [-8.5040, 115.2700],
+                [-8.5110, 115.2750], [-8.5180, 115.2730], [-8.5200, 115.2660],
+                [-8.5160, 115.2580], [-8.5100, 115.2540], [-8.5050, 115.2540]
+            ], {
+                color: '#eab308',
+                fillColor: '#eab308',
+                fillOpacity: 0.28,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            campuhan.bindPopup('<b>Campuhan Valley</b><br>Valley floor flooding<br>Hillside properties safe');
+            floodZones.push({ polygon: campuhan, region: regions.find(r => r.id === 'ubud') });
+
+            // Ubud center low area
+            const ubudLow = L.polygon([
+                [-8.5080, 115.2610], [-8.5060, 115.2670], [-8.5090, 115.2730],
+                [-8.5150, 115.2760], [-8.5210, 115.2740], [-8.5230, 115.2680],
+                [-8.5200, 115.2620], [-8.5140, 115.2600]
+            ], {
+                color: '#eab308',
+                fillColor: '#eab308',
+                fillOpacity: 0.22,
+                weight: 1.5,
+                smoothFactor: 2
+            }).addTo(map);
+            ubudLow.bindPopup('<b>Ubud Low Area</b><br>Minor flooding risk<br>Most of Ubud is safe');
+            floodZones.push({ polygon: ubudLow, region: regions.find(r => r.id === 'ubud') });
+
+            // ===========================================
+            // SANUR: Minor coastal zone
+            // ===========================================
+            const sanurCoast = L.polygon([
+                [-8.7000, 115.2650], [-8.6980, 115.2700], [-8.7020, 115.2750],
+                [-8.7100, 115.2780], [-8.7180, 115.2770], [-8.7220, 115.2720],
+                [-8.7180, 115.2660], [-8.7100, 115.2640], [-8.7040, 115.2640]
+            ], {
+                color: '#22c55e',
+                fillColor: '#22c55e',
+                fillOpacity: 0.2,
+                weight: 1,
+                smoothFactor: 2
+            }).addTo(map);
+            sanurCoast.bindPopup('<b>Sanur Beach Area</b><br>Very low risk<br>King tide minor flooding only');
+            floodZones.push({ polygon: sanurCoast, region: regions.find(r => r.id === 'sanur') });
+
+            // Add river lines for reference
+            addRiverLines();
+        }
+
+        // River lines for geographical context
+        function addRiverLines() {
+            const rivers = [
+                { name: 'Tukad Petanu', coords: [[-8.6200, 115.1100], [-8.6400, 115.1250], [-8.6550, 115.1450], [-8.6680, 115.1700]] },
+                { name: 'Tukad Mati', coords: [[-8.6700, 115.1650], [-8.6850, 115.1800], [-8.7000, 115.1900]] },
+                { name: 'Tukad Badung', coords: [[-8.6500, 115.2000], [-8.6700, 115.2150], [-8.6900, 115.2300]] }
+            ];
+
+            rivers.forEach(river => {
+                L.polyline(river.coords, {
+                    color: '#0ea5e9',
+                    weight: 2,
+                    opacity: 0.5,
+                    dashArray: '6, 4'
+                }).addTo(map).bindPopup(river.name);
             });
         }
 
@@ -1234,6 +1357,18 @@
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
 
+                    // Fetch elevation data
+                    let elevation = null;
+                    try {
+                        const elevResponse = await fetch(`https://api.open-elevation.com/api/v1/lookup?locations=${lat},${lon}`);
+                        const elevData = await elevResponse.json();
+                        if (elevData.results && elevData.results[0]) {
+                            elevation = elevData.results[0].elevation;
+                        }
+                    } catch (e) {
+                        console.log('Elevation API unavailable');
+                    }
+
                     // Remove existing user marker
                     if (userMarker) {
                         map.removeLayer(userMarker);
@@ -1248,12 +1383,16 @@
                         })
                     }).addTo(map);
 
-                    userMarker.bindPopup(`<b>Your Villa Location</b><br>${data[0].display_name}`).openPopup();
+                    const elevText = elevation !== null ? ` | Elevation: ${elevation}m` : '';
+                    userMarker.bindPopup(`<b>Your Villa Location</b><br>${data[0].display_name}${elevText}`).openPopup();
 
-                    map.flyTo([lat, lon], 15);
+                    map.flyTo([lat, lon], 16);
 
                     // Check flood risk
                     const riskResult = checkFloodRisk(lat, lon);
+                    riskResult.elevation = elevation;
+                    riskResult.lat = lat;
+                    riskResult.lon = lon;
                     displaySearchResult(riskResult, data[0].display_name);
 
                 } else {
@@ -1287,29 +1426,47 @@
             let nearestRegion = null;
             let minDistance = Infinity;
             let inFloodZone = false;
+            let floodZoneRisk = null;
 
-            // Check each region
+            // Check each region for nearest
             regions.forEach(region => {
                 const distance = getDistance(lat, lon, region.coords[0], region.coords[1]);
                 if (distance < minDistance) {
                     minDistance = distance;
                     nearestRegion = region;
                 }
-
-                // Check if in flood zone polygon
-                region.floodZones.forEach(zone => {
-                    if (isPointInPolygon([lat, lon], zone.coords)) {
-                        inFloodZone = true;
-                    }
-                });
             });
+
+            // Check if point is inside any flood zone polygon
+            const point = L.latLng(lat, lon);
+            floodZones.forEach(fz => {
+                if (fz.polygon && fz.region) {
+                    const bounds = fz.polygon.getBounds();
+                    if (bounds.contains(point)) {
+                        // More precise check using ray casting
+                        const latlngs = fz.polygon.getLatLngs()[0];
+                        if (isPointInLeafletPolygon(lat, lon, latlngs)) {
+                            inFloodZone = true;
+                            floodZoneRisk = fz.region;
+                        }
+                    }
+                }
+            });
+
+            // If in flood zone, use that region's risk level
+            if (inFloodZone && floodZoneRisk) {
+                nearestRegion = floodZoneRisk;
+            }
 
             // Determine risk level
             let riskLevel, riskClass;
-            if (inFloodZone || (nearestRegion && nearestRegion.riskScore >= 70 && minDistance < 2)) {
+            if (inFloodZone) {
                 riskLevel = 'danger';
                 riskClass = 'danger';
-            } else if (nearestRegion && nearestRegion.riskScore >= 40 && minDistance < 3) {
+            } else if (nearestRegion && nearestRegion.riskScore >= 70 && minDistance < 1.5) {
+                riskLevel = 'danger';
+                riskClass = 'danger';
+            } else if (nearestRegion && nearestRegion.riskScore >= 40 && minDistance < 2.5) {
                 riskLevel = 'warning';
                 riskClass = 'warning';
             } else {
@@ -1324,6 +1481,22 @@
                 distance: minDistance,
                 inFloodZone
             };
+        }
+
+        // Check if point is inside Leaflet polygon using ray casting
+        function isPointInLeafletPolygon(lat, lon, latlngs) {
+            let inside = false;
+            const x = lon, y = lat;
+
+            for (let i = 0, j = latlngs.length - 1; i < latlngs.length; j = i++) {
+                const xi = latlngs[i].lng, yi = latlngs[i].lat;
+                const xj = latlngs[j].lng, yj = latlngs[j].lat;
+
+                const intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+
+            return inside;
         }
 
         function displaySearchResult(result, address) {
@@ -1348,6 +1521,24 @@
             const regionName = result.nearestRegion ?
                 (currentLang === 'ko' ? result.nearestRegion.nameKo : result.nearestRegion.name) : 'Unknown';
 
+            // Elevation interpretation
+            let elevationDisplay = '-';
+            let elevationNote = '';
+            if (result.elevation !== null && result.elevation !== undefined) {
+                elevationDisplay = `${result.elevation}m`;
+                if (result.elevation < 5) {
+                    elevationNote = currentLang === 'ko' ? ' (저지대 - 주의)' : ' (Low-lying - Caution)';
+                } else if (result.elevation < 15) {
+                    elevationNote = currentLang === 'ko' ? ' (보통)' : ' (Moderate)';
+                } else {
+                    elevationNote = currentLang === 'ko' ? ' (고지대 - 양호)' : ' (Elevated - Good)';
+                }
+            }
+
+            // Coordinates display
+            const coordsDisplay = result.lat && result.lon ?
+                `${result.lat.toFixed(5)}, ${result.lon.toFixed(5)}` : '-';
+
             resultDiv.className = `search-result ${result.riskClass}`;
             resultDiv.innerHTML = `
                 <div class="result-header">
@@ -1359,12 +1550,20 @@
                 </div>
                 <div class="result-details">
                     <div class="result-item">
+                        <div class="result-label">${t.elevation || 'Elevation'}</div>
+                        <div class="result-value" style="font-weight:600;color:${result.elevation < 5 ? '#f59e0b' : result.elevation >= 15 ? '#22c55e' : 'inherit'};">${elevationDisplay}${elevationNote}</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">${t.coordinates || 'Coordinates'}</div>
+                        <div class="result-value" style="font-size:11px;">${coordsDisplay}</div>
+                    </div>
+                    <div class="result-item">
                         <div class="result-label">${t.nearestZone}</div>
                         <div class="result-value">${regionName}</div>
                     </div>
                     <div class="result-item">
-                        <div class="result-label">${t.distanceToRisk}</div>
-                        <div class="result-value">${result.distance.toFixed(1)} km</div>
+                        <div class="result-label">${t.inFloodZone || 'In Flood Zone'}</div>
+                        <div class="result-value" style="font-weight:600;color:${result.inFloodZone ? '#ef4444' : '#22c55e'};">${result.inFloodZone ? (currentLang === 'ko' ? '예 - 피해이력 있음' : 'Yes - Documented') : (currentLang === 'ko' ? '아니오' : 'No')}</div>
                     </div>
                     <div class="result-item">
                         <div class="result-label">${t.floodFrequency}</div>
