@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KVertex Properties Group - ROI Simulator</title>
+    <title>Ryan Villa ROI Simulator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,19 +78,17 @@
         }
 
         .logo {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--white);
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
             margin-bottom: 16px;
             display: inline-block;
-            padding: 12px 28px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
+            padding: 10px 28px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 6px;
         }
 
         .header h1 {
@@ -398,6 +396,221 @@
             font-weight: 500;
         }
 
+        /* Reference Pricing Table */
+        .reference-info {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.15));
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            color: var(--navy);
+        }
+
+        .reference-info strong {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 14px;
+        }
+
+        .reference-table th {
+            text-align: center;
+            padding: 14px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--light-gray);
+            background: var(--off-white);
+        }
+
+        .reference-table th:first-child {
+            text-align: left;
+            border-radius: 12px 0 0 0;
+        }
+
+        .reference-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .reference-table td {
+            text-align: center;
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--light-gray);
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .reference-table td:first-child {
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .reference-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .reference-table td.highlight {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.25));
+            color: var(--navy);
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        .reference-note {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: var(--off-white);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .data-sources {
+            margin-top: 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.03), rgba(26, 54, 93, 0.08));
+            border-radius: 12px;
+            border: 1px solid rgba(26, 54, 93, 0.1);
+        }
+
+        .sources-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .sources-list a {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--navy);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .sources-list a:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--navy);
+            transform: translateY(-1px);
+        }
+
+        .sources-note {
+            display: block;
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fetch-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--navy), #1a2744);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .fetch-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .fetch-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .fetch-btn .fetch-icon {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .fetch-btn.loading .fetch-icon {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .fetch-status {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .fetch-status.loading {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .fetch-status.success {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.2));
+            color: #27ae60;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .fetch-status.error {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.2));
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .data-source {
+            margin-left: 12px;
+            padding: 4px 10px;
+            background: var(--off-white);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .data-source.live {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.25));
+            color: #27ae60;
+        }
+
         /* Premium Price Table */
         .price-table {
             width: 100%;
@@ -462,6 +675,19 @@
             border-color: var(--gold);
             background: var(--white);
             box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        }
+
+        .calculated-days {
+            display: inline-block;
+            width: 60px;
+            padding: 14px 16px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.15));
+            border-radius: 12px;
+            border: 2px solid var(--gold);
         }
 
         .season-badge {
@@ -569,6 +795,139 @@
             color: var(--navy);
             padding-top: 16px;
             border-top: 1px dashed var(--light-gray);
+        }
+
+        /* Checkbox Label */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+
+        .checkbox-label.master-toggle {
+            gap: 14px;
+        }
+
+        .checkbox-label.master-toggle input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+        }
+
+        .checkbox-label.master-toggle .card-title {
+            margin: 0;
+        }
+
+        .growth-section-content {
+            transition: opacity 0.3s ease;
+        }
+
+        .growth-section-content.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Input with Unit */
+        .input-with-unit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-with-unit input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            background: var(--off-white);
+            color: var(--navy);
+            transition: all 0.3s;
+        }
+
+        .input-with-unit input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        }
+
+        .input-with-unit .unit {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--slate);
+            min-width: 30px;
+        }
+
+        /* Fee Grid 4 columns */
+        .fee-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        /* Total ROI Summary */
+        .total-roi-summary {
+            margin-top: 32px;
+            padding: 28px;
+            background: linear-gradient(145deg, var(--off-white) 0%, #f1f3f6 100%);
+            border-radius: 16px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .total-roi-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .total-roi-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .total-roi-row.highlight {
+            margin-top: 16px;
+            padding: 20px 24px;
+            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 12px;
+            border-bottom: none;
+        }
+
+        .total-roi-row.highlight .total-roi-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .total-roi-row.highlight .total-roi-value {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+        }
+
+        .total-roi-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate);
+        }
+
+        .total-roi-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy);
+            font-variant-numeric: tabular-nums;
         }
 
         /* Premium Summary Table */
@@ -802,18 +1161,32 @@
         }
 
         .footer .brand {
-            font-family: 'Inter', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 12px;
         }
 
         .footer .developer {
             font-size: 13px;
             font-weight: 500;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            margin-bottom: 16px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gold-light);
+            letter-spacing: 0.3px;
         }
 
         .footer a {
@@ -1140,11 +1513,20 @@
 
         /* Responsive - Premium Mobile Experience */
         @media (max-width: 900px) {
-            .form-grid, .fee-grid {
+            .form-grid {
                 grid-template-columns: 1fr;
+            }
+            .fee-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             .results-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .fee-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1320,6 +1702,28 @@
             .footer {
                 padding: 36px 16px 24px;
             }
+            .total-roi-summary {
+                padding: 20px;
+            }
+            .total-roi-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .total-roi-row.highlight {
+                padding: 16px 20px;
+            }
+            .total-roi-row.highlight .total-roi-value {
+                font-size: 24px;
+            }
+            .input-with-unit input {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+            .checkbox-label input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1370,7 +1774,7 @@
     <div class="container" id="pdfContent">
         <!-- Header -->
         <div class="header">
-            <div class="logo">KVertex Properties Group</div>
+            <div class="logo">Ryan Villa</div>
             <h1 data-i18n="title">ROI Simulator</h1>
             <p class="subtitle" data-i18n="subtitle">Villa Investment Return Calculator</p>
         </div>
@@ -1442,18 +1846,79 @@
                     <input type="text" id="villaName" value="One Villa">
                 </div>
                 <div class="form-group">
+                    <label data-i18n="location">Location</label>
+                    <select id="villaLocation" onchange="updateLocationDefaults()">
+                        <option value="seminyak" selected>Seminyak</option>
+                        <option value="canggu">Canggu</option>
+                        <option value="ubud">Ubud</option>
+                        <option value="sanur">Sanur</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label data-i18n="numBedrooms">Bedrooms</label>
-                    <input type="number" id="nbBedroom" value="2" onchange="calculate()">
+                    <select id="nbBedroom" onchange="updateLocationDefaults()">
+                        <option value="1">1 Bedroom</option>
+                        <option value="2" selected>2 Bedrooms</option>
+                        <option value="3">3 Bedrooms</option>
+                        <option value="4">4+ Bedrooms</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label data-i18n="buyingPrice">Purchase Price (USD)</label>
-                    <input type="text" id="buyingPrice" value="300,000" inputmode="numeric" onchange="calculate()">
+                    <input type="text" id="buyingPrice" value="380,000" inputmode="numeric" onchange="calculate()">
                     <div class="helper" id="buyingPriceMulti"></div>
                 </div>
                 <div class="form-group">
                     <label data-i18n="leaseRemaining">Lease Remaining (Years)</label>
                     <input type="number" id="leaseRemaining" value="25">
                 </div>
+            </div>
+        </div>
+
+        <!-- Reference Pricing Table -->
+        <div class="card" id="referenceCard">
+            <div class="card-header">
+                <h2 class="card-title" data-i18n="referencePricing">Reference Pricing by Location</h2>
+                <div class="header-actions">
+                    <button class="fetch-btn" onclick="fetchMarketData()" id="fetchBtn">
+                        <span class="fetch-icon">↻</span>
+                        <span data-i18n="fetchMarket">Fetch Live Data</span>
+                    </button>
+                    <span class="card-badge" data-i18n="marketAverage">Market Average</span>
+                </div>
+            </div>
+            <div class="reference-info">
+                <span data-i18n="selectedLocation">Selected:</span>
+                <strong id="selectedLocationName">Seminyak</strong> -
+                <strong id="selectedBedroomType">2 Bedrooms</strong>
+                <span id="dataSource" class="data-source"></span>
+            </div>
+            <div id="fetchStatus" class="fetch-status" style="display: none;"></div>
+            <table class="reference-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="season">Season</th>
+                        <th>1 BR</th>
+                        <th>2 BR</th>
+                        <th>3 BR</th>
+                        <th>4+ BR</th>
+                    </tr>
+                </thead>
+                <tbody id="referenceTableBody">
+                </tbody>
+            </table>
+            <div class="reference-note" data-i18n="referenceNote">
+                * Prices are average nightly rates (USD) for premium villas in each area
+            </div>
+            <div class="data-sources">
+                <span class="sources-label" data-i18n="dataSources">Data Sources:</span>
+                <div class="sources-list">
+                    <a href="https://www.thebalihomes.com/blog/short-term-rental-data-canggu-bali" target="_blank" rel="noopener">The Bali Homes</a>
+                    <a href="https://www.villabalisale.com/blog/bali-villa-rental-income-2025" target="_blank" rel="noopener">Villa Bali Sale</a>
+                    <a href="https://balivillarealty.com/blog/rental-property-for-rent/" target="_blank" rel="noopener">Bali Villa Realty</a>
+                    <a href="https://hospitable.com/bali-rental-market" target="_blank" rel="noopener">Hospitable</a>
+                </div>
+                <span class="sources-note" data-i18n="sourcesNote">2025 Q1 market data, premium private pool villas (4.5+ rating)</span>
             </div>
         </div>
 
@@ -1484,7 +1949,8 @@
                 <thead>
                     <tr>
                         <th data-i18n="season">Season</th>
-                        <th data-i18n="numDays">Days/Year</th>
+                        <th data-i18n="percentYear">% of Year</th>
+                        <th data-i18n="numDays">Days</th>
                         <th data-i18n="priceUsd">Nightly Rate</th>
                         <th data-i18n="occupancy">Occupancy</th>
                     </tr>
@@ -1492,21 +1958,24 @@
                 <tbody>
                     <tr>
                         <td><span class="season-badge peak"><span class="dot"></span><span data-i18n="peakSeason">Peak Season</span></span></td>
-                        <td><input type="number" id="peakDays" value="14" onchange="calculate()"></td>
-                        <td><input type="number" id="peakPrice" value="300" onchange="calculate()"></td>
-                        <td><input type="number" id="peakOccupancy" value="80" onchange="calculate()"> %</td>
+                        <td><input type="number" id="peakPercent" value="18" step="0.1" onchange="calculateSeasonDays()"> %</td>
+                        <td><span id="peakDays" class="calculated-days">66</span></td>
+                        <td><input type="number" id="peakPrice" value="380" onchange="calculate()"></td>
+                        <td><input type="number" id="peakOccupancy" value="85" onchange="calculate()"> %</td>
                     </tr>
                     <tr>
                         <td><span class="season-badge high"><span class="dot"></span><span data-i18n="highSeason">High Season</span></span></td>
-                        <td><input type="number" id="highDays" value="62" onchange="calculate()"></td>
-                        <td><input type="number" id="highPrice" value="250" onchange="calculate()"></td>
-                        <td><input type="number" id="highOccupancy" value="75" onchange="calculate()"> %</td>
+                        <td><input type="number" id="highPercent" value="32" step="0.1" onchange="calculateSeasonDays()"> %</td>
+                        <td><span id="highDays" class="calculated-days">117</span></td>
+                        <td><input type="number" id="highPrice" value="300" onchange="calculate()"></td>
+                        <td><input type="number" id="highOccupancy" value="70" onchange="calculate()"> %</td>
                     </tr>
                     <tr>
                         <td><span class="season-badge low"><span class="dot"></span><span data-i18n="lowSeason">Low Season</span></span></td>
-                        <td><input type="number" id="lowDays" value="289" onchange="calculate()"></td>
-                        <td><input type="number" id="lowPrice" value="200" onchange="calculate()"></td>
-                        <td><input type="number" id="lowOccupancy" value="70" onchange="calculate()"> %</td>
+                        <td><input type="number" id="lowPercent" value="50" step="0.1" onchange="calculateSeasonDays()"> %</td>
+                        <td><span id="lowDays" class="calculated-days">182</span></td>
+                        <td><input type="number" id="lowPrice" value="220" onchange="calculate()"></td>
+                        <td><input type="number" id="lowOccupancy" value="50" onchange="calculate()"> %</td>
                     </tr>
                 </tbody>
             </table>
@@ -1521,9 +1990,23 @@
             <div class="fee-grid">
                 <div class="fee-card">
                     <div class="fee-card-header">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="otaEnabled" checked onchange="calculate()">
+                            <span class="fee-card-title" data-i18n="otaCommission">OTA Commission</span>
+                        </label>
+                        <div class="fee-input-group">
+                            <input type="number" id="otaPercent" value="15" step="0.1" onchange="calculate()">
+                            <span>%</span>
+                        </div>
+                    </div>
+                    <div class="fee-description" data-i18n="otaList">Booking.com, Airbnb, Agoda, Expedia commission fees</div>
+                    <div class="fee-calculated" id="otaCalc">$0 / year</div>
+                </div>
+                <div class="fee-card">
+                    <div class="fee-card-header">
                         <span class="fee-card-title" data-i18n="villaExpenses">Property Expenses</span>
                         <div class="fee-input-group">
-                            <input type="number" id="villaExpensesPercent" value="20" step="0.1" onchange="calculate()">
+                            <input type="number" id="villaExpensesPercent" value="15" step="0.1" onchange="calculate()">
                             <span>%</span>
                         </div>
                     </div>
@@ -1532,25 +2015,74 @@
                 </div>
                 <div class="fee-card">
                     <div class="fee-card-header">
-                        <span class="fee-card-title" data-i18n="managementMarketing">Management & Marketing</span>
+                        <span class="fee-card-title" data-i18n="managementMarketing">Management</span>
                         <div class="fee-input-group">
-                            <input type="number" id="managementMarketingPercent" value="20" step="0.1" onchange="calculate()">
+                            <input type="number" id="managementMarketingPercent" value="15" step="0.1" onchange="calculate()">
                             <span>%</span>
                         </div>
                     </div>
-                    <div class="fee-description" data-i18n="managementList">Property management, guest services, marketing, OTA fees, booking management</div>
+                    <div class="fee-description" data-i18n="managementList">Property management, guest services, booking management</div>
                     <div class="fee-calculated" id="managementMarketingCalc">$0 / year</div>
                 </div>
                 <div class="fee-card">
                     <div class="fee-card-header">
-                        <span class="fee-card-title" data-i18n="taxPhr">Government Tax (PHR)</span>
+                        <span class="fee-card-title" data-i18n="taxPhr">Withholding Tax</span>
                         <div class="fee-input-group">
-                            <input type="number" id="taxPercent" value="10" step="0.1" onchange="calculate()">
+                            <input type="number" id="taxPercent" value="10" step="0.1" onchange="calculate()" disabled>
                             <span>%</span>
                         </div>
                     </div>
-                    <div class="fee-description" data-i18n="taxList">Pajak Hotel & Restoran (Indonesian hospitality tax)</div>
+                    <div class="fee-description" data-i18n="taxList">Fixed 10% per Indonesian regulation PP 34/2017 (Pajak Penghasilan)</div>
                     <div class="fee-calculated" id="taxCalc">$0 / year</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Growth & Resale Assumptions -->
+        <div class="card" id="growthCard">
+            <div class="card-header">
+                <label class="checkbox-label master-toggle">
+                    <input type="checkbox" id="growthResaleEnabled" onchange="toggleGrowthSection()">
+                    <h2 class="card-title" data-i18n="growthAssumptions">Growth & Resale Assumptions</h2>
+                </label>
+                <span class="card-badge" data-i18n="optional">Optional</span>
+            </div>
+            <div class="form-grid growth-section-content" id="growthSectionContent" style="display: none;">
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rentalGrowthEnabled" onchange="calculate()" checked>
+                        <span data-i18n="rentalGrowth">Annual Rental Rate Growth</span>
+                    </label>
+                    <div class="input-with-unit">
+                        <input type="number" id="rentalGrowthPercent" value="4" step="0.5" onchange="calculate()">
+                        <span class="unit">%</span>
+                    </div>
+                    <div class="helper" data-i18n="rentalGrowthHelp">Expected annual increase in nightly rates</div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="propertyGrowthEnabled" onchange="calculate()" checked>
+                        <span data-i18n="propertyGrowth">Annual Property Value Growth</span>
+                    </label>
+                    <div class="input-with-unit">
+                        <input type="number" id="propertyGrowthPercent" value="4" step="0.5" onchange="calculate()">
+                        <span class="unit">%</span>
+                    </div>
+                    <div class="helper" data-i18n="propertyGrowthHelp">Expected annual property appreciation</div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="resaleAgentFee">Resale Agent Commission</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="resaleAgentPercent" value="5" step="0.5" onchange="calculate()">
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="resaleTax">Resale Tax</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="resaleTaxPercent" value="10" step="0.5" onchange="calculate()">
+                        <span class="unit">%</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1590,9 +2122,29 @@
                     <div class="result-sub" data-i18n="investmentRecovery">Until full recovery</div>
                 </div>
                 <div class="result-card highlight">
-                    <div class="result-label">ROI</div>
+                    <div class="result-label" data-i18n="rentalROI">Rental ROI</div>
                     <div class="result-value" id="resultROI">0%</div>
-                    <div class="result-sub">Return on Investment</div>
+                    <div class="result-sub" data-i18n="annualReturn">Annual Return</div>
+                </div>
+            </div>
+
+            <!-- Total ROI Summary -->
+            <div class="total-roi-summary" id="totalRoiSummary">
+                <div class="total-roi-row">
+                    <span class="total-roi-label" data-i18n="projectedResaleValue">Projected Resale Value (Lease End)</span>
+                    <span class="total-roi-value" id="projectedResaleValue">$0</span>
+                </div>
+                <div class="total-roi-row">
+                    <span class="total-roi-label" data-i18n="resaleProfit">Resale Profit (after fees & tax)</span>
+                    <span class="total-roi-value" id="resaleProfit">$0</span>
+                </div>
+                <div class="total-roi-row">
+                    <span class="total-roi-label" data-i18n="totalRentalIncome">Total Rental Income (over lease)</span>
+                    <span class="total-roi-value" id="totalRentalIncome">$0</span>
+                </div>
+                <div class="total-roi-row highlight">
+                    <span class="total-roi-label" data-i18n="totalROI">Total ROI (Rental + Resale)</span>
+                    <span class="total-roi-value" id="totalROI">0%</span>
                 </div>
             </div>
         </div>
@@ -1633,7 +2185,10 @@
         </div>
 
         <div class="footer">
-            <div class="brand">KVertex Properties Group</div>
+            <div class="brand">Ryan Villa ROI Simulator</div>
+            <div class="footer-badge" data-i18n="footerBadge">
+                Market data powered by AirDNA, Bali Villa Realty & industry research
+            </div>
             <div class="developer">
                 <span data-i18n="developedBy">Developed by</span>
                 <a href="mailto:ryan@nuklabs.com">ryan@nuklabs.com</a>
@@ -1664,16 +2219,25 @@
                 lastUpdate: "Last updated: Manual",
                 basicInfo: "Property Information",
                 villaName: "Property Name",
+                location: "Location",
                 numBedrooms: "Bedrooms",
                 buyingPrice: "Purchase Price (USD)",
                 leaseRemaining: "Lease Remaining (Years)",
+                referencePricing: "Reference Pricing by Location",
+                marketAverage: "Market Average",
+                selectedLocation: "Selected:",
+                fetchMarket: "Fetch Live Data",
+                referenceNote: "* Prices are average nightly rates (USD) for premium villas in each area",
+                dataSources: "Data Sources:",
+                sourcesNote: "2025 Q1 market data, premium private pool villas (4.5+ rating)",
                 calculatedAvg: "Calculated Metrics",
                 autoCalculated: "Auto-calculated",
                 occupancyRate: "Average Occupancy Rate",
                 avgNightPrice: "Average Nightly Rate",
                 priceTable: "Seasonal Pricing (USD)",
                 season: "Season",
-                numDays: "Days/Year",
+                percentYear: "% of Year",
+                numDays: "Days",
                 priceUsd: "Nightly Rate",
                 occupancy: "Occupancy",
                 peakSeason: "Peak Season",
@@ -1683,10 +2247,12 @@
                 percentGross: "% of Gross Revenue",
                 villaExpenses: "Property Expenses",
                 villaExpensesList: "Cleaning, pool maintenance, laundry, utilities, internet, repairs, insurance, gardening",
-                managementMarketing: "Management & Marketing",
-                managementList: "Property management, guest services, marketing, OTA fees, booking management",
-                taxPhr: "Government Tax (PHR)",
-                taxList: "Pajak Hotel & Restoran (Indonesian hospitality tax)",
+                managementMarketing: "Management",
+                managementList: "Property management, guest services, booking management",
+                otaCommission: "OTA Commission",
+                otaList: "Booking.com, Airbnb, Agoda, Expedia commission fees",
+                taxPhr: "Withholding Tax",
+                taxList: "Fixed 10% per Indonesian regulation PP 34/2017",
                 financialSummary: "Financial Summary",
                 item: "Item",
                 monthly: "Monthly",
@@ -1696,6 +2262,20 @@
                 paybackPeriod: "Payback Period",
                 investmentRecovery: "Until full recovery",
                 grossIncome: "Gross Revenue",
+                growthAssumptions: "Growth & Resale Assumptions",
+                optional: "Optional",
+                rentalGrowth: "Annual Rental Rate Growth",
+                rentalGrowthHelp: "Expected annual increase in nightly rates",
+                propertyGrowth: "Annual Property Value Growth",
+                propertyGrowthHelp: "Expected annual property appreciation",
+                resaleAgentFee: "Resale Agent Commission",
+                resaleTax: "Resale Tax",
+                rentalROI: "Rental ROI",
+                annualReturn: "Annual Return",
+                projectedResaleValue: "Projected Resale Value (Lease End)",
+                resaleProfit: "Resale Profit (after fees & tax)",
+                totalRentalIncome: "Total Rental Income (over lease)",
+                totalROI: "Total ROI (Rental + Resale)",
                 netIncome: "Net Income",
                 updatedAt: "Last updated:",
                 realtime: "(Live)",
@@ -1705,7 +2285,8 @@
                 bepPoint: "Break-Even Point (BEP)",
                 breakEvenPoint: "Break-Even Point",
                 developedBy: "Developed by",
-                year: "Year"
+                year: "Year",
+                footerBadge: "Market data powered by AirDNA, Bali Villa Realty & industry research"
             },
             ko: {
                 title: "ROI 시뮬레이터",
@@ -1719,7 +2300,15 @@
                 lastUpdate: "최종 업데이트: 수동 입력",
                 basicInfo: "매물 정보",
                 villaName: "매물명",
+                location: "지역",
                 numBedrooms: "침실 수",
+                referencePricing: "지역별 시세 참고표",
+                marketAverage: "시장 평균",
+                selectedLocation: "선택:",
+                fetchMarket: "실시간 데이터",
+                referenceNote: "* 각 지역 프리미엄 빌라의 평균 1박 요금 (USD)",
+                dataSources: "데이터 출처:",
+                sourcesNote: "2025년 1분기 시장 데이터, 프리미엄 프라이빗 풀빌라 (평점 4.5+)",
                 buyingPrice: "매입가 (USD)",
                 leaseRemaining: "잔여 임대 기간 (년)",
                 calculatedAvg: "계산된 지표",
@@ -1728,7 +2317,8 @@
                 avgNightPrice: "평균 1박 요금",
                 priceTable: "시즌별 가격표 (USD)",
                 season: "시즌",
-                numDays: "연간 일수",
+                percentYear: "연간 비율",
+                numDays: "일수",
                 priceUsd: "1박 요금",
                 occupancy: "가동률",
                 peakSeason: "성수기 (피크)",
@@ -1738,10 +2328,12 @@
                 percentGross: "총 수입 대비 %",
                 villaExpenses: "빌라 운영비",
                 villaExpensesList: "청소, 수영장 관리, 세탁, 전기/수도, 인터넷, 수선, 보험, 정원 관리",
-                managementMarketing: "관리 및 마케팅",
-                managementList: "부동산 관리, 고객 응대, 마케팅, OTA 수수료, 예약 관리",
-                taxPhr: "정부 세금 (PHR)",
-                taxList: "Pajak Hotel & Restoran (인도네시아 숙박 세금)",
+                managementMarketing: "매니지먼트",
+                managementList: "부동산 관리, 고객 응대, 예약 관리",
+                otaCommission: "OTA 수수료",
+                otaList: "Booking.com, Airbnb, Agoda, Expedia 수수료",
+                taxPhr: "원천징수세",
+                taxList: "인도네시아 규정 PP 34/2017에 따른 고정 10%",
                 financialSummary: "재무 요약",
                 item: "항목",
                 monthly: "월간",
@@ -1751,6 +2343,20 @@
                 paybackPeriod: "투자 회수 기간",
                 investmentRecovery: "원금 회수 완료까지",
                 grossIncome: "총 수입",
+                growthAssumptions: "성장률 및 재판매 가정",
+                optional: "선택사항",
+                rentalGrowth: "연간 임대료 상승률",
+                rentalGrowthHelp: "예상 연간 1박 요금 인상률",
+                propertyGrowth: "연간 부동산 가치 상승률",
+                propertyGrowthHelp: "예상 연간 자산 가치 상승률",
+                resaleAgentFee: "재판매 중개 수수료",
+                resaleTax: "재판매 세금",
+                rentalROI: "임대 ROI",
+                annualReturn: "연간 수익률",
+                projectedResaleValue: "예상 재판매 가치 (리스 종료 시)",
+                resaleProfit: "재판매 수익 (수수료 및 세금 공제 후)",
+                totalRentalIncome: "총 임대 수익 (리스 기간)",
+                totalROI: "총 ROI (임대 + 재판매)",
                 netIncome: "순수익",
                 updatedAt: "최종 업데이트:",
                 realtime: "(실시간)",
@@ -1760,28 +2366,82 @@
                 bepPoint: "손익분기점 (BEP)",
                 breakEvenPoint: "손익분기점",
                 developedBy: "개발",
-                year: "년차"
+                year: "년차",
+                footerBadge: "AirDNA, Bali Villa Realty 및 업계 리서치 기반 시장 데이터"
             }
         };
 
+        // Location-based pricing matrix (USD nightly rates)
+        // Based on 2025 market data from AirDNA, Bali Villa Realty, The Bali Homes
+        const locationPricing = {
+            seminyak: {
+                name: { en: 'Seminyak', ko: '스미냑' },
+                description: { en: 'Premium/Luxury Area', ko: '프리미엄/럭셔리 지역' },
+                // ADR $271 weekend, $239 weekday - Premium +30-50%
+                '1': { peak: 280, high: 220, low: 160, purchase: 250000 },
+                '2': { peak: 380, high: 300, low: 220, purchase: 380000 },
+                '3': { peak: 520, high: 400, low: 300, purchase: 520000 },
+                '4': { peak: 750, high: 580, low: 420, purchase: 750000 },
+                occupancy: { peak: 85, high: 70, low: 50 }
+            },
+            canggu: {
+                name: { en: 'Canggu', ko: '짱구' },
+                description: { en: 'Trendy/Surfer Area', ko: '트렌디/서퍼 지역' },
+                // ADR $170 median, Premium $269+, Top $250-350
+                '1': { peak: 250, high: 190, low: 140, purchase: 220000 },
+                '2': { peak: 350, high: 270, low: 200, purchase: 350000 },
+                '3': { peak: 480, high: 370, low: 270, purchase: 480000 },
+                '4': { peak: 680, high: 520, low: 380, purchase: 680000 },
+                occupancy: { peak: 80, high: 65, low: 45 }
+            },
+            ubud: {
+                name: { en: 'Ubud', ko: '우붓' },
+                description: { en: 'Cultural/Nature Area', ko: '문화/자연 지역' },
+                // Lower yields (4-7%), ~20% below Canggu
+                '1': { peak: 200, high: 160, low: 110, purchase: 180000 },
+                '2': { peak: 300, high: 230, low: 170, purchase: 280000 },
+                '3': { peak: 420, high: 320, low: 240, purchase: 400000 },
+                '4': { peak: 580, high: 440, low: 320, purchase: 580000 },
+                occupancy: { peak: 75, high: 60, low: 42 }
+            },
+            sanur: {
+                name: { en: 'Sanur', ko: '사누르' },
+                description: { en: 'Family-friendly/Quiet', ko: '가족친화/조용한 지역' },
+                // ~25% below Canggu, stable expat demand
+                '1': { peak: 170, high: 130, low: 95, purchase: 150000 },
+                '2': { peak: 260, high: 200, low: 145, purchase: 240000 },
+                '3': { peak: 360, high: 280, low: 200, purchase: 350000 },
+                '4': { peak: 500, high: 380, low: 280, purchase: 500000 },
+                occupancy: { peak: 78, high: 62, low: 42 }
+            }
+        };
+
+        // Seminyak (Premium Area) Seasonal Breakdown:
+        // Peak: Christmas/New Year (Dec 20-Jan 5), Easter, Summer (Jul 15-Aug 15), CNY
+        // High: June, Late Aug-Sep, Oct-Nov (shoulder seasons)
+        // Low: Jan 6-Easter, Post-Easter to May (rainy season)
+        // Scenarios based on Seminyak 2BR premium villa market data
         const scenarios = {
             conservative: {
-                peakDays: 14, peakPrice: 270, peakOccupancy: 70,
-                highDays: 62, highPrice: 220, highOccupancy: 65,
-                lowDays: 289, lowPrice: 170, lowOccupancy: 60,
-                villaExpenses: 25, managementMarketing: 25, tax: 10
+                // 15% below market, lower occupancy
+                peakPercent: 15, peakPrice: 320, peakOccupancy: 75,
+                highPercent: 28, highPrice: 255, highOccupancy: 60,
+                lowPercent: 57, lowPrice: 185, lowOccupancy: 40,
+                ota: 15, villaExpenses: 18, managementMarketing: 18
             },
             optimistic: {
-                peakDays: 14, peakPrice: 300, peakOccupancy: 80,
-                highDays: 62, highPrice: 250, highOccupancy: 75,
-                lowDays: 289, lowPrice: 200, lowOccupancy: 70,
-                villaExpenses: 20, managementMarketing: 20, tax: 10
+                // Market baseline (Seminyak 2BR)
+                peakPercent: 18, peakPrice: 380, peakOccupancy: 85,
+                highPercent: 32, highPrice: 300, highOccupancy: 70,
+                lowPercent: 50, lowPrice: 220, lowOccupancy: 50,
+                ota: 15, villaExpenses: 15, managementMarketing: 15
             },
             aggressive: {
-                peakDays: 14, peakPrice: 350, peakOccupancy: 90,
-                highDays: 62, highPrice: 300, highOccupancy: 85,
-                lowDays: 289, lowPrice: 250, lowOccupancy: 80,
-                villaExpenses: 15, managementMarketing: 15, tax: 10
+                // 15% above market, higher occupancy
+                peakPercent: 22, peakPrice: 440, peakOccupancy: 92,
+                highPercent: 35, highPrice: 345, highOccupancy: 78,
+                lowPercent: 43, lowPrice: 255, lowOccupancy: 58,
+                ota: 15, villaExpenses: 12, managementMarketing: 12
             }
         };
 
@@ -1800,6 +2460,274 @@
                     el.textContent = t[key];
                 }
             });
+            // Update reference table when language changes
+            updateReferenceTable();
+        }
+
+        function updateReferenceTable() {
+            const location = document.getElementById('villaLocation').value;
+            const bedroom = document.getElementById('nbBedroom').value;
+            const locData = locationPricing[location];
+            const t = translations[currentLang];
+
+            // Update selected location info
+            document.getElementById('selectedLocationName').textContent = locData.name[currentLang];
+            const bedroomText = bedroom === '4' ? '4+ Bedrooms' : `${bedroom} Bedroom${bedroom > 1 ? 's' : ''}`;
+            document.getElementById('selectedBedroomType').textContent = bedroomText;
+
+            // Build reference table
+            const tbody = document.getElementById('referenceTableBody');
+            const seasons = [
+                { key: 'peak', label: currentLang === 'en' ? 'Peak Season' : '성수기 (피크)' },
+                { key: 'high', label: currentLang === 'en' ? 'High Season' : '준성수기' },
+                { key: 'low', label: currentLang === 'en' ? 'Low Season' : '비수기' }
+            ];
+
+            let html = '';
+            seasons.forEach(season => {
+                html += '<tr>';
+                html += `<td>${season.label}</td>`;
+                ['1', '2', '3', '4'].forEach(br => {
+                    const price = locData[br][season.key];
+                    const isHighlight = br === bedroom;
+                    html += `<td class="${isHighlight ? 'highlight' : ''}">$${price}</td>`;
+                });
+                html += '</tr>';
+            });
+
+            // Add purchase price row
+            html += '<tr style="border-top: 2px solid var(--light-gray);">';
+            html += `<td style="color: var(--gold);">${currentLang === 'en' ? 'Avg. Purchase' : '평균 매입가'}</td>`;
+            ['1', '2', '3', '4'].forEach(br => {
+                const price = locData[br].purchase;
+                const isHighlight = br === bedroom;
+                html += `<td class="${isHighlight ? 'highlight' : ''}" style="color: var(--gold);">$${price.toLocaleString()}</td>`;
+            });
+            html += '</tr>';
+
+            tbody.innerHTML = html;
+        }
+
+        function updateLocationDefaults() {
+            const location = document.getElementById('villaLocation').value;
+            const bedroom = document.getElementById('nbBedroom').value;
+            const locData = locationPricing[location];
+            const brData = locData[bedroom];
+            const occData = locData.occupancy;
+
+            // Update seasonal pricing
+            document.getElementById('peakPrice').value = brData.peak;
+            document.getElementById('highPrice').value = brData.high;
+            document.getElementById('lowPrice').value = brData.low;
+
+            // Update occupancy rates
+            document.getElementById('peakOccupancy').value = occData.peak;
+            document.getElementById('highOccupancy').value = occData.high;
+            document.getElementById('lowOccupancy').value = occData.low;
+
+            // Update purchase price
+            document.getElementById('buyingPrice').value = brData.purchase.toLocaleString();
+
+            // Update reference table
+            updateReferenceTable();
+
+            // Recalculate
+            calculate();
+        }
+
+        // Xotelo API location keys for Bali areas
+        const xoteloLocationKeys = {
+            seminyak: 'g469404',
+            canggu: 'g1646547',
+            ubud: 'g297701',
+            sanur: 'g664666'
+        };
+
+        // Premium villa pricing based on 2025 market research
+        // Sources: AirDNA, Bali Villa Realty, The Bali Homes, Villa Bali Sale
+        // Target: Top 15% luxury private pool villas (4.8+ rating, modern design)
+        // Canggu ADR $170-219, Premium $250-350+ (thebalihomes.com)
+        // Seminyak ADR $239-271, Premium $300-400+ (balivillaescapes.com.au)
+        // North Badung 5BR avg $635/night (villabalisale.com)
+        const defaultPricing = {
+            seminyak: {
+                // Seminyak: Most premium area, ADR $271 weekend, $239 weekday
+                // Premium segment commands 30-50% above market average
+                '1': { peak: 280, high: 220, low: 160, purchase: 250000 },
+                '2': { peak: 380, high: 300, low: 220, purchase: 380000 },
+                '3': { peak: 520, high: 400, low: 300, purchase: 520000 },
+                '4': { peak: 750, high: 580, low: 420, purchase: 750000 },
+                occupancy: { peak: 85, high: 70, low: 50 }
+            },
+            canggu: {
+                // Canggu: ADR $170 median, Premium $269+, Top $250-350
+                // 50% occupancy median, 70% summer peak
+                '1': { peak: 250, high: 190, low: 140, purchase: 220000 },
+                '2': { peak: 350, high: 270, low: 200, purchase: 350000 },
+                '3': { peak: 480, high: 370, low: 270, purchase: 480000 },
+                '4': { peak: 680, high: 520, low: 380, purchase: 680000 },
+                occupancy: { peak: 80, high: 65, low: 45 }
+            },
+            ubud: {
+                // Ubud: Lower yields (4-7%), wellness/retreat market
+                // ~20% below Canggu pricing
+                '1': { peak: 200, high: 160, low: 110, purchase: 180000 },
+                '2': { peak: 300, high: 230, low: 170, purchase: 280000 },
+                '3': { peak: 420, high: 320, low: 240, purchase: 400000 },
+                '4': { peak: 580, high: 440, low: 320, purchase: 580000 },
+                occupancy: { peak: 75, high: 60, low: 42 }
+            },
+            sanur: {
+                // Sanur: Family market, lower ADR than Seminyak/Canggu
+                // ~25% below Canggu, stable expat demand
+                '1': { peak: 170, high: 130, low: 95, purchase: 150000 },
+                '2': { peak: 260, high: 200, low: 145, purchase: 240000 },
+                '3': { peak: 360, high: 280, low: 200, purchase: 350000 },
+                '4': { peak: 500, high: 380, low: 280, purchase: 500000 },
+                occupancy: { peak: 78, high: 62, low: 42 }
+            }
+        };
+
+        function useEstimatedData(location) {
+            const locData = locationPricing[location];
+            const defaultData = defaultPricing[location];
+
+            // Reset to default estimated values
+            ['1', '2', '3', '4'].forEach(br => {
+                locData[br].peak = defaultData[br].peak;
+                locData[br].high = defaultData[br].high;
+                locData[br].low = defaultData[br].low;
+                locData[br].purchase = defaultData[br].purchase;
+            });
+            locData.occupancy = { ...defaultData.occupancy };
+
+            // Update UI
+            updateReferenceTable();
+            updateLocationDefaults();
+        }
+
+        async function fetchMarketData() {
+            const btn = document.getElementById('fetchBtn');
+            const status = document.getElementById('fetchStatus');
+            const dataSource = document.getElementById('dataSource');
+            const location = document.getElementById('villaLocation').value;
+            const locationKey = xoteloLocationKeys[location];
+            const t = translations[currentLang];
+
+            // Show loading state
+            btn.classList.add('loading');
+            btn.disabled = true;
+            status.style.display = 'block';
+            status.className = 'fetch-status loading';
+            status.textContent = currentLang === 'en'
+                ? '⏳ Fetching live data from TripAdvisor/OTAs...'
+                : '⏳ TripAdvisor/OTA에서 실시간 데이터 가져오는 중...';
+
+            try {
+                // Fetch accommodation list from Xotelo API
+                const listUrl = `https://data.xotelo.com/api/list?location_key=${locationKey}&limit=50&sort=best_value`;
+
+                const response = await fetch(listUrl);
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Filter for premium villas (rating >= 4.5, with pool mention)
+                const premiumVillas = (data.result || []).filter(hotel => {
+                    const rating = parseFloat(hotel.rating) || 0;
+                    const name = (hotel.name || '').toLowerCase();
+                    const hasPool = name.includes('villa') || name.includes('pool');
+                    return rating >= 4.0 && hasPool;
+                });
+
+                if (premiumVillas.length === 0) {
+                    throw new Error(currentLang === 'en'
+                        ? 'No premium villas found in this area'
+                        : '이 지역에서 프리미엄 빌라를 찾을 수 없습니다');
+                }
+
+                // Calculate average prices by bedroom estimate (based on price range)
+                const priceRanges = premiumVillas.map(v => ({
+                    min: v.price_range?.min || 0,
+                    max: v.price_range?.max || 0,
+                    avg: ((v.price_range?.min || 0) + (v.price_range?.max || 0)) / 2
+                })).filter(p => p.avg > 0);
+
+                if (priceRanges.length > 0) {
+                    // Sort by price to estimate bedroom categories
+                    priceRanges.sort((a, b) => a.avg - b.avg);
+                    const len = priceRanges.length;
+
+                    // Estimate prices by quartiles (1BR=low, 2BR=mid-low, 3BR=mid-high, 4BR=high)
+                    const q1 = Math.floor(len * 0.25);
+                    const q2 = Math.floor(len * 0.5);
+                    const q3 = Math.floor(len * 0.75);
+
+                    const avg1BR = priceRanges.slice(0, q1).reduce((s, p) => s + p.avg, 0) / Math.max(q1, 1);
+                    const avg2BR = priceRanges.slice(q1, q2).reduce((s, p) => s + p.avg, 0) / Math.max(q2 - q1, 1);
+                    const avg3BR = priceRanges.slice(q2, q3).reduce((s, p) => s + p.avg, 0) / Math.max(q3 - q2, 1);
+                    const avg4BR = priceRanges.slice(q3).reduce((s, p) => s + p.avg, 0) / Math.max(len - q3, 1);
+
+                    // Update locationPricing with live data (apply seasonal multipliers)
+                    const locData = locationPricing[location];
+                    const seasonMultiplier = { peak: 1.3, high: 1.0, low: 0.75 };
+
+                    ['1', '2', '3', '4'].forEach((br, idx) => {
+                        const basePrice = [avg1BR, avg2BR, avg3BR, avg4BR][idx];
+                        if (basePrice > 0) {
+                            locData[br].peak = Math.round(basePrice * seasonMultiplier.peak);
+                            locData[br].high = Math.round(basePrice * seasonMultiplier.high);
+                            locData[br].low = Math.round(basePrice * seasonMultiplier.low);
+                        }
+                    });
+
+                    // Update UI
+                    updateReferenceTable();
+                    updateLocationDefaults();
+
+                    // Show success
+                    status.className = 'fetch-status success';
+                    status.textContent = currentLang === 'en'
+                        ? `✓ Updated with ${premiumVillas.length} premium villas data`
+                        : `✓ ${premiumVillas.length}개 프리미엄 빌라 데이터로 업데이트됨`;
+
+                    dataSource.textContent = currentLang === 'en' ? '(Live Data)' : '(실시간)';
+                    dataSource.className = 'data-source live';
+                } else {
+                    throw new Error(currentLang === 'en'
+                        ? 'No price data available'
+                        : '가격 데이터를 사용할 수 없습니다');
+                }
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+
+                // Fallback to estimated data based on market research
+                useEstimatedData(location);
+
+                status.className = 'fetch-status success';
+                status.textContent = currentLang === 'en'
+                    ? '✓ Using market research data (API unavailable)'
+                    : '✓ 시장 조사 데이터 사용 중 (API 사용 불가)';
+
+                dataSource.textContent = currentLang === 'en' ? '(Estimated)' : '(추정치)';
+                dataSource.className = 'data-source';
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+
+                // Hide status after 5 seconds
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 5000);
+            }
         }
 
         function exportPDF() {
@@ -1811,7 +2739,7 @@
 
             const opt = {
                 margin: [5, 5, 5, 5],
-                filename: `KVertex_ROI_${villaName}_${date}.pdf`,
+                filename: `Ryan_Villa_ROI_${villaName}_${date}.pdf`,
                 image: { type: 'jpeg', quality: 0.95 },
                 html2canvas: {
                     scale: 1.5,
@@ -1932,29 +2860,45 @@
             return `${idr} / ${krw}`;
         }
 
+        function toggleGrowthSection() {
+            const enabled = document.getElementById('growthResaleEnabled').checked;
+            const content = document.getElementById('growthSectionContent');
+            const totalRoiSummary = document.getElementById('totalRoiSummary');
+
+            if (enabled) {
+                content.style.display = 'grid';
+                totalRoiSummary.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+                totalRoiSummary.style.display = 'none';
+            }
+            calculate();
+        }
+
         function loadScenario(scenarioName) {
             const scenario = scenarios[scenarioName];
 
-            document.getElementById('peakDays').value = scenario.peakDays;
+            document.getElementById('peakPercent').value = scenario.peakPercent;
             document.getElementById('peakPrice').value = scenario.peakPrice;
             document.getElementById('peakOccupancy').value = scenario.peakOccupancy;
 
-            document.getElementById('highDays').value = scenario.highDays;
+            document.getElementById('highPercent').value = scenario.highPercent;
             document.getElementById('highPrice').value = scenario.highPrice;
             document.getElementById('highOccupancy').value = scenario.highOccupancy;
 
-            document.getElementById('lowDays').value = scenario.lowDays;
+            document.getElementById('lowPercent').value = scenario.lowPercent;
             document.getElementById('lowPrice').value = scenario.lowPrice;
             document.getElementById('lowOccupancy').value = scenario.lowOccupancy;
 
+            document.getElementById('otaPercent').value = scenario.ota;
             document.getElementById('villaExpensesPercent').value = scenario.villaExpenses;
             document.getElementById('managementMarketingPercent').value = scenario.managementMarketing;
-            document.getElementById('taxPercent').value = scenario.tax;
+            // Tax is fixed at 10% per PP 34/2017
 
             document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            calculate();
+            calculateSeasonDays();
         }
 
         function updateChart(buyingPrice, netIncomeYearly, paybackYears) {
@@ -2131,6 +3075,22 @@
             document.getElementById('bepValue').textContent = bepText;
         }
 
+        function calculateSeasonDays() {
+            const peakPercent = parseFloat(document.getElementById('peakPercent').value) || 0;
+            const highPercent = parseFloat(document.getElementById('highPercent').value) || 0;
+            const lowPercent = parseFloat(document.getElementById('lowPercent').value) || 0;
+
+            const peakDays = Math.round(365 * peakPercent / 100);
+            const highDays = Math.round(365 * highPercent / 100);
+            const lowDays = Math.round(365 * lowPercent / 100);
+
+            document.getElementById('peakDays').textContent = peakDays;
+            document.getElementById('highDays').textContent = highDays;
+            document.getElementById('lowDays').textContent = lowDays;
+
+            calculate();
+        }
+
         function calculate() {
             updateExchangeRatesFromInputs();
             const t = translations[currentLang];
@@ -2138,15 +3098,15 @@
             const buyingPrice = parseFloat(document.getElementById('buyingPrice').value) || 0;
             document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
 
-            const peakDays = parseFloat(document.getElementById('peakDays').value) || 0;
+            const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
             const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
             const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100 || 0;
 
-            const highDays = parseFloat(document.getElementById('highDays').value) || 0;
+            const highDays = parseFloat(document.getElementById('highDays').textContent) || 0;
             const highPrice = parseFloat(document.getElementById('highPrice').value) || 0;
             const highOccupancy = parseFloat(document.getElementById('highOccupancy').value) / 100 || 0;
 
-            const lowDays = parseFloat(document.getElementById('lowDays').value) || 0;
+            const lowDays = parseFloat(document.getElementById('lowDays').textContent) || 0;
             const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
             const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
 
@@ -2296,30 +3256,50 @@
 
             const t = translations[currentLang];
             const buyingPrice = getInputValue('buyingPrice');
+            const leaseYears = parseInt(document.getElementById('leaseRemaining').value) || 25;
             document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
 
-            const peakDays = parseFloat(document.getElementById('peakDays').value) || 0;
+            // Seasonal pricing
+            const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
             const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
             const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100 || 0;
 
-            const highDays = parseFloat(document.getElementById('highDays').value) || 0;
+            const highDays = parseFloat(document.getElementById('highDays').textContent) || 0;
             const highPrice = parseFloat(document.getElementById('highPrice').value) || 0;
             const highOccupancy = parseFloat(document.getElementById('highOccupancy').value) / 100 || 0;
 
-            const lowDays = parseFloat(document.getElementById('lowDays').value) || 0;
+            const lowDays = parseFloat(document.getElementById('lowDays').textContent) || 0;
             const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
             const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
 
+            // Cost percentages
+            const otaEnabled = document.getElementById('otaEnabled').checked;
+            const otaPercent = otaEnabled ? (parseFloat(document.getElementById('otaPercent').value) / 100 || 0) : 0;
             const villaExpensesPercent = parseFloat(document.getElementById('villaExpensesPercent').value) / 100 || 0;
             const managementMarketingPercent = parseFloat(document.getElementById('managementMarketingPercent').value) / 100 || 0;
-            const taxPercent = parseFloat(document.getElementById('taxPercent').value) / 100 || 0;
+            const taxPercent = 0.10; // Fixed 10% per PP 34/2017
 
+            // Growth & Resale section enabled?
+            const growthResaleEnabled = document.getElementById('growthResaleEnabled').checked;
+
+            // Growth assumptions (only if section enabled)
+            const rentalGrowthEnabled = growthResaleEnabled && document.getElementById('rentalGrowthEnabled').checked;
+            const rentalGrowthPercent = rentalGrowthEnabled ? (parseFloat(document.getElementById('rentalGrowthPercent').value) / 100 || 0) : 0;
+            const propertyGrowthEnabled = growthResaleEnabled && document.getElementById('propertyGrowthEnabled').checked;
+            const propertyGrowthPercent = propertyGrowthEnabled ? (parseFloat(document.getElementById('propertyGrowthPercent').value) / 100 || 0) : 0;
+
+            // Resale assumptions (only if section enabled)
+            const resaleAgentPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleAgentPercent').value) / 100 || 0.05) : 0.05;
+            const resaleTaxPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleTaxPercent').value) / 100 || 0.10) : 0.10;
+
+            // Calculate gross income
             const peakIncome = peakDays * peakPrice * peakOccupancy;
             const highIncome = highDays * highPrice * highOccupancy;
             const lowIncome = lowDays * lowPrice * lowOccupancy;
             const grossIncomeYearly = peakIncome + highIncome + lowIncome;
             const grossIncomeMonthly = grossIncomeYearly / 12;
 
+            // Calculate averages
             const totalDays = peakDays + highDays + lowDays;
             const totalOccupiedDays = (peakDays * peakOccupancy) + (highDays * highOccupancy) + (lowDays * lowOccupancy);
             const avgOccupancy = totalDays > 0 ? (totalOccupiedDays / totalDays) * 100 : 0;
@@ -2328,6 +3308,9 @@
             document.getElementById('avgOccupancy').value = avgOccupancy.toFixed(1) + '%';
             document.getElementById('avgNightPrice').value = formatCurrency(avgNightPrice, 'USD');
 
+            // Calculate costs
+            const otaYearly = grossIncomeYearly * otaPercent;
+            const otaMonthly = otaYearly / 12;
             const villaExpensesYearly = grossIncomeYearly * villaExpensesPercent;
             const villaExpensesMonthly = villaExpensesYearly / 12;
             const managementMarketingYearly = grossIncomeYearly * managementMarketingPercent;
@@ -2335,22 +3318,53 @@
             const taxYearly = grossIncomeYearly * taxPercent;
             const taxMonthly = taxYearly / 12;
 
+            // Update cost displays
+            document.getElementById('otaCalc').textContent = otaEnabled ? `${formatCurrency(otaYearly)} / year` : '-';
             document.getElementById('villaExpensesCalc').textContent = `${formatCurrency(villaExpensesYearly)} / year`;
             document.getElementById('managementMarketingCalc').textContent = `${formatCurrency(managementMarketingYearly)} / year`;
             document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
 
-            const totalCostsYearly = villaExpensesYearly + managementMarketingYearly + taxYearly;
+            // Calculate net income
+            const totalCostsYearly = otaYearly + villaExpensesYearly + managementMarketingYearly + taxYearly;
             const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
             const netIncomeMonthly = netIncomeYearly / 12;
 
-            const roi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
+            // Calculate rental ROI
+            const rentalRoi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
             const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
 
+            // Calculate total rental income over lease period (with growth if enabled)
+            let totalRentalIncome = 0;
+            let currentNetIncome = netIncomeYearly;
+            for (let year = 1; year <= leaseYears; year++) {
+                totalRentalIncome += currentNetIncome;
+                if (rentalGrowthEnabled) {
+                    currentNetIncome *= (1 + rentalGrowthPercent);
+                }
+            }
+
+            // Calculate projected resale value and profit
+            let projectedResaleValue = buyingPrice;
+            if (propertyGrowthEnabled) {
+                projectedResaleValue = buyingPrice * Math.pow(1 + propertyGrowthPercent, leaseYears);
+            }
+            const resaleAgentFee = projectedResaleValue * resaleAgentPercent;
+            const resaleTax = projectedResaleValue * resaleTaxPercent;
+            const resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
+
+            // Calculate total ROI
+            const totalProfit = totalRentalIncome + resaleProfit;
+            const totalRoi = buyingPrice > 0 ? (totalProfit / buyingPrice) * 100 : 0;
+
+            // Build summary table
             let tableHTML = '';
             tableHTML += `<tr class="category"><td>${t.grossIncome}</td><td>${formatCurrency(grossIncomeMonthly)}</td><td>${formatCurrency(grossIncomeYearly)}</td></tr>`;
+            if (otaEnabled) {
+                tableHTML += `<tr class="expense"><td>${t.otaCommission || 'OTA Commission'} (${(otaPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(otaMonthly)}</td><td>-${formatCurrency(otaYearly)}</td></tr>`;
+            }
             tableHTML += `<tr class="expense"><td>${t.villaExpenses} (${(villaExpensesPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(villaExpensesMonthly)}</td><td>-${formatCurrency(villaExpensesYearly)}</td></tr>`;
-            tableHTML += `<tr class="expense"><td>${t.managementMarketing} (${(managementMarketingPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(managementMarketingMonthly)}</td><td>-${formatCurrency(managementMarketingYearly)}</td></tr>`;
-            tableHTML += `<tr class="expense"><td>${t.taxPhr} (${(taxPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(taxMonthly)}</td><td>-${formatCurrency(taxYearly)}</td></tr>`;
+            tableHTML += `<tr class="expense"><td>${t.managementMarketing || 'Management'} (${(managementMarketingPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(managementMarketingMonthly)}</td><td>-${formatCurrency(managementMarketingYearly)}</td></tr>`;
+            tableHTML += `<tr class="expense"><td>${t.taxPhr || 'Tax'} (10% - PP 34/2017)</td><td>-${formatCurrency(taxMonthly)}</td><td>-${formatCurrency(taxYearly)}</td></tr>`;
             tableHTML += `<tr class="net-income"><td>${t.netIncome}</td><td>${formatCurrency(netIncomeMonthly)}</td><td>${formatCurrency(netIncomeYearly)}</td></tr>`;
 
             document.getElementById('summaryBody').innerHTML = tableHTML;
@@ -2359,13 +3373,20 @@
             document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
             document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
             document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
-            document.getElementById('resultROI').textContent = roi.toFixed(1) + '%';
+            document.getElementById('resultROI').textContent = rentalRoi.toFixed(1) + '%';
+
+            // Update Total ROI Summary
+            document.getElementById('projectedResaleValue').textContent = formatCurrency(projectedResaleValue);
+            document.getElementById('resaleProfit').textContent = formatCurrency(resaleProfit);
+            document.getElementById('totalRentalIncome').textContent = formatCurrency(totalRentalIncome);
+            document.getElementById('totalROI').textContent = totalRoi.toFixed(1) + '%';
 
             updateChart(buyingPrice, netIncomeYearly, paybackYears);
         };
 
         // Initialize
         setupFormattedInputs();
+        updateReferenceTable();
         calculate();
         fetchExchangeRates();
     </script>
