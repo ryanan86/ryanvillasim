@@ -3127,6 +3127,11 @@
                     <div class="helper" id="buyingPriceMulti"></div>
                 </div>
                 <div class="form-group longterm-field">
+                    <label data-i18n="additionalCosts">Additional Costs (USD)</label>
+                    <input type="text" id="additionalCosts" value="30,000" inputmode="numeric" onchange="calculate()">
+                    <div class="helper" data-i18n="additionalCostsHint">Acquisition tax, registration, agent fees, legal fees</div>
+                </div>
+                <div class="form-group longterm-field">
                     <label data-i18n="leaseRemaining">Lease Remaining (Years)</label>
                     <input type="number" id="leaseRemaining" value="25" onchange="calculate()">
                 </div>
@@ -3136,6 +3141,11 @@
                     <label data-i18n="annualLeaseFee">Annual Lease Fee (USD)</label>
                     <input type="text" id="annualLeaseFee" value="35,000" inputmode="numeric" onchange="calculate()">
                     <div class="helper" id="annualLeaseFeeMulti"></div>
+                </div>
+                <div class="form-group shortterm-field" style="display: none;">
+                    <label data-i18n="initialSetupCost">Initial Setup Cost (USD)</label>
+                    <input type="text" id="initialSetupCost" value="15,000" inputmode="numeric" onchange="calculate()">
+                    <div class="helper" data-i18n="initialSetupHint">Interior, furniture, appliances, decorations</div>
                 </div>
                 <div class="form-group shortterm-field" style="display: none;">
                     <label data-i18n="contractTerm">Contract Term (Years)</label>
@@ -3765,6 +3775,8 @@
                 location: "Location",
                 numBedrooms: "Bedrooms",
                 buyingPrice: "Purchase Price (USD)",
+                additionalCosts: "Additional Costs (USD)",
+                additionalCostsHint: "Acquisition tax, registration, agent fees, legal fees",
                 leaseRemaining: "Lease Remaining (Years)",
                 referencePricing: "Reference Pricing by Location",
                 marketAverage: "Market Average",
@@ -3801,15 +3813,17 @@
                 monthly: "Monthly",
                 yearly: "Annual",
                 yearlyNetIncome: "Annual Net Income",
-                buyingPriceLabel: "Purchase Price",
+                buyingPriceLabel: "Total Investment",
                 paybackPeriod: "Payback Period",
                 investmentRecovery: "Until full recovery",
                 grossIncome: "Gross Revenue",
                 // Short-term mode
                 annualLeaseFee: "Annual Lease Fee (USD)",
+                initialSetupCost: "Initial Setup Cost (USD)",
+                initialSetupHint: "Interior, furniture, appliances, decorations",
                 contractTerm: "Contract Term (Years)",
                 yearlyGrossIncome: "Annual Rental Income",
-                annualLeaseFeeLabel: "Annual Lease Fee",
+                annualLeaseFeeLabel: "Total Investment",
                 annualProfit: "Annual Net Profit",
                 profitMargin: "Profit Margin",
                 onLeaseFee: "vs Lease Fee",
@@ -3946,6 +3960,8 @@
                 dataSources: "데이터 출처:",
                 sourcesNote: "2025년 1분기 시장 데이터, 프리미엄 프라이빗 풀빌라 (평점 4.5+)",
                 buyingPrice: "매입가 (USD)",
+                additionalCosts: "부대비용 (USD)",
+                additionalCostsHint: "취득세, 등록세, 부동산 수수료, 법무사 비용",
                 leaseRemaining: "잔여 임대 기간 (년)",
                 calculatedAvg: "계산된 지표",
                 autoCalculated: "자동 계산",
@@ -3975,12 +3991,14 @@
                 monthly: "월간",
                 yearly: "연간",
                 yearlyNetIncome: "연간 순수익",
-                buyingPriceLabel: "매입가",
+                buyingPriceLabel: "총 투자금",
                 // Short-term mode
-                annualLeaseFee: "연간 사용료 (USD)",
+                annualLeaseFee: "연간 임대료 (USD)",
+                initialSetupCost: "초기 세팅 비용 (USD)",
+                initialSetupHint: "인테리어, 가구, 가전, 소품 등",
                 contractTerm: "계약 기간 (년)",
                 yearlyGrossIncome: "연간 렌탈 수입",
-                annualLeaseFeeLabel: "연간 사용료",
+                annualLeaseFeeLabel: "총 투자금",
                 annualProfit: "연간 순수익",
                 profitMargin: "수익 마진",
                 onLeaseFee: "사용료 대비",
@@ -4749,7 +4767,7 @@
             calculateSeasonDays();
         }
 
-        function updateChart(buyingPrice, netIncomeYearly, paybackYears) {
+        function updateChart(totalInvestment, netIncomeYearly, paybackYears) {
             const t = translations[currentLang];
             const ctx = document.getElementById('roiChart').getContext('2d');
 
@@ -4765,7 +4783,7 @@
             for (let i = 0; i <= projectionYears; i++) {
                 labels.push(i === 0 ? (currentLang === 'en' ? 'Start' : '시작') : `${i}`);
                 cumulativeData.push(i * netIncomeYearly);
-                investmentLine.push(buyingPrice);
+                investmentLine.push(totalInvestment);
             }
 
             const bepYear = Math.ceil(paybackYears);
@@ -4918,8 +4936,8 @@
             });
 
             const bepText = currentLang === 'en'
-                ? `Year ${paybackYears.toFixed(1)} (${formatCurrency(buyingPrice)})`
-                : `${paybackYears.toFixed(1)}년차 (${formatCurrency(buyingPrice)})`;
+                ? `Year ${paybackYears.toFixed(1)} (${formatCurrency(totalInvestment)})`
+                : `${paybackYears.toFixed(1)}년차 (${formatCurrency(totalInvestment)})`;
             document.getElementById('bepValue').textContent = bepText;
         }
 
@@ -5020,7 +5038,7 @@
 
         // Number formatting with commas
         function setupFormattedInputs() {
-            const inputIds = ['buyingPrice', 'annualLeaseFee', 'usdToIdr', 'usdToKrw'];
+            const inputIds = ['buyingPrice', 'additionalCosts', 'annualLeaseFee', 'initialSetupCost', 'usdToIdr', 'usdToKrw'];
 
             inputIds.forEach(id => {
                 const input = document.getElementById(id);
@@ -5081,13 +5099,20 @@
 
             // Get investment basis
             let annualLeaseFee = 0;
+            let initialSetupCost = 0;
             let buyingPrice = 0;
+            let additionalCosts = 0;
+            let totalInvestment = 0;
 
             if (isShortTerm) {
                 annualLeaseFee = getInputValue('annualLeaseFee') || 0;
+                initialSetupCost = getInputValue('initialSetupCost') || 0;
+                totalInvestment = annualLeaseFee + initialSetupCost;
                 document.getElementById('annualLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
             } else {
                 buyingPrice = getInputValue('buyingPrice') || 0;
+                additionalCosts = getInputValue('additionalCosts') || 0;
+                totalInvestment = buyingPrice + additionalCosts;
                 document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
             }
 
@@ -5168,7 +5193,10 @@
 
                 const netProfitYearly = grossIncomeYearly - totalCostsYearly - annualLeaseFee;
                 const netProfitMonthly = netProfitYearly / 12;
-                const profitMargin = annualLeaseFee > 0 ? (netProfitYearly / annualLeaseFee) * 100 : 0;
+                // ROI based on total investment (lease fee + setup cost)
+                const profitMargin = totalInvestment > 0 ? (netProfitYearly / totalInvestment) * 100 : 0;
+                // Payback period for initial setup cost
+                const setupPayback = netProfitYearly > 0 ? initialSetupCost / netProfitYearly : 0;
 
                 tableHTML += `<tr class="net-income"><td>${t.annualProfit || 'Net Profit'}</td><td>${formatCurrency(netProfitMonthly)}</td><td>${formatCurrency(netProfitYearly)}</td></tr>`;
 
@@ -5177,14 +5205,14 @@
                 // Update short-term result cards
                 document.getElementById('resultGrossIncome').textContent = formatCurrency(grossIncomeYearly);
                 document.getElementById('resultGrossIncomeMulti').textContent = formatMultiCurrency(grossIncomeYearly);
-                document.getElementById('resultLeaseFee').textContent = formatCurrency(annualLeaseFee);
-                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
+                document.getElementById('resultLeaseFee').textContent = formatCurrency(totalInvestment);
+                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(totalInvestment);
                 document.getElementById('resultAnnualProfit').textContent = formatCurrency(netProfitYearly);
                 document.getElementById('resultAnnualProfitMulti').textContent = formatMultiCurrency(netProfitYearly);
                 document.getElementById('resultProfitMargin').textContent = profitMargin.toFixed(1) + '%';
 
                 // Update chart for short-term
-                updateChartShortTerm(annualLeaseFee, grossIncomeYearly, netProfitYearly);
+                updateChartShortTerm(totalInvestment, grossIncomeYearly, netProfitYearly);
 
             } else {
                 // ========== LONG-TERM MODE ==========
@@ -5195,9 +5223,9 @@
 
                 document.getElementById('summaryBody').innerHTML = tableHTML;
 
-                // Calculate rental ROI
-                const rentalRoi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
-                const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
+                // Calculate rental ROI (based on total investment including additional costs)
+                const rentalRoi = totalInvestment > 0 ? (netIncomeYearly / totalInvestment) * 100 : 0;
+                const paybackYears = netIncomeYearly > 0 ? totalInvestment / netIncomeYearly : 0;
 
                 // Growth & Resale calculations
                 const growthResaleEnabled = document.getElementById('growthResaleEnabled')?.checked || false;
@@ -5218,7 +5246,7 @@
                     }
                 }
 
-                // Calculate projected resale value and profit
+                // Calculate projected resale value and profit (resale is based on buying price, not additional costs)
                 let projectedResaleValue = 0;
                 let resaleProfit = 0;
 
@@ -5232,15 +5260,15 @@
                     resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
                 }
 
-                // Calculate total ROI
+                // Calculate total ROI (based on total investment)
                 const totalProfit = totalRentalIncome + resaleProfit;
-                const totalRoi = buyingPrice > 0 ? (totalProfit / buyingPrice) * 100 : 0;
+                const totalRoi = totalInvestment > 0 ? (totalProfit / totalInvestment) * 100 : 0;
 
                 // Update long-term result cards
                 document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
                 document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
-                document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
-                document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+                document.getElementById('resultBuyingPrice').textContent = formatCurrency(totalInvestment);
+                document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(totalInvestment);
                 document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
                 document.getElementById('resultROI').textContent = rentalRoi.toFixed(1) + '%';
 
@@ -5250,7 +5278,7 @@
                 document.getElementById('totalRentalIncome').textContent = formatCurrency(totalRentalIncome);
                 document.getElementById('totalROI').textContent = totalRoi.toFixed(1) + '%';
 
-                updateChart(buyingPrice, netIncomeYearly, paybackYears);
+                updateChart(totalInvestment, netIncomeYearly, paybackYears);
             }
         }
 
@@ -5308,7 +5336,9 @@
 
                 // Investment
                 buyingPrice: getInputValue('buyingPrice'),
+                additionalCosts: getInputValue('additionalCosts'),
                 annualLeaseFee: getInputValue('annualLeaseFee'),
+                initialSetupCost: getInputValue('initialSetupCost'),
                 leaseRemaining: document.getElementById('leaseRemaining').value,
                 contractTerm: document.getElementById('contractTerm').value,
 
@@ -5358,9 +5388,17 @@
                 document.getElementById('buyingPrice').value = data.buyingPrice.toLocaleString('en-US');
                 document.getElementById('buyingPrice').setAttribute('data-raw', data.buyingPrice);
             }
+            if (data.additionalCosts) {
+                document.getElementById('additionalCosts').value = data.additionalCosts.toLocaleString('en-US');
+                document.getElementById('additionalCosts').setAttribute('data-raw', data.additionalCosts);
+            }
             if (data.annualLeaseFee) {
                 document.getElementById('annualLeaseFee').value = data.annualLeaseFee.toLocaleString('en-US');
                 document.getElementById('annualLeaseFee').setAttribute('data-raw', data.annualLeaseFee);
+            }
+            if (data.initialSetupCost) {
+                document.getElementById('initialSetupCost').value = data.initialSetupCost.toLocaleString('en-US');
+                document.getElementById('initialSetupCost').setAttribute('data-raw', data.initialSetupCost);
             }
             document.getElementById('leaseRemaining').value = data.leaseRemaining || 25;
             document.getElementById('contractTerm').value = data.contractTerm || 3;
