@@ -69,6 +69,35 @@
             width: 100%;
             text-align: center;
             padding: 40px 0;
+            position: relative;
+        }
+
+        .modal-lang-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--white);
+            font-size: 13px;
+        }
+
+        .modal-lang-toggle:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--gold);
+        }
+
+        .modal-lang-toggle svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold);
         }
 
         .lease-modal-logo {
@@ -470,6 +499,50 @@
             gap: 16px;
             margin: 48px 0;
             flex-wrap: wrap;
+        }
+
+        /* User Info Bar */
+        .user-info-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 6px 14px 6px 6px;
+        }
+
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+        }
+
+        .user-name-small {
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 500;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .logout-btn-small {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.6);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn-small:hover {
+            border-color: var(--gold);
+            color: var(--gold);
         }
 
         .control-group {
@@ -2142,6 +2215,12 @@
     <!-- Lease Type Selection Modal -->
     <div class="lease-modal" id="leaseModal">
         <div class="lease-modal-content">
+            <button class="modal-lang-toggle" onclick="toggleLanguage()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                <span class="modal-lang-text">한국어</span>
+            </button>
             <div class="lease-modal-logo">Ryan Villa</div>
             <h1 class="lease-modal-title" data-i18n="leaseModalTitle">Select Your Investment Type</h1>
             <p class="lease-modal-subtitle" data-i18n="leaseModalSubtitle">Choose the rental operation model for your villa investment</p>
@@ -2201,54 +2280,84 @@
         <div class="legal-modal-content">
             <div class="legal-modal-header">
                 <h3 data-i18n="legalModalTitle">Bali Villa Rental: Legal & Tax Guide</h3>
-                <button class="legal-close-btn" onclick="closeLegalModal()">×</button>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="modal-lang-toggle" onclick="toggleLanguage()" style="position: static; padding: 6px 12px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                        <span class="modal-lang-text">한국어</span>
+                    </button>
+                    <button class="legal-close-btn" onclick="closeLegalModal()">×</button>
+                </div>
             </div>
             <div class="legal-modal-body">
+                <!-- Section 1: Licensing Requirements -->
                 <div class="legal-section">
-                    <h4 data-i18n="legalSection1Title">Short-term Rental Regulations</h4>
+                    <h4 data-i18n="legalSection1Title">1. Short-term Rental Licensing Requirements</h4>
                     <div class="legal-highlight">
-                        <p data-i18n="legalSection1Highlight">Short-term rentals (under 30 days) in Bali require proper licensing and may be restricted in certain areas.</p>
+                        <p data-i18n="legalSection1Highlight"><strong>Legal Basis:</strong> UU No. 10/2009 (Tourism Law), PP No. 67/1996 (Tourism Business), Perda Bali No. 2/2012 (Cultural Tourism)</p>
                     </div>
                     <ul>
-                        <li data-i18n="legalSection1Item1">PONDOK WISATA license required for short-term villa rentals</li>
-                        <li data-i18n="legalSection1Item2">Properties must meet safety and facility standards</li>
-                        <li data-i18n="legalSection1Item3">Registration with local tourism office (Dinas Pariwisata) mandatory</li>
-                        <li data-i18n="legalSection1Item4">Some residential zones prohibit commercial short-term rentals</li>
+                        <li data-i18n="legalSection1Item1"><strong>Pondok Wisata License (Homestay Permit):</strong> Required under Permenparekraf No. 9/2021. Mandatory for properties offering daily/weekly accommodation. Apply through OSS (Online Single Submission) system with NIB (Business ID Number).</li>
+                        <li data-i18n="legalSection1Item2"><strong>TDUP (Tourism Business Registration):</strong> Regulated by PP No. 24/2022. All tourism accommodations must register. Valid for 5 years, renewable. Requires: Building permit (IMB/PBG), land certificate, environmental compliance (UKL-UPL for properties >1000m²).</li>
+                        <li data-i18n="legalSection1Item3"><strong>Zoning Compliance:</strong> Per Perda Badung/Gianyar RTRW, short-term rentals prohibited in pure residential zones (Zona Perumahan). Allowed in mixed-use (Zona Campuran) and tourism zones (Zona Pariwisata) only.</li>
+                        <li data-i18n="legalSection1Item4"><strong>Safety Standards:</strong> Must comply with Permen PUPR No. 14/2017 - fire safety, emergency exits, pool safety barriers, electrical certification (SLO from PLN).</li>
                     </ul>
                 </div>
 
+                <!-- Section 2: Tax Obligations -->
                 <div class="legal-section">
-                    <h4 data-i18n="legalSection2Title">Tax Obligations</h4>
+                    <h4 data-i18n="legalSection2Title">2. Tax Obligations & Compliance</h4>
+                    <div class="legal-highlight">
+                        <p data-i18n="legalSection2Highlight"><strong>Legal Basis:</strong> UU No. 7/2021 (HPP - Tax Harmonization), PP No. 34/2017 (Income Tax on Rental), UU No. 1/2022 (HKPD - Regional Tax)</p>
+                    </div>
                     <ul>
-                        <li data-i18n="legalSection2Item1"><strong>PPh 23 (Withholding Tax):</strong> 2% of gross revenue for licensed operators</li>
-                        <li data-i18n="legalSection2Item2"><strong>PB1 (Hotel/Restaurant Tax):</strong> 10% collected from guests</li>
-                        <li data-i18n="legalSection2Item3"><strong>VAT (PPN):</strong> 11% if annual revenue exceeds IDR 4.8 billion</li>
-                        <li data-i18n="legalSection2Item4"><strong>Annual Tax Filing:</strong> Required by March 31 each year</li>
+                        <li data-i18n="legalSection2Item1"><strong>PPh Final (Income Tax):</strong> Per PP No. 34/2017, rental income taxed at 10% of gross revenue. Withholding by tenant if corporate; self-assessed if individual tenant. Monthly payment via e-Billing (SSE3).</li>
+                        <li data-i18n="legalSection2Item2"><strong>PBJT (Regional Service Tax):</strong> Per UU No. 1/2022 Art. 50-54, accommodation services subject to 10% tax on service value. Collected from guests, remitted monthly to Bapenda (Regional Revenue Office). Replaces former PB1 (Hotel Tax).</li>
+                        <li data-i18n="legalSection2Item3"><strong>PPN (VAT):</strong> Per UU No. 7/2021, 11% VAT applies if annual gross revenue exceeds IDR 4.8 billion. Must register as PKP (Taxable Entrepreneur). Issue tax invoices via e-Faktur system.</li>
+                        <li data-i18n="legalSection2Item4"><strong>PBB (Property Tax):</strong> Annual land and building tax per UU No. 12/1994. Rate: 0.1-0.3% of NJOP (assessed value). Due by August 31 annually.</li>
+                        <li data-i18n="legalSection2Item5"><strong>Annual Filing:</strong> SPT Tahunan due March 31 (individuals) or April 30 (entities). Non-compliance penalties: 2% monthly interest + administrative fines (Art. 9 UU KUP).</li>
                     </ul>
                 </div>
 
+                <!-- Section 3: Foreigner Ownership -->
                 <div class="legal-section">
-                    <h4 data-i18n="legalSection3Title">Foreigner Ownership Considerations</h4>
+                    <h4 data-i18n="legalSection3Title">3. Foreign Ownership & Property Rights</h4>
+                    <div class="legal-highlight">
+                        <p data-i18n="legalSection3Highlight"><strong>Legal Basis:</strong> UU No. 5/1960 (UUPA - Agrarian Law), PP No. 18/2021 (Land Rights), PP No. 103/2015 (Foreign Property Ownership)</p>
+                    </div>
                     <ul>
-                        <li data-i18n="legalSection3Item1">Foreigners cannot own freehold (Hak Milik) property</li>
-                        <li data-i18n="legalSection3Item2">Leasehold (Hak Sewa) or Right to Use (Hak Pakai) are common options</li>
-                        <li data-i18n="legalSection3Item3">PT PMA (foreign-owned company) can hold HGB (Right to Build) titles</li>
-                        <li data-i18n="legalSection3Item4">Nominee arrangements carry significant legal risks</li>
+                        <li data-i18n="legalSection3Item1"><strong>Hak Milik (Freehold):</strong> Per UUPA Art. 21, restricted to Indonesian citizens only. Foreigners absolutely prohibited. Any nominee arrangement violates Art. 26(2) UUPA - transaction is VOID ab initio.</li>
+                        <li data-i18n="legalSection3Item2"><strong>Hak Pakai (Right to Use):</strong> Per PP No. 18/2021, foreigners with valid KITAS/KITAP can obtain Hak Pakai. Initial term: 30 years, extendable 20+20 years (max 70 years). Property minimum value: IDR 5 billion (Bali). Must be used as residence, not for rental business.</li>
+                        <li data-i18n="legalSection3Item3"><strong>Hak Sewa (Leasehold):</strong> Per Civil Code Art. 1548-1600, lease agreement between parties. No maximum term legally, commonly 25-30 years. Notarized agreement recommended. Lessee has usage rights only, no ownership transfer.</li>
+                        <li data-i18n="legalSection3Item4"><strong>PT PMA (Foreign Company):</strong> Per UU No. 25/2007 (Investment Law) & PP No. 5/2021. Can hold HGB (Building Rights) - 30+20+20 years. Minimum investment: IDR 10 billion. Requires BKPM approval. Accommodation business (KBLI 55) open to 100% foreign ownership.</li>
+                        <li data-i18n="legalSection3Item5"><strong>Nominee Risk:</strong> Per Art. 26(2) UUPA and Criminal Code Art. 385, nominee arrangements constitute fraud. Land reverts to state. Both parties face criminal prosecution. Bank Indonesia Regulation PBI 20/2018 - suspicious transaction reporting.</li>
                     </ul>
                 </div>
 
+                <!-- Section 4: Business Structure Options -->
                 <div class="legal-section">
-                    <h4 data-i18n="legalSection4Title">Recommended Actions</h4>
+                    <h4 data-i18n="legalSection4Title">4. Recommended Business Structures</h4>
                     <ul>
-                        <li data-i18n="legalSection4Item1">Consult with a licensed Indonesian lawyer specializing in property</li>
-                        <li data-i18n="legalSection4Item2">Verify property zoning permits commercial rental use</li>
-                        <li data-i18n="legalSection4Item3">Engage a local tax consultant for compliance</li>
-                        <li data-i18n="legalSection4Item4">Consider property management companies with proper licenses</li>
+                        <li data-i18n="legalSection4Item1"><strong>Option A - Leasehold + Indonesian CV:</strong> Lease property via Hak Sewa. Establish CV (limited partnership) with Indonesian partner. Indonesian manages operations, foreigner provides capital. Profit sharing via notarial deed.</li>
+                        <li data-i18n="legalSection4Item2"><strong>Option B - PT PMA (100% Foreign):</strong> Full foreign ownership permitted for accommodation (KBLI 55101-55900). Higher setup cost (IDR 10B+ investment). Full control and legal protection. Direct HGB land title possible.</li>
+                        <li data-i18n="legalSection4Item3"><strong>Option C - Management Agreement:</strong> Indonesian-owned property. Foreign investor provides capital via loan agreement. Returns via management fee or profit-sharing. Lower risk but limited control.</li>
+                        <li data-i18n="legalSection4Item4"><strong>Due Diligence Required:</strong> Verify land certificate (SHM/SHGB) at BPN. Check zoning at Dinas Tata Ruang. Confirm no disputes via village head (Perbekel). Environmental clearance for commercial use.</li>
+                    </ul>
+                </div>
+
+                <!-- Section 5: Recent Regulatory Changes -->
+                <div class="legal-section">
+                    <h4 data-i18n="legalSection5Title">5. Recent Regulatory Updates (2023-2024)</h4>
+                    <ul>
+                        <li data-i18n="legalSection5Item1"><strong>Pergub Bali No. 25/2023:</strong> Stricter enforcement on unlicensed vacation rentals. Mandatory registration in CHSE (Health/Safety/Environment) program. Digital platform reporting requirements.</li>
+                        <li data-i18n="legalSection5Item2"><strong>UU Cipta Kerja (Job Creation Law):</strong> Simplified OSS licensing via PP No. 5/2021. Risk-based permit classification. Accommodation classified as medium-risk requiring standard certification.</li>
+                        <li data-i18n="legalSection5Item3"><strong>Tourist Levy (2024):</strong> Per Perda Bali No. 6/2023, IDR 150,000 levy per foreign tourist. Accommodation providers may be required to collect and verify payment proof.</li>
                     </ul>
                 </div>
 
                 <div class="legal-highlight" style="background: rgba(212, 175, 55, 0.1); border-color: var(--gold);">
-                    <p style="color: var(--navy);" data-i18n="legalDisclaimer"><strong>Disclaimer:</strong> This information is for general reference only and does not constitute legal advice. Regulations may change. Always consult qualified professionals before making investment decisions.</p>
+                    <p style="color: var(--navy);" data-i18n="legalDisclaimer"><strong>Disclaimer:</strong> This information is compiled from Indonesian laws and regulations for educational purposes only and does not constitute legal, tax, or investment advice. Laws and regulations are subject to change and interpretation may vary. Always consult with licensed Indonesian legal counsel (Advokat), certified tax consultant (Konsultan Pajak Bersertifikat), and registered notary (PPAT) before making any investment decisions. Last updated: January 2024.</p>
                 </div>
             </div>
         </div>
@@ -2306,6 +2415,11 @@
                 </svg>
                 <span data-i18n="floodRiskMap">Flood Risk Map</span>
             </a>
+            <div class="user-info-bar" id="userInfoBar">
+                <img class="user-avatar-small" id="userAvatarSmall" src="" alt="">
+                <span class="user-name-small" id="userNameSmall"></span>
+                <button class="logout-btn-small" onclick="handleLogout()" data-i18n="logout">Logout</button>
+            </div>
         </div>
 
         <!-- Exchange Rate Bar -->
@@ -2705,6 +2819,39 @@
     </div>
 
     <script>
+        // ============================================
+        // AUTH CHECK - 인증 확인
+        // ============================================
+        (function checkAuth() {
+            const auth = localStorage.getItem('ryanVillaAuth');
+            if (!auth) {
+                window.location.href = 'Villa_ROI_Auth.html';
+                return;
+            }
+
+            try {
+                const authData = JSON.parse(auth);
+                // 24시간 후 재인증 필요
+                if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                    localStorage.removeItem('ryanVillaAuth');
+                    window.location.href = 'Villa_ROI_Auth.html';
+                    return;
+                }
+
+                if (!authData.authorized) {
+                    window.location.href = 'Villa_ROI_Auth.html';
+                    return;
+                }
+
+                // Store user info for display
+                window.currentAuthUser = authData.user;
+            } catch (e) {
+                localStorage.removeItem('ryanVillaAuth');
+                window.location.href = 'Villa_ROI_Auth.html';
+                return;
+            }
+        })();
+
         let displayCurrency = 'USD';
         let currentLang = 'en';
         let roiChart = null;
@@ -2764,6 +2911,28 @@
             }
         }
 
+        // Display logged in user info
+        function displayUserInfo() {
+            if (window.currentAuthUser) {
+                const userBar = document.getElementById('userInfoBar');
+                const avatar = document.getElementById('userAvatarSmall');
+                const name = document.getElementById('userNameSmall');
+
+                if (avatar) avatar.src = window.currentAuthUser.picture || '';
+                if (name) name.textContent = window.currentAuthUser.name || window.currentAuthUser.email;
+                if (userBar) userBar.style.display = 'flex';
+            }
+        }
+
+        // Logout function
+        function handleLogout() {
+            localStorage.removeItem('ryanVillaAuth');
+            localStorage.removeItem('ryanVillaUser');
+            localStorage.removeItem('ryanVillaStatus');
+            localStorage.removeItem('ryanVillaLeaseType');
+            window.location.href = 'Villa_ROI_Auth.html';
+        }
+
         // Reset lease type (can be called to show modal again)
         function resetLeaseType() {
             localStorage.removeItem('ryanVillaLeaseType');
@@ -2785,6 +2954,7 @@
                 aggressive: "Optimistic",
                 exportPdf: "Export PDF",
                 floodRiskMap: "Flood Risk Map",
+                logout: "Logout",
                 baseCurrency: "Base Currency",
                 liveRates: "Refresh Rates",
                 lastUpdate: "Last updated: Manual",
@@ -2878,28 +3048,36 @@
                 shorttermBannerContent: "You are simulating <strong>short-term vacation rentals</strong>. This business model in Bali requires proper licensing (Pondok Wisata) and compliance with local regulations.",
                 // Legal Modal
                 legalModalTitle: "Bali Villa Rental: Legal & Tax Guide",
-                legalSection1Title: "Short-term Rental Regulations",
-                legalSection1Highlight: "Short-term rentals (under 30 days) in Bali require proper licensing and may be restricted in certain areas.",
-                legalSection1Item1: "PONDOK WISATA license required for short-term villa rentals",
-                legalSection1Item2: "Properties must meet safety and facility standards",
-                legalSection1Item3: "Registration with local tourism office (Dinas Pariwisata) mandatory",
-                legalSection1Item4: "Some residential zones prohibit commercial short-term rentals",
-                legalSection2Title: "Tax Obligations",
-                legalSection2Item1: "<strong>PPh 23 (Withholding Tax):</strong> 2% of gross revenue for licensed operators",
-                legalSection2Item2: "<strong>PB1 (Hotel/Restaurant Tax):</strong> 10% collected from guests",
-                legalSection2Item3: "<strong>VAT (PPN):</strong> 11% if annual revenue exceeds IDR 4.8 billion",
-                legalSection2Item4: "<strong>Annual Tax Filing:</strong> Required by March 31 each year",
-                legalSection3Title: "Foreigner Ownership Considerations",
-                legalSection3Item1: "Foreigners cannot own freehold (Hak Milik) property",
-                legalSection3Item2: "Leasehold (Hak Sewa) or Right to Use (Hak Pakai) are common options",
-                legalSection3Item3: "PT PMA (foreign-owned company) can hold HGB (Right to Build) titles",
-                legalSection3Item4: "Nominee arrangements carry significant legal risks",
-                legalSection4Title: "Recommended Actions",
-                legalSection4Item1: "Consult with a licensed Indonesian lawyer specializing in property",
-                legalSection4Item2: "Verify property zoning permits commercial rental use",
-                legalSection4Item3: "Engage a local tax consultant for compliance",
-                legalSection4Item4: "Consider property management companies with proper licenses",
-                legalDisclaimer: "<strong>Disclaimer:</strong> This information is for general reference only and does not constitute legal advice. Regulations may change. Always consult qualified professionals before making investment decisions."
+                legalSection1Title: "1. Short-term Rental Licensing Requirements",
+                legalSection1Highlight: "<strong>Legal Basis:</strong> UU No. 10/2009 (Tourism Law), PP No. 67/1996 (Tourism Business), Perda Bali No. 2/2012 (Cultural Tourism)",
+                legalSection1Item1: "<strong>Pondok Wisata License (Homestay Permit):</strong> Required under Permenparekraf No. 9/2021. Mandatory for properties offering daily/weekly accommodation. Apply through OSS (Online Single Submission) system with NIB (Business ID Number).",
+                legalSection1Item2: "<strong>TDUP (Tourism Business Registration):</strong> Regulated by PP No. 24/2022. All tourism accommodations must register. Valid for 5 years, renewable. Requires: Building permit (IMB/PBG), land certificate, environmental compliance (UKL-UPL for properties >1000m²).",
+                legalSection1Item3: "<strong>Zoning Compliance:</strong> Per Perda Badung/Gianyar RTRW, short-term rentals prohibited in pure residential zones (Zona Perumahan). Allowed in mixed-use (Zona Campuran) and tourism zones (Zona Pariwisata) only.",
+                legalSection1Item4: "<strong>Safety Standards:</strong> Must comply with Permen PUPR No. 14/2017 - fire safety, emergency exits, pool safety barriers, electrical certification (SLO from PLN).",
+                legalSection2Title: "2. Tax Obligations & Compliance",
+                legalSection2Highlight: "<strong>Legal Basis:</strong> UU No. 7/2021 (HPP - Tax Harmonization), PP No. 34/2017 (Income Tax on Rental), UU No. 1/2022 (HKPD - Regional Tax)",
+                legalSection2Item1: "<strong>PPh Final (Income Tax):</strong> Per PP No. 34/2017, rental income taxed at 10% of gross revenue. Withholding by tenant if corporate; self-assessed if individual tenant. Monthly payment via e-Billing (SSE3).",
+                legalSection2Item2: "<strong>PBJT (Regional Service Tax):</strong> Per UU No. 1/2022 Art. 50-54, accommodation services subject to 10% tax on service value. Collected from guests, remitted monthly to Bapenda (Regional Revenue Office). Replaces former PB1 (Hotel Tax).",
+                legalSection2Item3: "<strong>PPN (VAT):</strong> Per UU No. 7/2021, 11% VAT applies if annual gross revenue exceeds IDR 4.8 billion. Must register as PKP (Taxable Entrepreneur). Issue tax invoices via e-Faktur system.",
+                legalSection2Item4: "<strong>PBB (Property Tax):</strong> Annual land and building tax per UU No. 12/1994. Rate: 0.1-0.3% of NJOP (assessed value). Due by August 31 annually.",
+                legalSection2Item5: "<strong>Annual Filing:</strong> SPT Tahunan due March 31 (individuals) or April 30 (entities). Non-compliance penalties: 2% monthly interest + administrative fines (Art. 9 UU KUP).",
+                legalSection3Title: "3. Foreign Ownership & Property Rights",
+                legalSection3Highlight: "<strong>Legal Basis:</strong> UU No. 5/1960 (UUPA - Agrarian Law), PP No. 18/2021 (Land Rights), PP No. 103/2015 (Foreign Property Ownership)",
+                legalSection3Item1: "<strong>Hak Milik (Freehold):</strong> Per UUPA Art. 21, restricted to Indonesian citizens only. Foreigners absolutely prohibited. Any nominee arrangement violates Art. 26(2) UUPA - transaction is VOID ab initio.",
+                legalSection3Item2: "<strong>Hak Pakai (Right to Use):</strong> Per PP No. 18/2021, foreigners with valid KITAS/KITAP can obtain Hak Pakai. Initial term: 30 years, extendable 20+20 years (max 70 years). Property minimum value: IDR 5 billion (Bali). Must be used as residence, not for rental business.",
+                legalSection3Item3: "<strong>Hak Sewa (Leasehold):</strong> Per Civil Code Art. 1548-1600, lease agreement between parties. No maximum term legally, commonly 25-30 years. Notarized agreement recommended. Lessee has usage rights only, no ownership transfer.",
+                legalSection3Item4: "<strong>PT PMA (Foreign Company):</strong> Per UU No. 25/2007 (Investment Law) & PP No. 5/2021. Can hold HGB (Building Rights) - 30+20+20 years. Minimum investment: IDR 10 billion. Requires BKPM approval. Accommodation business (KBLI 55) open to 100% foreign ownership.",
+                legalSection3Item5: "<strong>Nominee Risk:</strong> Per Art. 26(2) UUPA and Criminal Code Art. 385, nominee arrangements constitute fraud. Land reverts to state. Both parties face criminal prosecution. Bank Indonesia Regulation PBI 20/2018 - suspicious transaction reporting.",
+                legalSection4Title: "4. Recommended Business Structures",
+                legalSection4Item1: "<strong>Option A - Leasehold + Indonesian CV:</strong> Lease property via Hak Sewa. Establish CV (limited partnership) with Indonesian partner. Indonesian manages operations, foreigner provides capital. Profit sharing via notarial deed.",
+                legalSection4Item2: "<strong>Option B - PT PMA (100% Foreign):</strong> Full foreign ownership permitted for accommodation (KBLI 55101-55900). Higher setup cost (IDR 10B+ investment). Full control and legal protection. Direct HGB land title possible.",
+                legalSection4Item3: "<strong>Option C - Management Agreement:</strong> Indonesian-owned property. Foreign investor provides capital via loan agreement. Returns via management fee or profit-sharing. Lower risk but limited control.",
+                legalSection4Item4: "<strong>Due Diligence Required:</strong> Verify land certificate (SHM/SHGB) at BPN. Check zoning at Dinas Tata Ruang. Confirm no disputes via village head (Perbekel). Environmental clearance for commercial use.",
+                legalSection5Title: "5. Recent Regulatory Updates (2023-2024)",
+                legalSection5Item1: "<strong>Pergub Bali No. 25/2023:</strong> Stricter enforcement on unlicensed vacation rentals. Mandatory registration in CHSE (Health/Safety/Environment) program. Digital platform reporting requirements.",
+                legalSection5Item2: "<strong>UU Cipta Kerja (Job Creation Law):</strong> Simplified OSS licensing via PP No. 5/2021. Risk-based permit classification. Accommodation classified as medium-risk requiring standard certification.",
+                legalSection5Item3: "<strong>Tourist Levy (2024):</strong> Per Perda Bali No. 6/2023, IDR 150,000 levy per foreign tourist. Accommodation providers may be required to collect and verify payment proof.",
+                legalDisclaimer: "<strong>Disclaimer:</strong> This information is compiled from Indonesian laws and regulations for educational purposes only and does not constitute legal, tax, or investment advice. Laws and regulations are subject to change and interpretation may vary. Always consult with licensed Indonesian legal counsel (Advokat), certified tax consultant (Konsultan Pajak Bersertifikat), and registered notary (PPAT) before making any investment decisions. Last updated: January 2024."
             },
             ko: {
                 title: "ROI 시뮬레이터",
@@ -2909,6 +3087,7 @@
                 aggressive: "낙관적",
                 exportPdf: "PDF 내보내기",
                 floodRiskMap: "침수 위험 지도",
+                logout: "로그아웃",
                 baseCurrency: "기준 통화",
                 liveRates: "환율 새로고침",
                 lastUpdate: "최종 업데이트: 수동 입력",
@@ -3002,28 +3181,36 @@
                 shorttermBannerContent: "<strong>단기 휴가 렌탈</strong>을 시뮬레이션 중입니다. 발리에서 이 비즈니스 모델은 적절한 라이선스(Pondok Wisata)와 현지 규정 준수가 필요합니다.",
                 // Legal Modal
                 legalModalTitle: "발리 빌라 렌탈: 법률 및 세금 가이드",
-                legalSection1Title: "단기 렌탈 규정",
-                legalSection1Highlight: "발리에서 30일 미만 단기 렌탈은 적절한 라이선스가 필요하며 특정 지역에서 제한될 수 있습니다.",
-                legalSection1Item1: "단기 빌라 렌탈에는 PONDOK WISATA 라이선스 필요",
-                legalSection1Item2: "숙소는 안전 및 시설 기준 충족 필요",
-                legalSection1Item3: "지역 관광청(Dinas Pariwisata) 등록 의무",
-                legalSection1Item4: "일부 주거 지역은 상업적 단기 렌탈 금지",
-                legalSection2Title: "세금 의무",
-                legalSection2Item1: "<strong>PPh 23 (원천징수세):</strong> 라이선스 운영자 총 수입의 2%",
-                legalSection2Item2: "<strong>PB1 (호텔/레스토랑세):</strong> 손님으로부터 10% 징수",
-                legalSection2Item3: "<strong>VAT (PPN):</strong> 연간 수입 IDR 48억 초과 시 11%",
-                legalSection2Item4: "<strong>연간 세금 신고:</strong> 매년 3월 31일까지 필수",
-                legalSection3Title: "외국인 소유권 고려사항",
-                legalSection3Item1: "외국인은 자유소유권(Hak Milik) 부동산 소유 불가",
-                legalSection3Item2: "임대권(Hak Sewa) 또는 사용권(Hak Pakai)이 일반적",
-                legalSection3Item3: "PT PMA(외국인 소유 회사)는 건축권(HGB) 보유 가능",
-                legalSection3Item4: "명의신탁(Nominee) 방식은 상당한 법적 위험 수반",
-                legalSection4Title: "권장 조치",
-                legalSection4Item1: "부동산 전문 인도네시아 공인 변호사와 상담",
-                legalSection4Item2: "부동산 용도 지역이 상업적 렌탈 허용하는지 확인",
-                legalSection4Item3: "현지 세무 컨설턴트와 규정 준수 협의",
-                legalSection4Item4: "적절한 라이선스를 가진 부동산 관리 회사 고려",
-                legalDisclaimer: "<strong>면책 조항:</strong> 이 정보는 일반적인 참고용이며 법적 조언을 구성하지 않습니다. 규정은 변경될 수 있습니다. 투자 결정 전 항상 전문가와 상담하세요."
+                legalSection1Title: "1. 단기 렌탈 라이선스 요건",
+                legalSection1Highlight: "<strong>법적 근거:</strong> UU No. 10/2009 (관광법), PP No. 67/1996 (관광사업), Perda Bali No. 2/2012 (문화관광)",
+                legalSection1Item1: "<strong>Pondok Wisata 라이선스 (홈스테이 허가):</strong> Permenparekraf No. 9/2021에 따라 필수. 일별/주별 숙박 제공 시 의무. OSS (온라인 단일 제출) 시스템을 통해 NIB (사업자 등록번호)와 함께 신청.",
+                legalSection1Item2: "<strong>TDUP (관광사업 등록):</strong> PP No. 24/2022에 따른 규정. 모든 관광 숙박시설 등록 필수. 5년 유효, 갱신 가능. 요구사항: 건축허가(IMB/PBG), 토지증명서, 환경준수(1000m² 초과 시 UKL-UPL).",
+                legalSection1Item3: "<strong>용도지역 준수:</strong> Perda Badung/Gianyar RTRW에 따라 순수 주거지역(Zona Perumahan)에서 단기 렌탈 금지. 혼합용도(Zona Campuran) 및 관광지역(Zona Pariwisata)에서만 허용.",
+                legalSection1Item4: "<strong>안전 기준:</strong> Permen PUPR No. 14/2017 준수 필수 - 소방안전, 비상구, 수영장 안전 펜스, 전기 인증(PLN의 SLO).",
+                legalSection2Title: "2. 세금 의무 및 준수",
+                legalSection2Highlight: "<strong>법적 근거:</strong> UU No. 7/2021 (HPP - 조세조화법), PP No. 34/2017 (임대소득세), UU No. 1/2022 (HKPD - 지방세법)",
+                legalSection2Item1: "<strong>PPh Final (소득세):</strong> PP No. 34/2017에 따라 임대소득 총수입의 10% 과세. 법인 임차인은 원천징수, 개인 임차인은 자진신고. e-Billing (SSE3)을 통해 월별 납부.",
+                legalSection2Item2: "<strong>PBJT (지방 서비스세):</strong> UU No. 1/2022 제50-54조에 따라 숙박 서비스에 서비스 가액의 10% 과세. 손님으로부터 징수 후 Bapenda (지방세무청)에 월별 납부. 기존 PB1 (호텔세) 대체.",
+                legalSection2Item3: "<strong>PPN (부가가치세):</strong> UU No. 7/2021에 따라 연간 총수입 IDR 48억 초과 시 11% PPN 적용. PKP (과세사업자) 등록 필수. e-Faktur 시스템으로 세금계산서 발행.",
+                legalSection2Item4: "<strong>PBB (재산세):</strong> UU No. 12/1994에 따른 연간 토지건물세. 세율: NJOP (공시가격)의 0.1-0.3%. 매년 8월 31일까지 납부.",
+                legalSection2Item5: "<strong>연간 신고:</strong> SPT Tahunan 개인 3월 31일, 법인 4월 30일까지. 미준수 시 과태료: 월 2% 이자 + 행정 벌금 (UU KUP 제9조).",
+                legalSection3Title: "3. 외국인 소유권 및 재산권",
+                legalSection3Highlight: "<strong>법적 근거:</strong> UU No. 5/1960 (UUPA - 농지법), PP No. 18/2021 (토지권), PP No. 103/2015 (외국인 부동산 소유)",
+                legalSection3Item1: "<strong>Hak Milik (자유소유권):</strong> UUPA 제21조에 따라 인도네시아 국민만 가능. 외국인 절대 금지. 명의신탁 방식은 제26조(2)항 위반 - 거래 자체가 무효(VOID ab initio).",
+                legalSection3Item2: "<strong>Hak Pakai (사용권):</strong> PP No. 18/2021에 따라 유효한 KITAS/KITAP 보유 외국인 취득 가능. 최초 30년, 연장 20+20년 (최대 70년). 최소 부동산 가치: IDR 50억 (발리). 거주 목적만 허용, 임대 사업 불가.",
+                legalSection3Item3: "<strong>Hak Sewa (임대권):</strong> 민법 제1548-1600조에 따른 당사자 간 임대 계약. 법적 최대 기간 없음, 통상 25-30년. 공증 계약서 권장. 임차인은 사용권만 보유, 소유권 이전 없음.",
+                legalSection3Item4: "<strong>PT PMA (외국인투자회사):</strong> UU No. 25/2007 (투자법) & PP No. 5/2021에 따름. HGB (건축권) 보유 가능 - 30+20+20년. 최소 투자금: IDR 100억. BKPM 승인 필요. 숙박업 (KBLI 55) 100% 외국인 소유 가능.",
+                legalSection3Item5: "<strong>명의신탁 위험:</strong> UUPA 제26조(2)항 및 형법 제385조에 따라 명의신탁은 사기죄 구성. 토지는 국가로 환수. 양 당사자 형사 기소 대상. Bank Indonesia 규정 PBI 20/2018 - 의심거래 보고 의무.",
+                legalSection4Title: "4. 권장 사업 구조",
+                legalSection4Item1: "<strong>Option A - 임대권 + 인도네시아 CV:</strong> Hak Sewa로 부동산 임대. 인도네시아 파트너와 CV (합자회사) 설립. 인도네시아인이 운영, 외국인은 자본 제공. 공증 증서로 수익 분배.",
+                legalSection4Item2: "<strong>Option B - PT PMA (100% 외국인):</strong> 숙박업(KBLI 55101-55900) 100% 외국인 소유 허용. 높은 설립 비용 (IDR 100억+ 투자). 완전한 통제권 및 법적 보호. 직접 HGB 토지 소유 가능.",
+                legalSection4Item3: "<strong>Option C - 관리 계약:</strong> 인도네시아인 소유 부동산. 외국 투자자는 대출 계약으로 자본 제공. 관리 수수료 또는 수익 분배로 수익. 위험 낮지만 통제권 제한.",
+                legalSection4Item4: "<strong>실사(Due Diligence) 필수:</strong> BPN에서 토지증명서(SHM/SHGB) 확인. Dinas Tata Ruang에서 용도지역 확인. 이장(Perbekel)을 통해 분쟁 없음 확인. 상업용 환경 인허가.",
+                legalSection5Title: "5. 최근 규제 변경 (2023-2024)",
+                legalSection5Item1: "<strong>Pergub Bali No. 25/2023:</strong> 무허가 휴가 렌탈에 대한 단속 강화. CHSE (보건/안전/환경) 프로그램 필수 등록. 디지털 플랫폼 보고 의무.",
+                legalSection5Item2: "<strong>UU Cipta Kerja (일자리창출법):</strong> PP No. 5/2021을 통한 OSS 라이선스 간소화. 위험 기반 허가 분류. 숙박업은 표준 인증 필요한 중위험으로 분류.",
+                legalSection5Item3: "<strong>관광세 (2024):</strong> Perda Bali No. 6/2023에 따라 외국인 관광객 1인당 IDR 150,000 부과. 숙박 제공자는 납부 증명 징수 및 확인 의무 부과 가능.",
+                legalDisclaimer: "<strong>면책 조항:</strong> 본 정보는 인도네시아 법률 및 규정을 교육 목적으로 정리한 것이며 법률, 세무 또는 투자 자문을 구성하지 않습니다. 법률과 규정은 변경될 수 있으며 해석이 다를 수 있습니다. 투자 결정 전 반드시 인도네시아 공인 변호사(Advokat), 공인 세무사(Konsultan Pajak Bersertifikat), 공증인(PPAT)과 상담하시기 바랍니다. 최종 업데이트: 2024년 1월."
             }
         };
 
@@ -3103,7 +3290,12 @@
 
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'ko' : 'en';
-            document.getElementById('langToggleText').textContent = currentLang === 'en' ? '한국어' : 'English';
+            const langText = currentLang === 'en' ? '한국어' : 'English';
+            document.getElementById('langToggleText').textContent = langText;
+            // Update all modal language toggles
+            document.querySelectorAll('.modal-lang-text').forEach(el => {
+                el.textContent = langText;
+            });
             applyTranslations();
             calculate();
         }
@@ -4047,6 +4239,7 @@
 
         // Initialize
         checkLeaseTypeOnLoad();
+        displayUserInfo();
         setupFormattedInputs();
         updateReferenceTable();
         calculate();
