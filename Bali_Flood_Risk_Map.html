@@ -1521,17 +1521,26 @@
             const regionName = result.nearestRegion ?
                 (currentLang === 'ko' ? result.nearestRegion.nameKo : result.nearestRegion.name) : 'Unknown';
 
-            // Elevation interpretation
+            // Elevation interpretation for Bali flood risk
+            // Bali coastal villas: most flooding occurs below 10m with poor drainage
+            // 10m+ generally safe, 25m+ very safe, 50m+ (Uluwatu cliffs) no risk
             let elevationDisplay = '-';
             let elevationNote = '';
+            let elevationColor = 'inherit';
             if (result.elevation !== null && result.elevation !== undefined) {
                 elevationDisplay = `${result.elevation}m`;
-                if (result.elevation < 5) {
-                    elevationNote = currentLang === 'ko' ? ' (저지대 - 주의)' : ' (Low-lying - Caution)';
-                } else if (result.elevation < 15) {
-                    elevationNote = currentLang === 'ko' ? ' (보통)' : ' (Moderate)';
+                if (result.elevation < 10) {
+                    elevationNote = currentLang === 'ko' ? ' (저지대 - 배수 확인 필요)' : ' (Low - Check drainage)';
+                    elevationColor = '#f59e0b';
+                } else if (result.elevation < 25) {
+                    elevationNote = currentLang === 'ko' ? ' (보통 - 대체로 안전)' : ' (Moderate - Generally safe)';
+                    elevationColor = '#22c55e';
+                } else if (result.elevation < 75) {
+                    elevationNote = currentLang === 'ko' ? ' (양호 - 안전)' : ' (Good - Safe)';
+                    elevationColor = '#22c55e';
                 } else {
-                    elevationNote = currentLang === 'ko' ? ' (고지대 - 양호)' : ' (Elevated - Good)';
+                    elevationNote = currentLang === 'ko' ? ' (고지대 - 침수 위험 없음)' : ' (Elevated - No flood risk)';
+                    elevationColor = '#22c55e';
                 }
             }
 
@@ -1551,7 +1560,7 @@
                 <div class="result-details">
                     <div class="result-item">
                         <div class="result-label">${t.elevation || 'Elevation'}</div>
-                        <div class="result-value" style="font-weight:600;color:${result.elevation < 5 ? '#f59e0b' : result.elevation >= 15 ? '#22c55e' : 'inherit'};">${elevationDisplay}${elevationNote}</div>
+                        <div class="result-value" style="font-weight:600;color:${elevationColor};">${elevationDisplay}${elevationNote}</div>
                     </div>
                     <div class="result-item">
                         <div class="result-label">${t.coordinates || 'Coordinates'}</div>
