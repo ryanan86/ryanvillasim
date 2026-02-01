@@ -1682,8 +1682,9 @@
 
         .fee-card-header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: flex-start;
+            gap: 12px;
             margin-bottom: 18px;
         }
 
@@ -1701,12 +1702,12 @@
         }
 
         .fee-input-group input {
-            width: 72px;
-            padding: 12px 14px;
+            width: 100px;
+            padding: 14px 16px;
             border: 2px solid var(--light-gray);
             border-radius: 10px;
             text-align: right;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             background: var(--white);
             color: var(--navy);
@@ -1721,7 +1722,7 @@
 
         .fee-input-group span {
             color: var(--slate);
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
         }
 
@@ -2165,10 +2166,10 @@
         /* PDF Optimized - Compact 2-page Layout */
         .pdf-optimized {
             width: 210mm;
-            padding: 6mm 8mm;
+            padding: 8mm 10mm;
             margin: 0 auto;
             background: white;
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .pdf-optimized .header {
@@ -2244,24 +2245,25 @@
         }
 
         .pdf-optimized .form-grid {
-            gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .pdf-optimized .form-group label {
-            font-size: 9px;
-            margin-bottom: 3px;
+            font-size: 10px;
+            margin-bottom: 4px;
         }
 
         .pdf-optimized .form-group input,
         .pdf-optimized .form-group select {
-            padding: 6px 10px;
+            padding: 8px 10px;
             font-size: 11px;
             border-radius: 6px;
         }
 
         .pdf-optimized .form-group .helper {
-            font-size: 8px;
-            margin-top: 2px;
+            font-size: 9px;
+            margin-top: 3px;
         }
 
         .pdf-optimized .price-table th {
@@ -2292,41 +2294,45 @@
         }
 
         .pdf-optimized .fee-grid {
-            gap: 8px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         .pdf-optimized .fee-card {
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
         }
 
         .pdf-optimized .fee-card-header {
-            margin-bottom: 6px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .pdf-optimized .fee-card-title {
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .pdf-optimized .fee-input-group input {
-            width: 40px;
-            padding: 4px 6px;
-            font-size: 11px;
+            width: 50px;
+            padding: 5px 8px;
+            font-size: 12px;
             border-radius: 5px;
         }
 
         .pdf-optimized .fee-input-group span {
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .pdf-optimized .fee-description {
-            font-size: 7px;
+            font-size: 8px;
             margin-bottom: 6px;
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
         .pdf-optimized .fee-calculated {
-            font-size: 10px;
+            font-size: 11px;
             padding-top: 6px;
         }
 
@@ -2335,21 +2341,21 @@
         }
 
         .pdf-optimized .summary-table th {
-            padding: 6px 10px;
-            font-size: 8px;
+            padding: 8px 10px;
+            font-size: 9px;
         }
 
         .pdf-optimized .summary-table td {
-            padding: 6px 10px;
-            font-size: 10px;
-        }
-
-        .pdf-optimized .summary-table tr.category td {
+            padding: 8px 10px;
             font-size: 11px;
         }
 
-        .pdf-optimized .summary-table tr.net-income td {
+        .pdf-optimized .summary-table tr.category td {
             font-size: 12px;
+        }
+
+        .pdf-optimized .summary-table tr.net-income td {
+            font-size: 13px;
             background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
             color: var(--white);
         }
@@ -2370,16 +2376,16 @@
         }
 
         .pdf-optimized .result-label {
-            font-size: 7px;
+            font-size: 9px;
             margin-bottom: 4px;
         }
 
         .pdf-optimized .result-value {
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .pdf-optimized .result-sub {
-            font-size: 7px;
+            font-size: 8px;
             margin-top: 3px;
         }
 
@@ -2584,14 +2590,15 @@
             }
             .fee-card-header {
                 flex-direction: column;
-                gap: 12px;
+                gap: 10px;
             }
             .fee-card-title {
                 font-size: 15px;
             }
             .fee-input-group input {
-                width: 72px;
-                font-size: 17px;
+                width: 90px;
+                padding: 12px 14px;
+                font-size: 18px;
             }
             .summary-table th, .summary-table td {
                 padding: 14px 16px;
@@ -3076,11 +3083,33 @@
                 <div class="form-group">
                     <label data-i18n="location">Location</label>
                     <select id="villaLocation" onchange="updateLocationDefaults()">
-                        <option value="seminyak" selected>Seminyak</option>
-                        <option value="canggu">Canggu</option>
-                        <option value="ubud">Ubud</option>
-                        <option value="sanur">Sanur</option>
+                        <optgroup label="Premium Areas">
+                            <option value="seminyak">Seminyak</option>
+                            <option value="uluwatu">Uluwatu</option>
+                            <option value="nusadua">Nusa Dua</option>
+                        </optgroup>
+                        <optgroup label="Trendy Areas">
+                            <option value="canggu" selected>Canggu</option>
+                            <option value="berawa">Berawa</option>
+                            <option value="pererenan">Pererenan</option>
+                            <option value="kedungu">Kedungu</option>
+                        </optgroup>
+                        <optgroup label="Cultural/Nature">
+                            <option value="ubud">Ubud</option>
+                            <option value="tabanan">Tabanan</option>
+                        </optgroup>
+                        <optgroup label="Beach Areas">
+                            <option value="sanur">Sanur</option>
+                            <option value="jimbaran">Jimbaran</option>
+                            <option value="kuta">Kuta / Legian</option>
+                            <option value="amed">Amed</option>
+                            <option value="lovina">Lovina</option>
+                        </optgroup>
+                        <optgroup label="Other">
+                            <option value="custom">✏️ Custom (Manual Entry)</option>
+                        </optgroup>
                     </select>
+                    <input type="text" id="customLocationName" placeholder="Enter location name..." style="display: none; margin-top: 10px; width: 100%; padding: 14px 16px; border: 2px solid var(--light-gray); border-radius: 12px; font-size: 16px; font-weight: 500;" onchange="calculate()">
                 </div>
                 <div class="form-group">
                     <label data-i18n="numBedrooms">Bedrooms</label>
@@ -4072,45 +4101,149 @@
         // Location-based pricing matrix (USD nightly rates)
         // Based on 2025 market data from AirDNA, Bali Villa Realty, The Bali Homes
         const locationPricing = {
+            // === PREMIUM AREAS ===
             seminyak: {
                 name: { en: 'Seminyak', ko: '스미냑' },
                 description: { en: 'Premium/Luxury Area', ko: '프리미엄/럭셔리 지역' },
-                // ADR $271 weekend, $239 weekday - Premium +30-50%
                 '1': { peak: 280, high: 220, low: 160, purchase: 250000 },
                 '2': { peak: 380, high: 300, low: 220, purchase: 380000 },
                 '3': { peak: 520, high: 400, low: 300, purchase: 520000 },
                 '4': { peak: 750, high: 580, low: 420, purchase: 750000 },
                 occupancy: { peak: 85, high: 70, low: 50 }
             },
+            uluwatu: {
+                name: { en: 'Uluwatu', ko: '울루와뚜' },
+                description: { en: 'Luxury Clifftop Villas', ko: '럭셔리 절벽 빌라' },
+                '1': { peak: 300, high: 240, low: 170, purchase: 280000 },
+                '2': { peak: 420, high: 330, low: 240, purchase: 420000 },
+                '3': { peak: 580, high: 450, low: 330, purchase: 580000 },
+                '4': { peak: 850, high: 650, low: 480, purchase: 850000 },
+                occupancy: { peak: 82, high: 68, low: 45 }
+            },
+            nusadua: {
+                name: { en: 'Nusa Dua', ko: '누사두아' },
+                description: { en: 'Resort/MICE Area', ko: '리조트/컨벤션 지역' },
+                '1': { peak: 260, high: 200, low: 150, purchase: 230000 },
+                '2': { peak: 360, high: 280, low: 200, purchase: 360000 },
+                '3': { peak: 500, high: 380, low: 280, purchase: 500000 },
+                '4': { peak: 720, high: 550, low: 400, purchase: 720000 },
+                occupancy: { peak: 80, high: 65, low: 45 }
+            },
+
+            // === TRENDY AREAS ===
             canggu: {
                 name: { en: 'Canggu', ko: '짱구' },
                 description: { en: 'Trendy/Surfer Area', ko: '트렌디/서퍼 지역' },
-                // ADR $170 median, Premium $269+, Top $250-350
                 '1': { peak: 250, high: 190, low: 140, purchase: 220000 },
                 '2': { peak: 350, high: 270, low: 200, purchase: 350000 },
                 '3': { peak: 480, high: 370, low: 270, purchase: 480000 },
                 '4': { peak: 680, high: 520, low: 380, purchase: 680000 },
                 occupancy: { peak: 80, high: 65, low: 45 }
             },
+            berawa: {
+                name: { en: 'Berawa', ko: '버라와' },
+                description: { en: 'Beach/Cafe Culture', ko: '비치/카페 문화' },
+                '1': { peak: 240, high: 185, low: 135, purchase: 210000 },
+                '2': { peak: 340, high: 260, low: 190, purchase: 340000 },
+                '3': { peak: 460, high: 350, low: 260, purchase: 460000 },
+                '4': { peak: 650, high: 500, low: 360, purchase: 650000 },
+                occupancy: { peak: 78, high: 63, low: 44 }
+            },
+            pererenan: {
+                name: { en: 'Pererenan', ko: '뻬레레난' },
+                description: { en: 'Quiet/Emerging Area', ko: '조용한/신흥 지역' },
+                '1': { peak: 220, high: 170, low: 120, purchase: 190000 },
+                '2': { peak: 310, high: 240, low: 175, purchase: 310000 },
+                '3': { peak: 430, high: 330, low: 240, purchase: 430000 },
+                '4': { peak: 600, high: 460, low: 340, purchase: 600000 },
+                occupancy: { peak: 75, high: 60, low: 42 }
+            },
+            kedungu: {
+                name: { en: 'Kedungu', ko: '끄둥구' },
+                description: { en: 'Surf/Rice Field Views', ko: '서핑/논 전망' },
+                '1': { peak: 200, high: 155, low: 110, purchase: 170000 },
+                '2': { peak: 280, high: 215, low: 160, purchase: 280000 },
+                '3': { peak: 380, high: 290, low: 215, purchase: 380000 },
+                '4': { peak: 520, high: 400, low: 290, purchase: 520000 },
+                occupancy: { peak: 72, high: 58, low: 40 }
+            },
+
+            // === CULTURAL/NATURE ===
             ubud: {
                 name: { en: 'Ubud', ko: '우붓' },
                 description: { en: 'Cultural/Nature Area', ko: '문화/자연 지역' },
-                // Lower yields (4-7%), ~20% below Canggu
                 '1': { peak: 200, high: 160, low: 110, purchase: 180000 },
                 '2': { peak: 300, high: 230, low: 170, purchase: 280000 },
                 '3': { peak: 420, high: 320, low: 240, purchase: 400000 },
                 '4': { peak: 580, high: 440, low: 320, purchase: 580000 },
                 occupancy: { peak: 75, high: 60, low: 42 }
             },
+            tabanan: {
+                name: { en: 'Tabanan', ko: '따바난' },
+                description: { en: 'Rice Terraces/Quiet', ko: '라이스테라스/조용한' },
+                '1': { peak: 160, high: 125, low: 90, purchase: 140000 },
+                '2': { peak: 230, high: 180, low: 130, purchase: 230000 },
+                '3': { peak: 320, high: 250, low: 180, purchase: 320000 },
+                '4': { peak: 440, high: 340, low: 250, purchase: 440000 },
+                occupancy: { peak: 68, high: 52, low: 35 }
+            },
+
+            // === BEACH AREAS ===
             sanur: {
                 name: { en: 'Sanur', ko: '사누르' },
                 description: { en: 'Family-friendly/Quiet', ko: '가족친화/조용한 지역' },
-                // ~25% below Canggu, stable expat demand
                 '1': { peak: 170, high: 130, low: 95, purchase: 150000 },
                 '2': { peak: 260, high: 200, low: 145, purchase: 240000 },
                 '3': { peak: 360, high: 280, low: 200, purchase: 350000 },
                 '4': { peak: 500, high: 380, low: 280, purchase: 500000 },
                 occupancy: { peak: 78, high: 62, low: 42 }
+            },
+            jimbaran: {
+                name: { en: 'Jimbaran', ko: '짐바란' },
+                description: { en: 'Seafood/Sunset Beach', ko: '해산물/선셋 비치' },
+                '1': { peak: 220, high: 170, low: 125, purchase: 200000 },
+                '2': { peak: 320, high: 250, low: 180, purchase: 320000 },
+                '3': { peak: 450, high: 350, low: 250, purchase: 450000 },
+                '4': { peak: 620, high: 480, low: 350, purchase: 620000 },
+                occupancy: { peak: 76, high: 60, low: 42 }
+            },
+            kuta: {
+                name: { en: 'Kuta / Legian', ko: '쿠타 / 레기안' },
+                description: { en: 'Budget Tourist Area', ko: '저예산 관광 지역' },
+                '1': { peak: 140, high: 110, low: 80, purchase: 120000 },
+                '2': { peak: 200, high: 155, low: 115, purchase: 180000 },
+                '3': { peak: 280, high: 215, low: 160, purchase: 260000 },
+                '4': { peak: 380, high: 290, low: 215, purchase: 360000 },
+                occupancy: { peak: 82, high: 68, low: 48 }
+            },
+            amed: {
+                name: { en: 'Amed', ko: '아메드' },
+                description: { en: 'Diving/Snorkeling', ko: '다이빙/스노클링' },
+                '1': { peak: 150, high: 115, low: 85, purchase: 130000 },
+                '2': { peak: 220, high: 170, low: 125, purchase: 200000 },
+                '3': { peak: 300, high: 230, low: 170, purchase: 280000 },
+                '4': { peak: 420, high: 320, low: 235, purchase: 400000 },
+                occupancy: { peak: 70, high: 55, low: 35 }
+            },
+            lovina: {
+                name: { en: 'Lovina', ko: '로비나' },
+                description: { en: 'North Bali/Dolphins', ko: '북부 발리/돌고래' },
+                '1': { peak: 130, high: 100, low: 75, purchase: 110000 },
+                '2': { peak: 190, high: 145, low: 110, purchase: 170000 },
+                '3': { peak: 260, high: 200, low: 150, purchase: 240000 },
+                '4': { peak: 360, high: 275, low: 200, purchase: 340000 },
+                occupancy: { peak: 65, high: 50, low: 32 }
+            },
+
+            // === CUSTOM (default values) ===
+            custom: {
+                name: { en: 'Custom Location', ko: '직접 입력' },
+                description: { en: 'Enter your own data', ko: '직접 데이터 입력' },
+                '1': { peak: 200, high: 150, low: 110, purchase: 180000 },
+                '2': { peak: 300, high: 230, low: 170, purchase: 300000 },
+                '3': { peak: 420, high: 320, low: 240, purchase: 420000 },
+                '4': { peak: 580, high: 440, low: 320, purchase: 580000 },
+                occupancy: { peak: 75, high: 60, low: 42 }
             }
         };
 
@@ -4214,6 +4347,18 @@
         function updateLocationDefaults() {
             const location = document.getElementById('villaLocation').value;
             const bedroom = document.getElementById('nbBedroom').value;
+            const customInput = document.getElementById('customLocationName');
+
+            // Show/hide custom location input
+            if (location === 'custom') {
+                customInput.style.display = 'block';
+                // For custom location, keep current values (user will set manually)
+                calculate();
+                return;
+            } else {
+                customInput.style.display = 'none';
+            }
+
             const locData = locationPricing[location];
             const brData = locData[bedroom];
             const occData = locData.occupancy;
