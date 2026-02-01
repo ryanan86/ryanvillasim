@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #d4af37;
@@ -522,13 +522,415 @@
             }
         }
 
+        /* Save/Load & Consulting Modal Styles */
+        .sim-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 20, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sim-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sim-modal-content {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 85vh;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sim-modal.show .sim-modal-content {
+            transform: translateY(0);
+        }
+
+        .sim-modal-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sim-modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: var(--white);
+            margin: 0;
+        }
+
+        .sim-modal-close {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .sim-modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sim-modal-body {
+            padding: 28px;
+            overflow-y: auto;
+            max-height: calc(85vh - 80px);
+        }
+
+        .sim-form-group {
+            margin-bottom: 20px;
+        }
+
+        .sim-form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .sim-form-group input,
+        .sim-form-group select,
+        .sim-form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .sim-form-group input:focus,
+        .sim-form-group select:focus,
+        .sim-form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+        }
+
+        .sim-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .sim-form-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 6px;
+        }
+
+        .sim-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sim-btn-primary {
+            background: var(--gold-gradient);
+            color: var(--navy);
+        }
+
+        .sim-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .sim-btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+        }
+
+        .sim-btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+        }
+
+        .sim-btn-secondary {
+            background: var(--light-gray);
+            color: var(--navy);
+        }
+
+        .sim-btn-secondary:hover {
+            background: #dce0e6;
+        }
+
+        /* Saved Simulations List */
+        .sim-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sim-list-item {
+            background: var(--off-white);
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sim-list-item:hover {
+            border-color: var(--gold);
+            transform: translateX(4px);
+        }
+
+        .sim-list-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .sim-list-item-name {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 16px;
+        }
+
+        .sim-list-item-date {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .sim-list-item-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        .sim-list-item-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sim-list-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .sim-list-empty svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--light-gray);
+            margin-bottom: 12px;
+        }
+
+        /* Budget Range Selector */
+        .budget-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .budget-option {
+            padding: 14px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .budget-option:hover {
+            border-color: var(--gold);
+        }
+
+        .budget-option.selected {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Consulting CTA Banner */
+        .consulting-cta {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .consulting-cta-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .consulting-cta-content p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .consulting-cta-btn {
+            background: var(--gold-gradient);
+            color: var(--navy);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 15px;
+        }
+
+        .consulting-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* Operation Mode Selector */
+        .operation-mode-selector {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--off-white);
+            border-radius: 12px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            background: var(--white);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--slate);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--gold);
+        }
+
+        .mode-btn.active {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--navy);
+        }
+
+        .mode-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .self-mode-input {
+            display: none;
+        }
+
+        .self-mode-input span {
+            color: var(--slate);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .mode-toggle {
+                flex-direction: column;
+            }
+            .sim-modal-content {
+                max-height: 90vh;
+            }
+            .sim-modal-header {
+                padding: 20px;
+            }
+            .sim-modal-body {
+                padding: 20px;
+            }
+            .consulting-cta {
+                flex-direction: column;
+                text-align: center;
+            }
+            .budget-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Action buttons for save/load */
+        .action-btn.save-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .action-btn.save-btn:hover {
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .action-btn.load-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .action-btn.load-btn:hover {
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+        }
+
+        .action-btn.consult-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+        }
+
+        .action-btn.consult-btn:hover {
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+        }
+
         /* Ensure body scrolls when modal is hidden */
         body.modal-open {
             overflow: hidden;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
             background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 40%, var(--navy-medium) 100%);
             min-height: 100vh;
             padding: 48px 24px;
@@ -2470,6 +2872,85 @@
         </div>
     </div>
 
+    <!-- Save Simulation Modal -->
+    <div class="sim-modal" id="saveModal">
+        <div class="sim-modal-content">
+            <div class="sim-modal-header">
+                <h3 data-i18n="saveModalTitle">Save Simulation</h3>
+                <button class="sim-modal-close" onclick="closeSaveModal()">×</button>
+            </div>
+            <div class="sim-modal-body">
+                <div class="sim-form-group">
+                    <label data-i18n="simulationName">Simulation Name</label>
+                    <input type="text" id="saveSimName" placeholder="e.g., Canggu 3BR Villa">
+                    <div class="sim-form-hint" data-i18n="simulationNameHint">Give your simulation a memorable name</div>
+                </div>
+                <div class="sim-form-group">
+                    <label data-i18n="simulationNotes">Notes (Optional)</label>
+                    <textarea id="saveSimNotes" placeholder="Any additional notes about this property..."></textarea>
+                </div>
+                <button class="sim-btn sim-btn-primary" onclick="saveSimulation()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span data-i18n="saveBtn">Save Simulation</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Simulation Modal -->
+    <div class="sim-modal" id="loadModal">
+        <div class="sim-modal-content">
+            <div class="sim-modal-header">
+                <h3 data-i18n="loadModalTitle">My Saved Simulations</h3>
+                <button class="sim-modal-close" onclick="closeLoadModal()">×</button>
+            </div>
+            <div class="sim-modal-body">
+                <div id="simListContainer">
+                    <div class="sim-list-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p data-i18n="noSavedSims">No saved simulations yet</p>
+                        <p style="font-size: 13px;" data-i18n="noSavedSimsHint">Save your first simulation to see it here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Consultation Modal -->
+    <div class="sim-modal" id="consultModal">
+        <div class="sim-modal-content">
+            <div class="sim-modal-header">
+                <h3 data-i18n="consultModalTitle">Got Questions?</h3>
+                <button class="sim-modal-close" onclick="closeConsultModal()">×</button>
+            </div>
+            <div class="sim-modal-body" style="text-align: center;">
+                <p style="color: var(--gray); margin-bottom: 24px; font-size: 14px;" data-i18n="consultModalDesc">
+                    Have questions about starting an Airbnb in Bali? Scan the QR code to chat with me on WhatsApp!
+                </p>
+
+                <div style="background: #25D366; padding: 24px; border-radius: 16px; display: inline-block; margin-bottom: 20px;">
+                    <div style="background: white; padding: 16px; border-radius: 12px;">
+                        <p style="font-weight: 600; color: var(--navy); margin-bottom: 8px; font-size: 16px;">Ryan An</p>
+                        <p style="color: var(--gray); font-size: 12px; margin-bottom: 12px;">WhatsApp Contact</p>
+                        <img src="whatsapp-qr.jpg" alt="WhatsApp QR Code" style="width: 200px; height: 200px; border-radius: 8px;">
+                    </div>
+                </div>
+
+                <p style="color: var(--slate); font-size: 13px; margin-bottom: 8px;" data-i18n="scanQrInstruction">
+                    Open WhatsApp → Camera → Scan this QR code
+                </p>
+
+                <p style="color: var(--gray); font-size: 12px;" data-i18n="consultFree">
+                    Free - No obligations
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="container" id="pdfContent">
         <!-- Short-term Warning Banner -->
         <div class="shortterm-warning-banner" id="shorttermWarning">
@@ -2522,6 +3003,24 @@
                 </svg>
                 <span data-i18n="floodRiskMap">Flood Risk Map</span>
             </a>
+            <button class="action-btn save-btn" onclick="openSaveModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                <span data-i18n="saveSimulation">Save</span>
+            </button>
+            <button class="action-btn load-btn" onclick="openLoadModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                <span data-i18n="loadSimulation">Load</span>
+            </button>
+            <button class="action-btn consult-btn" onclick="openConsultModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <span data-i18n="askQuestions">Ask Questions</span>
+            </button>
             <div class="user-info-bar" id="userInfoBar">
                 <img class="user-avatar-small" id="userAvatarSmall" src="" alt="">
                 <span class="user-name-small" id="userNameSmall"></span>
@@ -2733,6 +3232,16 @@
                 <h2 class="card-title" data-i18n="costsFees">Operating Costs</h2>
                 <span class="card-badge" data-i18n="percentGross">% of Gross Revenue</span>
             </div>
+
+            <!-- Operation Mode Selector (Short-term only) -->
+            <div class="operation-mode-selector shortterm-field" style="display: none;">
+                <div class="mode-toggle">
+                    <button type="button" class="mode-btn active" id="modeAutoBtn" onclick="setOperationMode('auto')" data-i18n="autoOperation">Auto Operation (Outsourced)</button>
+                    <button type="button" class="mode-btn" id="modeSelfBtn" onclick="setOperationMode('self')" data-i18n="selfOperation">Self Operation (DIY)</button>
+                </div>
+                <p class="mode-hint" id="modeHint" data-i18n="autoModeHint">Costs calculated as % of gross revenue. Suitable for outsourced villa management.</p>
+            </div>
+
             <div class="fee-grid">
                 <div class="fee-card">
                     <div class="fee-card-header">
@@ -2751,9 +3260,16 @@
                 <div class="fee-card">
                     <div class="fee-card-header">
                         <span class="fee-card-title" data-i18n="villaExpenses">Property Expenses</span>
-                        <div class="fee-input-group">
+                        <!-- Percent input (Auto mode) -->
+                        <div class="fee-input-group auto-mode-input">
                             <input type="number" id="villaExpensesPercent" value="15" step="0.1" onchange="calculate()">
                             <span>%</span>
+                        </div>
+                        <!-- USD Monthly input (Self mode) -->
+                        <div class="fee-input-group self-mode-input" style="display: none;">
+                            <span>$</span>
+                            <input type="number" id="villaExpensesUSD" value="500" step="50" onchange="updatePercentFromUSD('villaExpenses')">
+                            <span data-i18n="perMonth">/mo</span>
                         </div>
                     </div>
                     <div class="fee-description" data-i18n="villaExpensesList">Cleaning, pool maintenance, laundry, utilities, internet, repairs, insurance, gardening</div>
@@ -2762,9 +3278,16 @@
                 <div class="fee-card">
                     <div class="fee-card-header">
                         <span class="fee-card-title" data-i18n="managementMarketing">Management</span>
-                        <div class="fee-input-group">
+                        <!-- Percent input (Auto mode) -->
+                        <div class="fee-input-group auto-mode-input">
                             <input type="number" id="managementMarketingPercent" value="15" step="0.1" onchange="calculate()">
                             <span>%</span>
+                        </div>
+                        <!-- USD Monthly input (Self mode) -->
+                        <div class="fee-input-group self-mode-input" style="display: none;">
+                            <span>$</span>
+                            <input type="number" id="managementMarketingUSD" value="500" step="50" onchange="updatePercentFromUSD('managementMarketing')">
+                            <span data-i18n="perMonth">/mo</span>
                         </div>
                     </div>
                     <div class="fee-description" data-i18n="managementList">Property management, guest services, booking management</div>
@@ -3067,6 +3590,76 @@
             if (growthCard) {
                 growthCard.style.display = isShortTerm ? 'none' : 'block';
             }
+
+            // Reset to auto mode when switching lease types
+            if (isShortTerm) {
+                setOperationMode('auto');
+            }
+        }
+
+        // Operation Mode: Auto vs Self
+        let operationMode = 'auto'; // 'auto' or 'self'
+
+        function setOperationMode(mode) {
+            operationMode = mode;
+            const t = translations[currentLang];
+
+            // Update button states
+            document.getElementById('modeAutoBtn').classList.toggle('active', mode === 'auto');
+            document.getElementById('modeSelfBtn').classList.toggle('active', mode === 'self');
+
+            // Update hint text
+            const hintEl = document.getElementById('modeHint');
+            if (mode === 'auto') {
+                hintEl.textContent = t.autoModeHint || 'Costs calculated as % of gross revenue. Suitable for outsourced villa management.';
+            } else {
+                hintEl.textContent = t.selfModeHint || 'Enter your actual monthly costs in USD. Percentage will be auto-calculated.';
+            }
+
+            // Toggle input visibility
+            document.querySelectorAll('.auto-mode-input').forEach(el => {
+                el.style.display = mode === 'auto' ? 'flex' : 'none';
+            });
+            document.querySelectorAll('.self-mode-input').forEach(el => {
+                el.style.display = mode === 'self' ? 'flex' : 'none';
+            });
+
+            // If switching to self mode, update percentages from USD inputs
+            if (mode === 'self') {
+                updatePercentFromUSD('villaExpenses');
+                updatePercentFromUSD('managementMarketing');
+            }
+
+            calculate();
+        }
+
+        function updatePercentFromUSD(costType) {
+            // Get monthly USD value
+            const monthlyUSD = parseFloat(document.getElementById(costType + 'USD').value) || 0;
+            const annualUSD = monthlyUSD * 12;
+
+            // Get gross income to calculate percentage
+            const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
+            const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
+            const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100 || 0;
+            const highDays = parseFloat(document.getElementById('highDays').textContent) || 0;
+            const highPrice = parseFloat(document.getElementById('highPrice').value) || 0;
+            const highOccupancy = parseFloat(document.getElementById('highOccupancy').value) / 100 || 0;
+            const lowDays = parseFloat(document.getElementById('lowDays').textContent) || 0;
+            const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
+            const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
+
+            const grossIncomeYearly = (peakDays * peakPrice * peakOccupancy) +
+                                     (highDays * highPrice * highOccupancy) +
+                                     (lowDays * lowPrice * lowOccupancy);
+
+            // Calculate percentage
+            const percent = grossIncomeYearly > 0 ? (annualUSD / grossIncomeYearly) * 100 : 0;
+
+            // Update the percentage input
+            document.getElementById(costType + 'Percent').value = percent.toFixed(1);
+
+            calculate();
         }
 
         function showLegalModal() {
@@ -3265,7 +3858,40 @@
                 legalSection5Item1: "<strong>Pergub Bali No. 25/2023:</strong> Stricter enforcement on unlicensed vacation rentals. Mandatory registration in CHSE (Health/Safety/Environment) program. Digital platform reporting requirements.",
                 legalSection5Item2: "<strong>UU Cipta Kerja (Job Creation Law):</strong> Simplified OSS licensing via PP No. 5/2021. Risk-based permit classification. Accommodation classified as medium-risk requiring standard certification.",
                 legalSection5Item3: "<strong>Tourist Levy (2024):</strong> Per Perda Bali No. 6/2023, IDR 150,000 levy per foreign tourist. Accommodation providers may be required to collect and verify payment proof.",
-                legalDisclaimer: "<strong>Disclaimer:</strong> This information is compiled from Indonesian laws and regulations for educational purposes only and does not constitute legal, tax, or investment advice. Laws and regulations are subject to change and interpretation may vary. Always consult with licensed Indonesian legal counsel (Advokat), certified tax consultant (Konsultan Pajak Bersertifikat), and registered notary (PPAT) before making any investment decisions. Last updated: January 2024."
+                legalDisclaimer: "<strong>Disclaimer:</strong> This information is compiled from Indonesian laws and regulations for educational purposes only and does not constitute legal, tax, or investment advice. Laws and regulations are subject to change and interpretation may vary. Always consult with licensed Indonesian legal counsel (Advokat), certified tax consultant (Konsultan Pajak Bersertifikat), and registered notary (PPAT) before making any investment decisions. Last updated: January 2024.",
+                // Save/Load/Consult
+                saveSimulation: "Save",
+                loadSimulation: "Load",
+                askQuestions: "Ask Questions",
+                // Operation Mode
+                autoOperation: "Auto Operation (Outsourced)",
+                selfOperation: "Self Operation (DIY)",
+                autoModeHint: "Costs calculated as % of gross revenue. Suitable for outsourced villa management.",
+                selfModeHint: "Enter your actual monthly costs in USD. Percentage will be auto-calculated.",
+                perMonth: "/mo",
+                saveModalTitle: "Save Simulation",
+                simulationName: "Simulation Name",
+                simulationNameHint: "Give your simulation a memorable name",
+                simulationNotes: "Notes (Optional)",
+                saveBtn: "Save Simulation",
+                loadModalTitle: "My Saved Simulations",
+                noSavedSims: "No saved simulations yet",
+                noSavedSimsHint: "Save your first simulation to see it here",
+                consultModalTitle: "Got Questions?",
+                consultModalDesc: "Have questions about starting an Airbnb in Bali? Scan the QR code to chat with me on WhatsApp!",
+                scanQrInstruction: "Open WhatsApp → Camera → Scan this QR code",
+                yourName: "Your Name",
+                budgetRange: "Budget Range (USD)",
+                investmentTimeline: "When are you looking to invest?",
+                selectTimeline: "Select timeline...",
+                timelineAsap: "As soon as possible",
+                timeline3m: "Within 3 months",
+                timeline6m: "Within 6 months",
+                timeline1y: "Within 1 year",
+                timelineResearch: "Just researching for now",
+                yourQuestion: "Your Question",
+                sendWhatsApp: "Send via WhatsApp",
+                consultFree: "Free - No obligations"
             },
             ko: {
                 title: "ROI 시뮬레이터",
@@ -3406,7 +4032,40 @@
                 legalSection5Item1: "<strong>Pergub Bali No. 25/2023:</strong> 무허가 휴가 렌탈에 대한 단속 강화. CHSE (보건/안전/환경) 프로그램 필수 등록. 디지털 플랫폼 보고 의무.",
                 legalSection5Item2: "<strong>UU Cipta Kerja (일자리창출법):</strong> PP No. 5/2021을 통한 OSS 라이선스 간소화. 위험 기반 허가 분류. 숙박업은 표준 인증 필요한 중위험으로 분류.",
                 legalSection5Item3: "<strong>관광세 (2024):</strong> Perda Bali No. 6/2023에 따라 외국인 관광객 1인당 IDR 150,000 부과. 숙박 제공자는 납부 증명 징수 및 확인 의무 부과 가능.",
-                legalDisclaimer: "<strong>면책 조항:</strong> 본 정보는 인도네시아 법률 및 규정을 교육 목적으로 정리한 것이며 법률, 세무 또는 투자 자문을 구성하지 않습니다. 법률과 규정은 변경될 수 있으며 해석이 다를 수 있습니다. 투자 결정 전 반드시 인도네시아 공인 변호사(Advokat), 공인 세무사(Konsultan Pajak Bersertifikat), 공증인(PPAT)과 상담하시기 바랍니다. 최종 업데이트: 2024년 1월."
+                legalDisclaimer: "<strong>면책 조항:</strong> 본 정보는 인도네시아 법률 및 규정을 교육 목적으로 정리한 것이며 법률, 세무 또는 투자 자문을 구성하지 않습니다. 법률과 규정은 변경될 수 있으며 해석이 다를 수 있습니다. 투자 결정 전 반드시 인도네시아 공인 변호사(Advokat), 공인 세무사(Konsultan Pajak Bersertifikat), 공증인(PPAT)과 상담하시기 바랍니다. 최종 업데이트: 2024년 1월.",
+                // Save/Load/Consult
+                saveSimulation: "저장",
+                loadSimulation: "불러오기",
+                askQuestions: "문의하기",
+                // Operation Mode
+                autoOperation: "자동 운영 (위탁)",
+                selfOperation: "자체 운영 (직접)",
+                autoModeHint: "총 수입 대비 %로 비용 계산. 빌라 관리 위탁 시 적합.",
+                selfModeHint: "실제 월 비용을 USD로 입력하세요. %가 자동 계산됩니다.",
+                perMonth: "/월",
+                saveModalTitle: "시뮬레이션 저장",
+                simulationName: "시뮬레이션 이름",
+                simulationNameHint: "기억하기 쉬운 이름을 입력하세요",
+                simulationNotes: "메모 (선택)",
+                saveBtn: "저장하기",
+                loadModalTitle: "저장된 시뮬레이션",
+                noSavedSims: "저장된 시뮬레이션이 없습니다",
+                noSavedSimsHint: "첫 시뮬레이션을 저장해보세요",
+                consultModalTitle: "궁금한 점이 있으신가요?",
+                consultModalDesc: "발리 에어비앤비에 대해 궁금한 점이 있으시면 QR 코드를 스캔해서 WhatsApp으로 문의해주세요!",
+                scanQrInstruction: "WhatsApp 열기 → 카메라 → QR 코드 스캔",
+                yourName: "이름",
+                budgetRange: "예산 범위 (USD)",
+                investmentTimeline: "투자 예정 시기",
+                selectTimeline: "시기 선택...",
+                timelineAsap: "가능한 빨리",
+                timeline3m: "3개월 이내",
+                timeline6m: "6개월 이내",
+                timeline1y: "1년 이내",
+                timelineResearch: "아직 조사 중",
+                yourQuestion: "질문 내용",
+                sendWhatsApp: "WhatsApp으로 보내기",
+                consultFree: "무료 - 부담없이 문의하세요"
             }
         };
 
@@ -4135,158 +4794,7 @@
             calculate();
         }
 
-        function calculate() {
-            updateExchangeRatesFromInputs();
-            const t = translations[currentLang];
-            const isShortTerm = leaseType === 'short';
-
-            // Get investment basis
-            let investmentBasis = 0;
-            if (isShortTerm) {
-                const annualLeaseFeeInput = document.getElementById('annualLeaseFee');
-                const rawValue = annualLeaseFeeInput.getAttribute('data-raw') || annualLeaseFeeInput.value.replace(/,/g, '');
-                investmentBasis = parseFloat(rawValue) || 0;
-                document.getElementById('annualLeaseFeeMulti').textContent = formatMultiCurrency(investmentBasis);
-            } else {
-                const buyingPriceInput = document.getElementById('buyingPrice');
-                const rawValue = buyingPriceInput.getAttribute('data-raw') || buyingPriceInput.value.replace(/,/g, '');
-                investmentBasis = parseFloat(rawValue) || 0;
-                document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(investmentBasis);
-            }
-
-            const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
-            const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
-            const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100 || 0;
-
-            const highDays = parseFloat(document.getElementById('highDays').textContent) || 0;
-            const highPrice = parseFloat(document.getElementById('highPrice').value) || 0;
-            const highOccupancy = parseFloat(document.getElementById('highOccupancy').value) / 100 || 0;
-
-            const lowDays = parseFloat(document.getElementById('lowDays').textContent) || 0;
-            const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
-            const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
-
-            const villaExpensesPercent = parseFloat(document.getElementById('villaExpensesPercent').value) / 100 || 0;
-            const managementMarketingPercent = parseFloat(document.getElementById('managementMarketingPercent').value) / 100 || 0;
-            const taxPercent = parseFloat(document.getElementById('taxPercent').value) / 100 || 0;
-
-            const peakIncome = peakDays * peakPrice * peakOccupancy;
-            const highIncome = highDays * highPrice * highOccupancy;
-            const lowIncome = lowDays * lowPrice * lowOccupancy;
-            const grossIncomeYearly = peakIncome + highIncome + lowIncome;
-            const grossIncomeMonthly = grossIncomeYearly / 12;
-
-            const totalDays = peakDays + highDays + lowDays;
-            const totalOccupiedDays = (peakDays * peakOccupancy) + (highDays * highOccupancy) + (lowDays * lowOccupancy);
-            const avgOccupancy = totalDays > 0 ? (totalOccupiedDays / totalDays) * 100 : 0;
-
-            const avgNightPrice = totalOccupiedDays > 0 ? grossIncomeYearly / totalOccupiedDays : 0;
-
-            document.getElementById('avgOccupancy').value = avgOccupancy.toFixed(1) + '%';
-            document.getElementById('avgNightPrice').value = formatCurrency(avgNightPrice, 'USD');
-
-            const villaExpensesYearly = grossIncomeYearly * villaExpensesPercent;
-            const villaExpensesMonthly = villaExpensesYearly / 12;
-
-            const managementMarketingYearly = grossIncomeYearly * managementMarketingPercent;
-            const managementMarketingMonthly = managementMarketingYearly / 12;
-
-            const taxYearly = grossIncomeYearly * taxPercent;
-            const taxMonthly = taxYearly / 12;
-
-            document.getElementById('villaExpensesCalc').textContent = `${formatCurrency(villaExpensesYearly)} / year`;
-            document.getElementById('managementMarketingCalc').textContent = `${formatCurrency(managementMarketingYearly)} / year`;
-            document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
-
-            const totalCostsYearly = villaExpensesYearly + managementMarketingYearly + taxYearly;
-
-            let tableHTML = '';
-            tableHTML += `<tr class="category">
-                <td>${t.grossIncome}</td>
-                <td>${formatCurrency(grossIncomeMonthly)}</td>
-                <td>${formatCurrency(grossIncomeYearly)}</td>
-            </tr>`;
-
-            tableHTML += `<tr class="expense">
-                <td>${t.villaExpenses} (${(villaExpensesPercent * 100).toFixed(1)}%)</td>
-                <td>-${formatCurrency(villaExpensesMonthly)}</td>
-                <td>-${formatCurrency(villaExpensesYearly)}</td>
-            </tr>`;
-
-            tableHTML += `<tr class="expense">
-                <td>${t.managementMarketing} (${(managementMarketingPercent * 100).toFixed(1)}%)</td>
-                <td>-${formatCurrency(managementMarketingMonthly)}</td>
-                <td>-${formatCurrency(managementMarketingYearly)}</td>
-            </tr>`;
-
-            tableHTML += `<tr class="expense">
-                <td>${t.taxPhr} (${(taxPercent * 100).toFixed(1)}%)</td>
-                <td>-${formatCurrency(taxMonthly)}</td>
-                <td>-${formatCurrency(taxYearly)}</td>
-            </tr>`;
-
-            if (isShortTerm) {
-                // Short-term: Add lease fee as cost
-                const annualLeaseFee = investmentBasis;
-                const monthlyLeaseFee = annualLeaseFee / 12;
-
-                tableHTML += `<tr class="expense">
-                    <td>${t.annualLeaseFeeLabel || 'Annual Lease Fee'}</td>
-                    <td>-${formatCurrency(monthlyLeaseFee)}</td>
-                    <td>-${formatCurrency(annualLeaseFee)}</td>
-                </tr>`;
-
-                const netProfitYearly = grossIncomeYearly - totalCostsYearly - annualLeaseFee;
-                const netProfitMonthly = netProfitYearly / 12;
-                const profitMargin = annualLeaseFee > 0 ? (netProfitYearly / annualLeaseFee) * 100 : 0;
-
-                tableHTML += `<tr class="net-income">
-                    <td>${t.annualProfit || 'Net Profit'}</td>
-                    <td>${formatCurrency(netProfitMonthly)}</td>
-                    <td>${formatCurrency(netProfitYearly)}</td>
-                </tr>`;
-
-                document.getElementById('summaryBody').innerHTML = tableHTML;
-
-                // Update short-term result cards
-                document.getElementById('resultGrossIncome').textContent = formatCurrency(grossIncomeYearly);
-                document.getElementById('resultGrossIncomeMulti').textContent = formatMultiCurrency(grossIncomeYearly);
-                document.getElementById('resultLeaseFee').textContent = formatCurrency(annualLeaseFee);
-                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
-                document.getElementById('resultAnnualProfit').textContent = formatCurrency(netProfitYearly);
-                document.getElementById('resultAnnualProfitMulti').textContent = formatMultiCurrency(netProfitYearly);
-                document.getElementById('resultProfitMargin').textContent = profitMargin.toFixed(1) + '%';
-
-                // Update chart for short-term (show annual comparison)
-                updateChartShortTerm(annualLeaseFee, grossIncomeYearly, netProfitYearly);
-
-            } else {
-                // Long-term mode
-                const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
-                const netIncomeMonthly = netIncomeYearly / 12;
-                const buyingPrice = investmentBasis;
-                const roi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
-                const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
-
-                tableHTML += `<tr class="net-income">
-                    <td>${t.netIncome}</td>
-                    <td>${formatCurrency(netIncomeMonthly)}</td>
-                    <td>${formatCurrency(netIncomeYearly)}</td>
-                </tr>`;
-
-                document.getElementById('summaryBody').innerHTML = tableHTML;
-
-                // Update long-term result cards
-                document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
-                document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
-                document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
-                document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
-                document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
-                document.getElementById('resultROI').textContent = roi.toFixed(1) + '%';
-
-                updateChart(buyingPrice, netIncomeYearly, paybackYears);
-            }
-        }
+        // First calculate function removed - using the unified version below
 
         // Chart for Short-term mode
         function updateChartShortTerm(leaseFee, grossIncome, netProfit) {
@@ -4417,17 +4925,29 @@
             return parseFloat(input.value.replace(/,/g, '')) || 0;
         }
 
-        // Update calculate to use getInputValue
-        const originalCalculate = calculate;
-        calculate = function() {
+        // Unified calculate function with Short-term support
+        function calculate() {
             // Update exchange rates from formatted inputs
             exchangeRates.IDR = getInputValue('usdToIdr') || 16500;
             exchangeRates.KRW = getInputValue('usdToKrw') || 1480;
 
             const t = translations[currentLang];
-            const buyingPrice = getInputValue('buyingPrice');
+            const isShortTerm = leaseType === 'short';
+
+            // Get investment basis
+            let annualLeaseFee = 0;
+            let buyingPrice = 0;
+
+            if (isShortTerm) {
+                annualLeaseFee = getInputValue('annualLeaseFee') || 0;
+                document.getElementById('annualLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
+            } else {
+                buyingPrice = getInputValue('buyingPrice') || 0;
+                document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+            }
+
             const leaseYears = parseInt(document.getElementById('leaseRemaining').value) || 25;
-            document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+            const contractYears = parseInt(document.getElementById('contractTerm').value) || 3;
 
             // Seasonal pricing
             const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
@@ -4448,19 +4968,6 @@
             const villaExpensesPercent = parseFloat(document.getElementById('villaExpensesPercent').value) / 100 || 0;
             const managementMarketingPercent = parseFloat(document.getElementById('managementMarketingPercent').value) / 100 || 0;
             const taxPercent = 0.10; // Fixed 10% per PP 34/2017
-
-            // Growth & Resale section enabled?
-            const growthResaleEnabled = document.getElementById('growthResaleEnabled').checked;
-
-            // Growth assumptions (only if section enabled)
-            const rentalGrowthEnabled = growthResaleEnabled && document.getElementById('rentalGrowthEnabled').checked;
-            const rentalGrowthPercent = rentalGrowthEnabled ? (parseFloat(document.getElementById('rentalGrowthPercent').value) / 100 || 0) : 0;
-            const propertyGrowthEnabled = growthResaleEnabled && document.getElementById('propertyGrowthEnabled').checked;
-            const propertyGrowthPercent = propertyGrowthEnabled ? (parseFloat(document.getElementById('propertyGrowthPercent').value) / 100 || 0) : 0;
-
-            // Resale assumptions (only if section enabled)
-            const resaleAgentPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleAgentPercent').value) / 100 || 0.05) : 0.05;
-            const resaleTaxPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleTaxPercent').value) / 100 || 0.10) : 0.10;
 
             // Calculate gross income
             const peakIncome = peakDays * peakPrice * peakOccupancy;
@@ -4494,70 +5001,424 @@
             document.getElementById('managementMarketingCalc').textContent = `${formatCurrency(managementMarketingYearly)} / year`;
             document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
 
-            // Calculate net income
+            // Calculate total operating costs
             const totalCostsYearly = otaYearly + villaExpensesYearly + managementMarketingYearly + taxYearly;
-            const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
-            const netIncomeMonthly = netIncomeYearly / 12;
-
-            // Calculate rental ROI
-            const rentalRoi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
-            const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
-
-            // Calculate total rental income over lease period (with growth if enabled)
-            let totalRentalIncome = 0;
-            let currentNetIncome = netIncomeYearly;
-            for (let year = 1; year <= leaseYears; year++) {
-                totalRentalIncome += currentNetIncome;
-                if (rentalGrowthEnabled) {
-                    currentNetIncome *= (1 + rentalGrowthPercent);
-                }
-            }
-
-            // Calculate projected resale value and profit (only if Growth & Resale is enabled)
-            let projectedResaleValue = 0;
-            let resaleProfit = 0;
-
-            if (growthResaleEnabled) {
-                projectedResaleValue = buyingPrice;
-                if (propertyGrowthEnabled) {
-                    projectedResaleValue = buyingPrice * Math.pow(1 + propertyGrowthPercent, leaseYears);
-                }
-                const resaleAgentFee = projectedResaleValue * resaleAgentPercent;
-                const resaleTax = projectedResaleValue * resaleTaxPercent;
-                resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
-            }
-
-            // Calculate total ROI
-            const totalProfit = totalRentalIncome + resaleProfit;
-            const totalRoi = buyingPrice > 0 ? (totalProfit / buyingPrice) * 100 : 0;
 
             // Build summary table
             let tableHTML = '';
             tableHTML += `<tr class="category"><td>${t.grossIncome}</td><td>${formatCurrency(grossIncomeMonthly)}</td><td>${formatCurrency(grossIncomeYearly)}</td></tr>`;
+
             if (otaEnabled) {
                 tableHTML += `<tr class="expense"><td>${t.otaCommission || 'OTA Commission'} (${(otaPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(otaMonthly)}</td><td>-${formatCurrency(otaYearly)}</td></tr>`;
             }
             tableHTML += `<tr class="expense"><td>${t.villaExpenses} (${(villaExpensesPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(villaExpensesMonthly)}</td><td>-${formatCurrency(villaExpensesYearly)}</td></tr>`;
             tableHTML += `<tr class="expense"><td>${t.managementMarketing || 'Management'} (${(managementMarketingPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(managementMarketingMonthly)}</td><td>-${formatCurrency(managementMarketingYearly)}</td></tr>`;
             tableHTML += `<tr class="expense"><td>${t.taxPhr || 'Tax'} (10% - PP 34/2017)</td><td>-${formatCurrency(taxMonthly)}</td><td>-${formatCurrency(taxYearly)}</td></tr>`;
-            tableHTML += `<tr class="net-income"><td>${t.netIncome}</td><td>${formatCurrency(netIncomeMonthly)}</td><td>${formatCurrency(netIncomeYearly)}</td></tr>`;
 
-            document.getElementById('summaryBody').innerHTML = tableHTML;
-            document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
-            document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
-            document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
-            document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
-            document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
-            document.getElementById('resultROI').textContent = rentalRoi.toFixed(1) + '%';
+            if (isShortTerm) {
+                // ========== SHORT-TERM MODE ==========
+                const monthlyLeaseFee = annualLeaseFee / 12;
 
-            // Update Total ROI Summary
-            document.getElementById('projectedResaleValue').textContent = formatCurrency(projectedResaleValue);
-            document.getElementById('resaleProfit').textContent = formatCurrency(resaleProfit);
-            document.getElementById('totalRentalIncome').textContent = formatCurrency(totalRentalIncome);
-            document.getElementById('totalROI').textContent = totalRoi.toFixed(1) + '%';
+                tableHTML += `<tr class="expense" style="border-top: 2px solid var(--gold);"><td>${t.annualLeaseFeeLabel || 'Annual Lease Fee'}</td><td>-${formatCurrency(monthlyLeaseFee)}</td><td>-${formatCurrency(annualLeaseFee)}</td></tr>`;
 
-            updateChart(buyingPrice, netIncomeYearly, paybackYears);
-        };
+                const netProfitYearly = grossIncomeYearly - totalCostsYearly - annualLeaseFee;
+                const netProfitMonthly = netProfitYearly / 12;
+                const profitMargin = annualLeaseFee > 0 ? (netProfitYearly / annualLeaseFee) * 100 : 0;
+
+                tableHTML += `<tr class="net-income"><td>${t.annualProfit || 'Net Profit'}</td><td>${formatCurrency(netProfitMonthly)}</td><td>${formatCurrency(netProfitYearly)}</td></tr>`;
+
+                document.getElementById('summaryBody').innerHTML = tableHTML;
+
+                // Update short-term result cards
+                document.getElementById('resultGrossIncome').textContent = formatCurrency(grossIncomeYearly);
+                document.getElementById('resultGrossIncomeMulti').textContent = formatMultiCurrency(grossIncomeYearly);
+                document.getElementById('resultLeaseFee').textContent = formatCurrency(annualLeaseFee);
+                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
+                document.getElementById('resultAnnualProfit').textContent = formatCurrency(netProfitYearly);
+                document.getElementById('resultAnnualProfitMulti').textContent = formatMultiCurrency(netProfitYearly);
+                document.getElementById('resultProfitMargin').textContent = profitMargin.toFixed(1) + '%';
+
+                // Update chart for short-term
+                updateChartShortTerm(annualLeaseFee, grossIncomeYearly, netProfitYearly);
+
+            } else {
+                // ========== LONG-TERM MODE ==========
+                const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
+                const netIncomeMonthly = netIncomeYearly / 12;
+
+                tableHTML += `<tr class="net-income"><td>${t.netIncome}</td><td>${formatCurrency(netIncomeMonthly)}</td><td>${formatCurrency(netIncomeYearly)}</td></tr>`;
+
+                document.getElementById('summaryBody').innerHTML = tableHTML;
+
+                // Calculate rental ROI
+                const rentalRoi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
+                const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
+
+                // Growth & Resale calculations
+                const growthResaleEnabled = document.getElementById('growthResaleEnabled')?.checked || false;
+                const rentalGrowthEnabled = growthResaleEnabled && document.getElementById('rentalGrowthEnabled')?.checked;
+                const rentalGrowthPercent = rentalGrowthEnabled ? (parseFloat(document.getElementById('rentalGrowthPercent').value) / 100 || 0) : 0;
+                const propertyGrowthEnabled = growthResaleEnabled && document.getElementById('propertyGrowthEnabled')?.checked;
+                const propertyGrowthPercent = propertyGrowthEnabled ? (parseFloat(document.getElementById('propertyGrowthPercent').value) / 100 || 0) : 0;
+                const resaleAgentPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleAgentPercent').value) / 100 || 0.05) : 0.05;
+                const resaleTaxPercent = growthResaleEnabled ? (parseFloat(document.getElementById('resaleTaxPercent').value) / 100 || 0.10) : 0.10;
+
+                // Calculate total rental income over lease period
+                let totalRentalIncome = 0;
+                let currentNetIncome = netIncomeYearly;
+                for (let year = 1; year <= leaseYears; year++) {
+                    totalRentalIncome += currentNetIncome;
+                    if (rentalGrowthEnabled) {
+                        currentNetIncome *= (1 + rentalGrowthPercent);
+                    }
+                }
+
+                // Calculate projected resale value and profit
+                let projectedResaleValue = 0;
+                let resaleProfit = 0;
+
+                if (growthResaleEnabled) {
+                    projectedResaleValue = buyingPrice;
+                    if (propertyGrowthEnabled) {
+                        projectedResaleValue = buyingPrice * Math.pow(1 + propertyGrowthPercent, leaseYears);
+                    }
+                    const resaleAgentFee = projectedResaleValue * resaleAgentPercent;
+                    const resaleTax = projectedResaleValue * resaleTaxPercent;
+                    resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
+                }
+
+                // Calculate total ROI
+                const totalProfit = totalRentalIncome + resaleProfit;
+                const totalRoi = buyingPrice > 0 ? (totalProfit / buyingPrice) * 100 : 0;
+
+                // Update long-term result cards
+                document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
+                document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
+                document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
+                document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+                document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
+                document.getElementById('resultROI').textContent = rentalRoi.toFixed(1) + '%';
+
+                // Update Total ROI Summary
+                document.getElementById('projectedResaleValue').textContent = formatCurrency(projectedResaleValue);
+                document.getElementById('resaleProfit').textContent = formatCurrency(resaleProfit);
+                document.getElementById('totalRentalIncome').textContent = formatCurrency(totalRentalIncome);
+                document.getElementById('totalROI').textContent = totalRoi.toFixed(1) + '%';
+
+                updateChart(buyingPrice, netIncomeYearly, paybackYears);
+            }
+        }
+
+        // ============================================
+        // SAVE / LOAD SIMULATION FUNCTIONS
+        // ============================================
+
+        const APPS_SCRIPT_URL = localStorage.getItem('appsScriptUrl') || '';
+
+        function openSaveModal() {
+            const modal = document.getElementById('saveModal');
+            modal.classList.add('show');
+            // Pre-fill with villa name
+            const villaName = document.getElementById('villaName').value;
+            document.getElementById('saveSimName').value = villaName || '';
+        }
+
+        function closeSaveModal() {
+            document.getElementById('saveModal').classList.remove('show');
+        }
+
+        function openLoadModal() {
+            const modal = document.getElementById('loadModal');
+            modal.classList.add('show');
+            loadSavedSimulations();
+        }
+
+        function closeLoadModal() {
+            document.getElementById('loadModal').classList.remove('show');
+        }
+
+        function openConsultModal() {
+            const modal = document.getElementById('consultModal');
+            modal.classList.add('show');
+        }
+
+        function closeConsultModal() {
+            document.getElementById('consultModal').classList.remove('show');
+        }
+
+        // Close modals on outside click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('sim-modal')) {
+                e.target.classList.remove('show');
+            }
+        });
+
+        function getCurrentSimulationData() {
+            return {
+                // Basic info
+                villaName: document.getElementById('villaName').value,
+                location: document.getElementById('villaLocation').value,
+                bedroom: document.getElementById('villaSize').value,
+                leaseType: leaseType,
+
+                // Investment
+                buyingPrice: getInputValue('buyingPrice'),
+                annualLeaseFee: getInputValue('annualLeaseFee'),
+                leaseRemaining: document.getElementById('leaseRemaining').value,
+                contractTerm: document.getElementById('contractTerm').value,
+
+                // Seasonal pricing
+                peakPrice: document.getElementById('peakPrice').value,
+                peakOccupancy: document.getElementById('peakOccupancy').value,
+                highPrice: document.getElementById('highPrice').value,
+                highOccupancy: document.getElementById('highOccupancy').value,
+                lowPrice: document.getElementById('lowPrice').value,
+                lowOccupancy: document.getElementById('lowOccupancy').value,
+
+                // Costs
+                otaEnabled: document.getElementById('otaEnabled').checked,
+                otaPercent: document.getElementById('otaPercent').value,
+                villaExpensesPercent: document.getElementById('villaExpensesPercent').value,
+                managementMarketingPercent: document.getElementById('managementMarketingPercent').value,
+
+                // Growth
+                growthResaleEnabled: document.getElementById('growthResaleEnabled').checked,
+                rentalGrowthEnabled: document.getElementById('rentalGrowthEnabled').checked,
+                rentalGrowthPercent: document.getElementById('rentalGrowthPercent').value,
+                propertyGrowthEnabled: document.getElementById('propertyGrowthEnabled').checked,
+                propertyGrowthPercent: document.getElementById('propertyGrowthPercent').value,
+                resaleAgentPercent: document.getElementById('resaleAgentPercent').value,
+                resaleTaxPercent: document.getElementById('resaleTaxPercent').value,
+
+                // Exchange rates
+                usdToIdr: getInputValue('usdToIdr'),
+                usdToKrw: getInputValue('usdToKrw')
+            };
+        }
+
+        function applySimulationData(data) {
+            // Basic info
+            document.getElementById('villaName').value = data.villaName || '';
+            document.getElementById('villaLocation').value = data.location || 'canggu';
+            document.getElementById('villaSize').value = data.bedroom || '3';
+
+            // Set lease type
+            if (data.leaseType) {
+                leaseType = data.leaseType;
+                applyLeaseTypeUI();
+            }
+
+            // Investment
+            if (data.buyingPrice) {
+                document.getElementById('buyingPrice').value = data.buyingPrice.toLocaleString('en-US');
+                document.getElementById('buyingPrice').setAttribute('data-raw', data.buyingPrice);
+            }
+            if (data.annualLeaseFee) {
+                document.getElementById('annualLeaseFee').value = data.annualLeaseFee.toLocaleString('en-US');
+                document.getElementById('annualLeaseFee').setAttribute('data-raw', data.annualLeaseFee);
+            }
+            document.getElementById('leaseRemaining').value = data.leaseRemaining || 25;
+            document.getElementById('contractTerm').value = data.contractTerm || 3;
+
+            // Seasonal pricing
+            document.getElementById('peakPrice').value = data.peakPrice || 380;
+            document.getElementById('peakOccupancy').value = data.peakOccupancy || 85;
+            document.getElementById('highPrice').value = data.highPrice || 300;
+            document.getElementById('highOccupancy').value = data.highOccupancy || 70;
+            document.getElementById('lowPrice').value = data.lowPrice || 220;
+            document.getElementById('lowOccupancy').value = data.lowOccupancy || 50;
+
+            // Costs
+            document.getElementById('otaEnabled').checked = data.otaEnabled !== false;
+            document.getElementById('otaPercent').value = data.otaPercent || 15;
+            document.getElementById('villaExpensesPercent').value = data.villaExpensesPercent || 15;
+            document.getElementById('managementMarketingPercent').value = data.managementMarketingPercent || 15;
+
+            // Growth
+            if (document.getElementById('growthResaleEnabled')) {
+                document.getElementById('growthResaleEnabled').checked = data.growthResaleEnabled !== false;
+            }
+            document.getElementById('rentalGrowthEnabled').checked = data.rentalGrowthEnabled !== false;
+            document.getElementById('rentalGrowthPercent').value = data.rentalGrowthPercent || 4;
+            document.getElementById('propertyGrowthEnabled').checked = data.propertyGrowthEnabled !== false;
+            document.getElementById('propertyGrowthPercent').value = data.propertyGrowthPercent || 4;
+            document.getElementById('resaleAgentPercent').value = data.resaleAgentPercent || 5;
+            document.getElementById('resaleTaxPercent').value = data.resaleTaxPercent || 10;
+
+            // Exchange rates
+            if (data.usdToIdr) {
+                document.getElementById('usdToIdr').value = data.usdToIdr.toLocaleString('en-US');
+                document.getElementById('usdToIdr').setAttribute('data-raw', data.usdToIdr);
+            }
+            if (data.usdToKrw) {
+                document.getElementById('usdToKrw').value = data.usdToKrw.toLocaleString('en-US');
+                document.getElementById('usdToKrw').setAttribute('data-raw', data.usdToKrw);
+            }
+
+            // Recalculate
+            updateLocationDefaults();
+            calculate();
+        }
+
+        function saveSimulation() {
+            const simName = document.getElementById('saveSimName').value.trim();
+            const simNotes = document.getElementById('saveSimNotes').value.trim();
+
+            if (!simName) {
+                alert(currentLang === 'en' ? 'Please enter a simulation name' : '시뮬레이션 이름을 입력해주세요');
+                return;
+            }
+
+            const auth = localStorage.getItem('ryanVillaAuth');
+            if (!auth) {
+                alert(currentLang === 'en' ? 'Please log in to save simulations' : '시뮬레이션을 저장하려면 로그인이 필요합니다');
+                return;
+            }
+
+            const authData = JSON.parse(auth);
+            const simData = getCurrentSimulationData();
+
+            const saveData = {
+                id: Date.now().toString(),
+                name: simName,
+                notes: simNotes,
+                data: simData,
+                createdAt: new Date().toISOString(),
+                userEmail: authData.email
+            };
+
+            // Save to localStorage (per user)
+            const storageKey = 'ryanVillaSims_' + authData.email;
+            let savedSims = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            savedSims.unshift(saveData);
+            // Keep only last 20 simulations
+            if (savedSims.length > 20) savedSims = savedSims.slice(0, 20);
+            localStorage.setItem(storageKey, JSON.stringify(savedSims));
+
+            closeSaveModal();
+
+            // Show success message
+            const msg = currentLang === 'en' ? 'Simulation saved!' : '시뮬레이션이 저장되었습니다!';
+            showToast(msg);
+        }
+
+        function loadSavedSimulations() {
+            const auth = localStorage.getItem('ryanVillaAuth');
+            const container = document.getElementById('simListContainer');
+
+            if (!auth) {
+                container.innerHTML = `
+                    <div class="sim-list-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <p data-i18n="loginToSave">${currentLang === 'en' ? 'Please log in to view saved simulations' : '저장된 시뮬레이션을 보려면 로그인해주세요'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const authData = JSON.parse(auth);
+            const storageKey = 'ryanVillaSims_' + authData.email;
+            const savedSims = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+            if (savedSims.length === 0) {
+                container.innerHTML = `
+                    <div class="sim-list-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p>${currentLang === 'en' ? 'No saved simulations yet' : '저장된 시뮬레이션이 없습니다'}</p>
+                        <p style="font-size: 13px;">${currentLang === 'en' ? 'Save your first simulation to see it here' : '첫 시뮬레이션을 저장해보세요'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<ul class="sim-list">';
+            savedSims.forEach(sim => {
+                const date = new Date(sim.createdAt).toLocaleDateString();
+                const leaseLabel = sim.data.leaseType === 'short' ? 'Short-term' : 'Long-term';
+                const investment = sim.data.leaseType === 'short'
+                    ? '$' + (sim.data.annualLeaseFee || 0).toLocaleString() + '/yr'
+                    : '$' + (sim.data.buyingPrice || 0).toLocaleString();
+
+                html += `
+                    <li class="sim-list-item" onclick="loadSimulation('${sim.id}')">
+                        <div class="sim-list-item-header">
+                            <span class="sim-list-item-name">${sim.name}</span>
+                            <span class="sim-list-item-date">${date}</span>
+                        </div>
+                        <div class="sim-list-item-meta">
+                            <span>📍 ${sim.data.location || 'Canggu'}</span>
+                            <span>🏠 ${sim.data.bedroom || 3}BR</span>
+                            <span>💰 ${investment}</span>
+                            <span>📋 ${leaseLabel}</span>
+                        </div>
+                        ${sim.notes ? `<p style="font-size: 12px; color: var(--gray); margin-top: 8px;">${sim.notes}</p>` : ''}
+                    </li>
+                `;
+            });
+            html += '</ul>';
+
+            container.innerHTML = html;
+        }
+
+        function loadSimulation(simId) {
+            const auth = localStorage.getItem('ryanVillaAuth');
+            if (!auth) return;
+
+            const authData = JSON.parse(auth);
+            const storageKey = 'ryanVillaSims_' + authData.email;
+            const savedSims = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+            const sim = savedSims.find(s => s.id === simId);
+            if (sim) {
+                applySimulationData(sim.data);
+                closeLoadModal();
+                showToast(currentLang === 'en' ? 'Simulation loaded!' : '시뮬레이션을 불러왔습니다!');
+            }
+        }
+
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 24px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--navy);
+                color: white;
+                padding: 14px 28px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 99999;
+                animation: toastIn 0.3s ease;
+                box-shadow: var(--shadow-lg);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Add animation keyframes
+            if (!document.getElementById('toastStyles')) {
+                const style = document.createElement('style');
+                style.id = 'toastStyles';
+                style.textContent = `
+                    @keyframes toastIn {
+                        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            setTimeout(() => {
+                toast.style.animation = 'toastIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
 
         // Initialize
         checkLeaseTypeOnLoad();
