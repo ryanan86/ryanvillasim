@@ -2592,14 +2592,31 @@
                         <option value="4">4+ Bedrooms</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <!-- Long-term Mode: Buying Price -->
+                <div class="form-group longterm-field">
                     <label data-i18n="buyingPrice">Purchase Price (USD)</label>
                     <input type="text" id="buyingPrice" value="380,000" inputmode="numeric" onchange="calculate()">
                     <div class="helper" id="buyingPriceMulti"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group longterm-field">
                     <label data-i18n="leaseRemaining">Lease Remaining (Years)</label>
-                    <input type="number" id="leaseRemaining" value="25">
+                    <input type="number" id="leaseRemaining" value="25" onchange="calculate()">
+                </div>
+
+                <!-- Short-term Mode: Annual Lease Fee -->
+                <div class="form-group shortterm-field" style="display: none;">
+                    <label data-i18n="annualLeaseFee">Annual Lease Fee (USD)</label>
+                    <input type="text" id="annualLeaseFee" value="35,000" inputmode="numeric" onchange="calculate()">
+                    <div class="helper" id="annualLeaseFeeMulti"></div>
+                </div>
+                <div class="form-group shortterm-field" style="display: none;">
+                    <label data-i18n="contractTerm">Contract Term (Years)</label>
+                    <select id="contractTerm" onchange="calculate()">
+                        <option value="1">1 Year</option>
+                        <option value="2">2 Years</option>
+                        <option value="3" selected>3 Years</option>
+                        <option value="5">5 Years</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -2833,8 +2850,8 @@
                 </tbody>
             </table>
 
-            <!-- Results -->
-            <div class="results-grid">
+            <!-- Results - Long-term Mode -->
+            <div class="results-grid longterm-results">
                 <div class="result-card">
                     <div class="result-label" data-i18n="yearlyNetIncome">Annual Net Income</div>
                     <div class="result-value" id="resultNetIncome">$0</div>
@@ -2857,8 +2874,32 @@
                 </div>
             </div>
 
-            <!-- Total ROI Summary -->
-            <div class="total-roi-summary" id="totalRoiSummary">
+            <!-- Results - Short-term Mode -->
+            <div class="results-grid shortterm-results" style="display: none;">
+                <div class="result-card">
+                    <div class="result-label" data-i18n="yearlyGrossIncome">Annual Rental Income</div>
+                    <div class="result-value" id="resultGrossIncome">$0</div>
+                    <div class="result-sub" id="resultGrossIncomeMulti"></div>
+                </div>
+                <div class="result-card">
+                    <div class="result-label" data-i18n="annualLeaseFeeLabel">Annual Lease Fee</div>
+                    <div class="result-value" id="resultLeaseFee">$0</div>
+                    <div class="result-sub" id="resultLeaseFeeMulti"></div>
+                </div>
+                <div class="result-card">
+                    <div class="result-label" data-i18n="annualProfit">Annual Net Profit</div>
+                    <div class="result-value" id="resultAnnualProfit">$0</div>
+                    <div class="result-sub" id="resultAnnualProfitMulti"></div>
+                </div>
+                <div class="result-card highlight">
+                    <div class="result-label" data-i18n="profitMargin">Profit Margin</div>
+                    <div class="result-value" id="resultProfitMargin">0%</div>
+                    <div class="result-sub" data-i18n="onLeaseFee">vs Lease Fee</div>
+                </div>
+            </div>
+
+            <!-- Total ROI Summary (Long-term only) -->
+            <div class="total-roi-summary longterm-results" id="totalRoiSummary">
                 <div class="total-roi-row">
                     <span class="total-roi-label" data-i18n="projectedResaleValue">Projected Resale Value (Lease End)</span>
                     <span class="total-roi-value" id="projectedResaleValue">$0</span>
@@ -2982,16 +3023,50 @@
             document.getElementById('leaseModal').classList.add('hidden');
             document.body.classList.remove('modal-open');
 
-            // Show warning banner for short-term
-            if (leaseType === 'short') {
-                document.getElementById('shorttermWarning').classList.add('show');
-            }
+            // Apply mode-specific UI
+            applyLeaseTypeUI();
 
             // Store preference
             localStorage.setItem('ryanVillaLeaseType', leaseType);
 
             // Force scroll to top
             window.scrollTo(0, 0);
+
+            // Recalculate
+            calculate();
+        }
+
+        function applyLeaseTypeUI() {
+            const isShortTerm = leaseType === 'short';
+
+            // Show/hide warning banner
+            if (isShortTerm) {
+                document.getElementById('shorttermWarning').classList.add('show');
+            } else {
+                document.getElementById('shorttermWarning').classList.remove('show');
+            }
+
+            // Toggle input fields
+            document.querySelectorAll('.longterm-field').forEach(el => {
+                el.style.display = isShortTerm ? 'none' : 'block';
+            });
+            document.querySelectorAll('.shortterm-field').forEach(el => {
+                el.style.display = isShortTerm ? 'block' : 'none';
+            });
+
+            // Toggle result cards
+            document.querySelectorAll('.longterm-results').forEach(el => {
+                el.style.display = isShortTerm ? 'none' : '';
+            });
+            document.querySelectorAll('.shortterm-results').forEach(el => {
+                el.style.display = isShortTerm ? '' : 'none';
+            });
+
+            // Hide Growth & Resale section for short-term
+            const growthCard = document.getElementById('growthCard');
+            if (growthCard) {
+                growthCard.style.display = isShortTerm ? 'none' : 'block';
+            }
         }
 
         function showLegalModal() {
@@ -3009,9 +3084,7 @@
                 leaseType = savedType;
                 document.getElementById('leaseModal').classList.add('hidden');
                 document.body.classList.remove('modal-open');
-                if (savedType === 'short') {
-                    document.getElementById('shorttermWarning').classList.add('show');
-                }
+                applyLeaseTypeUI();
             } else {
                 // Modal is visible, prevent body scroll on mobile
                 document.body.classList.add('modal-open');
@@ -3110,6 +3183,14 @@
                 paybackPeriod: "Payback Period",
                 investmentRecovery: "Until full recovery",
                 grossIncome: "Gross Revenue",
+                // Short-term mode
+                annualLeaseFee: "Annual Lease Fee (USD)",
+                contractTerm: "Contract Term (Years)",
+                yearlyGrossIncome: "Annual Rental Income",
+                annualLeaseFeeLabel: "Annual Lease Fee",
+                annualProfit: "Annual Net Profit",
+                profitMargin: "Profit Margin",
+                onLeaseFee: "vs Lease Fee",
                 growthAssumptions: "Growth & Resale Assumptions",
                 optional: "Optional",
                 rentalGrowth: "Annual Rental Rate Growth",
@@ -3240,6 +3321,14 @@
                 yearly: "연간",
                 yearlyNetIncome: "연간 순수익",
                 buyingPriceLabel: "매입가",
+                // Short-term mode
+                annualLeaseFee: "연간 사용료 (USD)",
+                contractTerm: "계약 기간 (년)",
+                yearlyGrossIncome: "연간 렌탈 수입",
+                annualLeaseFeeLabel: "연간 사용료",
+                annualProfit: "연간 순수익",
+                profitMargin: "수익 마진",
+                onLeaseFee: "사용료 대비",
                 paybackPeriod: "투자 회수 기간",
                 investmentRecovery: "원금 회수 완료까지",
                 grossIncome: "총 수입",
@@ -4049,9 +4138,21 @@
         function calculate() {
             updateExchangeRatesFromInputs();
             const t = translations[currentLang];
+            const isShortTerm = leaseType === 'short';
 
-            const buyingPrice = parseFloat(document.getElementById('buyingPrice').value) || 0;
-            document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+            // Get investment basis
+            let investmentBasis = 0;
+            if (isShortTerm) {
+                const annualLeaseFeeInput = document.getElementById('annualLeaseFee');
+                const rawValue = annualLeaseFeeInput.getAttribute('data-raw') || annualLeaseFeeInput.value.replace(/,/g, '');
+                investmentBasis = parseFloat(rawValue) || 0;
+                document.getElementById('annualLeaseFeeMulti').textContent = formatMultiCurrency(investmentBasis);
+            } else {
+                const buyingPriceInput = document.getElementById('buyingPrice');
+                const rawValue = buyingPriceInput.getAttribute('data-raw') || buyingPriceInput.value.replace(/,/g, '');
+                investmentBasis = parseFloat(rawValue) || 0;
+                document.getElementById('buyingPriceMulti').textContent = formatMultiCurrency(investmentBasis);
+            }
 
             const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
             const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
@@ -4098,14 +4199,8 @@
             document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
 
             const totalCostsYearly = villaExpensesYearly + managementMarketingYearly + taxYearly;
-            const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
-            const netIncomeMonthly = netIncomeYearly / 12;
-
-            const roi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
-            const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
 
             let tableHTML = '';
-
             tableHTML += `<tr class="category">
                 <td>${t.grossIncome}</td>
                 <td>${formatCurrency(grossIncomeMonthly)}</td>
@@ -4130,29 +4225,149 @@
                 <td>-${formatCurrency(taxYearly)}</td>
             </tr>`;
 
-            tableHTML += `<tr class="net-income">
-                <td>${t.netIncome}</td>
-                <td>${formatCurrency(netIncomeMonthly)}</td>
-                <td>${formatCurrency(netIncomeYearly)}</td>
-            </tr>`;
+            if (isShortTerm) {
+                // Short-term: Add lease fee as cost
+                const annualLeaseFee = investmentBasis;
+                const monthlyLeaseFee = annualLeaseFee / 12;
 
-            document.getElementById('summaryBody').innerHTML = tableHTML;
+                tableHTML += `<tr class="expense">
+                    <td>${t.annualLeaseFeeLabel || 'Annual Lease Fee'}</td>
+                    <td>-${formatCurrency(monthlyLeaseFee)}</td>
+                    <td>-${formatCurrency(annualLeaseFee)}</td>
+                </tr>`;
 
-            document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
-            document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
+                const netProfitYearly = grossIncomeYearly - totalCostsYearly - annualLeaseFee;
+                const netProfitMonthly = netProfitYearly / 12;
+                const profitMargin = annualLeaseFee > 0 ? (netProfitYearly / annualLeaseFee) * 100 : 0;
 
-            document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
-            document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+                tableHTML += `<tr class="net-income">
+                    <td>${t.annualProfit || 'Net Profit'}</td>
+                    <td>${formatCurrency(netProfitMonthly)}</td>
+                    <td>${formatCurrency(netProfitYearly)}</td>
+                </tr>`;
 
-            document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
-            document.getElementById('resultROI').textContent = roi.toFixed(1) + '%';
+                document.getElementById('summaryBody').innerHTML = tableHTML;
 
-            updateChart(buyingPrice, netIncomeYearly, paybackYears);
+                // Update short-term result cards
+                document.getElementById('resultGrossIncome').textContent = formatCurrency(grossIncomeYearly);
+                document.getElementById('resultGrossIncomeMulti').textContent = formatMultiCurrency(grossIncomeYearly);
+                document.getElementById('resultLeaseFee').textContent = formatCurrency(annualLeaseFee);
+                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(annualLeaseFee);
+                document.getElementById('resultAnnualProfit').textContent = formatCurrency(netProfitYearly);
+                document.getElementById('resultAnnualProfitMulti').textContent = formatMultiCurrency(netProfitYearly);
+                document.getElementById('resultProfitMargin').textContent = profitMargin.toFixed(1) + '%';
+
+                // Update chart for short-term (show annual comparison)
+                updateChartShortTerm(annualLeaseFee, grossIncomeYearly, netProfitYearly);
+
+            } else {
+                // Long-term mode
+                const netIncomeYearly = grossIncomeYearly - totalCostsYearly;
+                const netIncomeMonthly = netIncomeYearly / 12;
+                const buyingPrice = investmentBasis;
+                const roi = buyingPrice > 0 ? (netIncomeYearly / buyingPrice) * 100 : 0;
+                const paybackYears = netIncomeYearly > 0 ? buyingPrice / netIncomeYearly : 0;
+
+                tableHTML += `<tr class="net-income">
+                    <td>${t.netIncome}</td>
+                    <td>${formatCurrency(netIncomeMonthly)}</td>
+                    <td>${formatCurrency(netIncomeYearly)}</td>
+                </tr>`;
+
+                document.getElementById('summaryBody').innerHTML = tableHTML;
+
+                // Update long-term result cards
+                document.getElementById('resultNetIncome').textContent = formatCurrency(netIncomeYearly);
+                document.getElementById('resultNetIncomeMulti').textContent = formatMultiCurrency(netIncomeYearly);
+                document.getElementById('resultBuyingPrice').textContent = formatCurrency(buyingPrice);
+                document.getElementById('resultBuyingPriceMulti').textContent = formatMultiCurrency(buyingPrice);
+                document.getElementById('resultPayback').textContent = paybackYears.toFixed(1) + ' yrs';
+                document.getElementById('resultROI').textContent = roi.toFixed(1) + '%';
+
+                updateChart(buyingPrice, netIncomeYearly, paybackYears);
+            }
+        }
+
+        // Chart for Short-term mode
+        function updateChartShortTerm(leaseFee, grossIncome, netProfit) {
+            const ctx = document.getElementById('roiChart').getContext('2d');
+            const contractYears = parseInt(document.getElementById('contractTerm').value) || 3;
+
+            if (roiChart) {
+                roiChart.destroy();
+            }
+
+            const labels = [];
+            const profitData = [];
+            const leaseData = [];
+            let cumulativeProfit = 0;
+
+            for (let i = 0; i <= contractYears; i++) {
+                labels.push(i === 0 ? (currentLang === 'en' ? 'Start' : '시작') : `${i}`);
+                cumulativeProfit = i * netProfit;
+                profitData.push(cumulativeProfit);
+                leaseData.push(i * leaseFee);
+            }
+
+            roiChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: currentLang === 'en' ? 'Cumulative Profit' : '누적 수익',
+                            data: profitData,
+                            backgroundColor: netProfit >= 0 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)',
+                            borderRadius: 6
+                        },
+                        {
+                            label: currentLang === 'en' ? 'Cumulative Lease Cost' : '누적 임대료',
+                            data: leaseData,
+                            backgroundColor: 'rgba(212, 175, 55, 0.6)',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: currentLang === 'en' ? 'Year' : '년차'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Update BEP text for short-term
+            const bepText = currentLang === 'en'
+                ? `Annual Profit: ${formatCurrency(netProfit)}`
+                : `연간 수익: ${formatCurrency(netProfit)}`;
+            document.getElementById('bepValue').textContent = bepText;
         }
 
         // Number formatting with commas
         function setupFormattedInputs() {
-            const inputIds = ['buyingPrice', 'usdToIdr', 'usdToKrw'];
+            const inputIds = ['buyingPrice', 'annualLeaseFee', 'usdToIdr', 'usdToKrw'];
 
             inputIds.forEach(id => {
                 const input = document.getElementById(id);
