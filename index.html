@@ -52,19 +52,23 @@
             background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 40%, var(--navy-medium) 100%);
             z-index: 9999;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 24px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .lease-modal.hidden {
-            display: none;
+            display: none !important;
+            pointer-events: none;
         }
 
         .lease-modal-content {
             max-width: 800px;
             width: 100%;
             text-align: center;
+            padding: 40px 0;
         }
 
         .lease-modal-logo {
@@ -378,6 +382,20 @@
             .lease-modal-title {
                 font-size: 28px;
             }
+            .lease-modal {
+                padding: 16px;
+            }
+            .lease-modal-content {
+                padding: 20px 0;
+            }
+            .lease-option {
+                padding: 24px 20px;
+            }
+        }
+
+        /* Ensure body scrolls when modal is hidden */
+        body.modal-open {
+            overflow: hidden;
         }
 
         body {
@@ -2708,6 +2726,7 @@
         function startSimulator() {
             if (!leaseType) return;
             document.getElementById('leaseModal').classList.add('hidden');
+            document.body.classList.remove('modal-open');
 
             // Show warning banner for short-term
             if (leaseType === 'short') {
@@ -2716,6 +2735,9 @@
 
             // Store preference
             localStorage.setItem('ryanVillaLeaseType', leaseType);
+
+            // Force scroll to top
+            window.scrollTo(0, 0);
         }
 
         function showLegalModal() {
@@ -2732,9 +2754,13 @@
             if (savedType) {
                 leaseType = savedType;
                 document.getElementById('leaseModal').classList.add('hidden');
+                document.body.classList.remove('modal-open');
                 if (savedType === 'short') {
                     document.getElementById('shorttermWarning').classList.add('show');
                 }
+            } else {
+                // Modal is visible, prevent body scroll on mobile
+                document.body.classList.add('modal-open');
             }
         }
 
@@ -2746,6 +2772,8 @@
             document.getElementById('shorttermWarning').classList.remove('show');
             document.querySelectorAll('.lease-option').forEach(el => el.classList.remove('selected'));
             document.getElementById('leaseStartBtn').classList.remove('active');
+            document.body.classList.add('modal-open');
+            window.scrollTo(0, 0);
         }
 
         const translations = {
@@ -3971,14 +3999,19 @@
                 }
             }
 
-            // Calculate projected resale value and profit
-            let projectedResaleValue = buyingPrice;
-            if (propertyGrowthEnabled) {
-                projectedResaleValue = buyingPrice * Math.pow(1 + propertyGrowthPercent, leaseYears);
+            // Calculate projected resale value and profit (only if Growth & Resale is enabled)
+            let projectedResaleValue = 0;
+            let resaleProfit = 0;
+
+            if (growthResaleEnabled) {
+                projectedResaleValue = buyingPrice;
+                if (propertyGrowthEnabled) {
+                    projectedResaleValue = buyingPrice * Math.pow(1 + propertyGrowthPercent, leaseYears);
+                }
+                const resaleAgentFee = projectedResaleValue * resaleAgentPercent;
+                const resaleTax = projectedResaleValue * resaleTaxPercent;
+                resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
             }
-            const resaleAgentFee = projectedResaleValue * resaleAgentPercent;
-            const resaleTax = projectedResaleValue * resaleTaxPercent;
-            const resaleProfit = projectedResaleValue - buyingPrice - resaleAgentFee - resaleTax;
 
             // Calculate total ROI
             const totalProfit = totalRentalIncome + resaleProfit;
