@@ -282,6 +282,7 @@
 
         /* Short-term warning banner in main content */
         .shortterm-warning-banner {
+            position: relative;
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
             border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 16px;
@@ -292,6 +293,29 @@
 
         .shortterm-warning-banner.show {
             display: block;
+        }
+
+        .shortterm-warning-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            background: rgba(239, 68, 68, 0.15);
+            border: none;
+            border-radius: 8px;
+            color: #ef4444;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .shortterm-warning-close:hover {
+            background: rgba(239, 68, 68, 0.25);
         }
 
         .shortterm-warning-header {
@@ -997,9 +1021,23 @@
         /* Premium Controls */
         .controls {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 16px;
             margin: 48px 0;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .control-group-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
@@ -1186,11 +1224,29 @@
             margin-bottom: 24px;
             box-shadow: var(--shadow-lg);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 24px;
+            flex-direction: column;
+            gap: 20px;
             border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .exchange-bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .exchange-bar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .exchange-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .exchange-items {
@@ -2501,13 +2557,17 @@
                 font-size: 15px;
             }
             .controls {
+                gap: 16px;
+                margin: 32px 0;
+            }
+            .controls-row {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 12px;
-                margin: 32px 0;
             }
-            .control-group {
+            .control-group, .control-group-right {
                 justify-content: center;
+                flex-wrap: wrap;
             }
             .scenario-btn {
                 padding: 14px 20px;
@@ -2959,8 +3019,9 @@
     </div>
 
     <div class="container" id="pdfContent">
-        <!-- Short-term Warning Banner -->
+        <!-- Short-term Warning Banner (dismissible) -->
         <div class="shortterm-warning-banner" id="shorttermWarning">
+            <button class="shortterm-warning-close" onclick="dismissShorttermWarning()" title="Close">×</button>
             <div class="shortterm-warning-header">
                 <div class="shortterm-warning-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
@@ -2985,58 +3046,77 @@
 
         <!-- Controls -->
         <div class="controls no-print">
-            <div class="control-group">
-                <button class="scenario-btn" onclick="loadScenario('conservative')" data-i18n="conservative">Conservative</button>
-                <button class="scenario-btn active" onclick="loadScenario('optimistic')" data-i18n="optimistic">Moderate</button>
-                <button class="scenario-btn" onclick="loadScenario('aggressive')" data-i18n="aggressive">Optimistic</button>
+            <!-- Row 1: Scenarios & Settings -->
+            <div class="controls-row">
+                <div class="control-group">
+                    <button class="scenario-btn" onclick="loadScenario('conservative')" data-i18n="conservative">Conservative</button>
+                    <button class="scenario-btn active" onclick="loadScenario('optimistic')" data-i18n="optimistic">Moderate</button>
+                    <button class="scenario-btn" onclick="loadScenario('aggressive')" data-i18n="aggressive">Optimistic</button>
+                </div>
+                <div class="control-group-right">
+                    <button class="action-btn" onclick="toggleLanguage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                        <span id="langToggleText">한국어</span>
+                    </button>
+                    <div class="user-info-bar" id="userInfoBar">
+                        <img class="user-avatar-small" id="userAvatarSmall" src="" alt="">
+                        <span class="user-name-small" id="userNameSmall"></span>
+                        <button class="logout-btn-small" onclick="handleLogout()" data-i18n="logout">Logout</button>
+                    </div>
+                </div>
             </div>
-            <button class="action-btn" onclick="toggleLanguage()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-                </svg>
-                <span id="langToggleText">한국어</span>
-            </button>
-            <button class="action-btn" onclick="exportPDF()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
-                <span data-i18n="exportPdf">Export PDF</span>
-            </button>
-            <a href="Bali_Flood_Risk_Map.html" class="action-btn flood-map-btn" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-4.247m0 0A8.966 8.966 0 013 12c0-1.97.633-3.794 1.708-5.276"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 19c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 15c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2" opacity="0.5"/>
-                </svg>
-                <span data-i18n="floodRiskMap">Flood Risk Map</span>
-            </a>
-            <button class="action-btn save-btn" onclick="openSaveModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-                </svg>
-                <span data-i18n="saveSimulation">Save</span>
-            </button>
-            <button class="action-btn load-btn" onclick="openLoadModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                </svg>
-                <span data-i18n="loadSimulation">Load</span>
-            </button>
-            <button class="action-btn consult-btn" onclick="openConsultModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                </svg>
-                <span data-i18n="askQuestions">Ask Questions</span>
-            </button>
-            <div class="user-info-bar" id="userInfoBar">
-                <img class="user-avatar-small" id="userAvatarSmall" src="" alt="">
-                <span class="user-name-small" id="userNameSmall"></span>
-                <button class="logout-btn-small" onclick="handleLogout()" data-i18n="logout">Logout</button>
+            <!-- Row 2: Actions -->
+            <div class="controls-row">
+                <div class="control-group">
+                    <button class="action-btn" onclick="exportPDF()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span data-i18n="exportPdf">Export PDF</span>
+                    </button>
+                    <a href="Bali_Flood_Risk_Map.html" class="action-btn flood-map-btn" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-4.247m0 0A8.966 8.966 0 013 12c0-1.97.633-3.794 1.708-5.276"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 19c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 15c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2" opacity="0.5"/>
+                        </svg>
+                        <span data-i18n="floodRiskMap">Flood Risk Map</span>
+                    </a>
+                </div>
+                <div class="control-group-right">
+                    <button class="action-btn save-btn" onclick="openSaveModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                        </svg>
+                        <span data-i18n="saveSimulation">Save</span>
+                    </button>
+                    <button class="action-btn load-btn" onclick="openLoadModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                        </svg>
+                        <span data-i18n="loadSimulation">Load</span>
+                    </button>
+                    <button class="action-btn consult-btn" onclick="openConsultModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        <span data-i18n="askQuestions">Ask Questions</span>
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Exchange Rate Bar -->
         <div class="exchange-bar">
+            <div class="exchange-bar-header">
+                <span class="exchange-bar-title" data-i18n="exchangeRate">Exchange Rates</span>
+                <div class="exchange-bar-actions no-print">
+                    <span class="exchange-status" id="exchangeStatus" data-i18n="lastUpdate">Last updated: Manual</span>
+                    <button class="refresh-btn" onclick="fetchExchangeRates()" data-i18n="liveRates">Refresh Rates</button>
+                </div>
+            </div>
             <div class="exchange-items">
                 <div class="exchange-item">
                     <label data-i18n="baseCurrency">Base Currency</label>
@@ -3054,10 +3134,6 @@
                     <label>1 USD = KRW</label>
                     <input type="text" id="usdToKrw" value="1,480" inputmode="numeric" onchange="calculate()">
                 </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <span class="exchange-status" id="exchangeStatus" data-i18n="lastUpdate">Last updated: Manual</span>
-                <button class="refresh-btn no-print" onclick="fetchExchangeRates()" data-i18n="liveRates">Refresh Rates</button>
             </div>
         </div>
 
@@ -3601,8 +3677,9 @@
         function applyLeaseTypeUI() {
             const isShortTerm = leaseType === 'short';
 
-            // Show/hide warning banner
-            if (isShortTerm) {
+            // Show/hide warning banner (only if not dismissed)
+            const warningDismissed = localStorage.getItem('shorttermWarningDismissed');
+            if (isShortTerm && !warningDismissed) {
                 document.getElementById('shorttermWarning').classList.add('show');
             } else {
                 document.getElementById('shorttermWarning').classList.remove('show');
@@ -3634,6 +3711,12 @@
             if (isShortTerm) {
                 setOperationMode('auto');
             }
+        }
+
+        // Dismiss short-term warning banner
+        function dismissShorttermWarning() {
+            document.getElementById('shorttermWarning').classList.remove('show');
+            localStorage.setItem('shorttermWarningDismissed', 'true');
         }
 
         // Operation Mode: Auto vs Self
@@ -3767,6 +3850,7 @@
                 exportPdf: "Export PDF",
                 floodRiskMap: "Flood Risk Map",
                 logout: "Logout",
+                exchangeRate: "Exchange Rates",
                 baseCurrency: "Base Currency",
                 liveRates: "Refresh Rates",
                 lastUpdate: "Last updated: Manual",
@@ -3825,8 +3909,8 @@
                 yearlyGrossIncome: "Annual Rental Income",
                 annualLeaseFeeLabel: "Total Investment",
                 annualProfit: "Annual Net Profit",
-                profitMargin: "Profit Margin",
-                onLeaseFee: "vs Lease Fee",
+                profitMargin: "ROI",
+                onLeaseFee: "vs Setup Cost",
                 growthAssumptions: "Growth & Resale Assumptions",
                 optional: "Optional",
                 rentalGrowth: "Annual Rental Rate Growth",
@@ -3945,6 +4029,7 @@
                 exportPdf: "PDF 내보내기",
                 floodRiskMap: "침수 위험 지도",
                 logout: "로그아웃",
+                exchangeRate: "환율",
                 baseCurrency: "기준 통화",
                 liveRates: "환율 새로고침",
                 lastUpdate: "최종 업데이트: 수동 입력",
@@ -4000,8 +4085,8 @@
                 yearlyGrossIncome: "연간 렌탈 수입",
                 annualLeaseFeeLabel: "총 투자금",
                 annualProfit: "연간 순수익",
-                profitMargin: "수익 마진",
-                onLeaseFee: "사용료 대비",
+                profitMargin: "ROI",
+                onLeaseFee: "세팅비용 대비",
                 paybackPeriod: "투자 회수 기간",
                 investmentRecovery: "원금 회수 완료까지",
                 grossIncome: "총 수입",
@@ -4960,9 +5045,14 @@
         // First calculate function removed - using the unified version below
 
         // Chart for Short-term mode
-        function updateChartShortTerm(leaseFee, grossIncome, netProfit) {
+        function updateChartShortTerm(initialSetup, grossIncome, netProfit) {
             const ctx = document.getElementById('roiChart').getContext('2d');
             const contractYears = parseInt(document.getElementById('contractTerm').value) || 3;
+
+            // Calculate setup cost payback (how long to recover initial setup cost)
+            const setupPayback = netProfit > 0 ? initialSetup / netProfit : 0;
+            const projectionYears = Math.max(contractYears, Math.ceil(setupPayback) + 1);
+            document.getElementById('projectionYears').textContent = `${contractYears} ${currentLang === 'en' ? 'Years' : '년'}`;
 
             if (roiChart) {
                 roiChart.destroy();
@@ -4970,14 +5060,12 @@
 
             const labels = [];
             const profitData = [];
-            const leaseData = [];
-            let cumulativeProfit = 0;
+            const setupLine = [];
 
             for (let i = 0; i <= contractYears; i++) {
                 labels.push(i === 0 ? (currentLang === 'en' ? 'Start' : '시작') : `${i}`);
-                cumulativeProfit = i * netProfit;
-                profitData.push(cumulativeProfit);
-                leaseData.push(i * leaseFee);
+                profitData.push(i * netProfit);
+                setupLine.push(initialSetup); // Flat line for initial setup cost
             }
 
             roiChart = new Chart(ctx, {
@@ -4992,10 +5080,14 @@
                             borderRadius: 6
                         },
                         {
-                            label: currentLang === 'en' ? 'Cumulative Lease Cost' : '누적 임대료',
-                            data: leaseData,
-                            backgroundColor: 'rgba(212, 175, 55, 0.6)',
-                            borderRadius: 6
+                            type: 'line',
+                            label: currentLang === 'en' ? 'Initial Setup Cost' : '초기 세팅 비용',
+                            data: setupLine,
+                            borderColor: 'rgba(212, 175, 55, 1)',
+                            borderWidth: 3,
+                            borderDash: [8, 4],
+                            pointRadius: 0,
+                            fill: false
                         }
                     ]
                 },
@@ -5029,10 +5121,17 @@
                 }
             });
 
-            // Update BEP text for short-term
-            const bepText = currentLang === 'en'
-                ? `Annual Profit: ${formatCurrency(netProfit)}`
-                : `연간 수익: ${formatCurrency(netProfit)}`;
+            // Update BEP text for short-term (setup cost recovery)
+            let bepText;
+            if (initialSetup <= 0) {
+                bepText = currentLang === 'en' ? 'No setup cost' : '세팅 비용 없음';
+            } else if (netProfit <= 0) {
+                bepText = currentLang === 'en' ? 'Not profitable' : '수익 없음';
+            } else {
+                bepText = currentLang === 'en'
+                    ? `Setup Recovery: ${setupPayback.toFixed(1)} years (${formatCurrency(initialSetup)})`
+                    : `세팅 회수: ${setupPayback.toFixed(1)}년 (${formatCurrency(initialSetup)})`;
+            }
             document.getElementById('bepValue').textContent = bepText;
         }
 
@@ -5193,8 +5292,8 @@
 
                 const netProfitYearly = grossIncomeYearly - totalCostsYearly - annualLeaseFee;
                 const netProfitMonthly = netProfitYearly / 12;
-                // ROI based on total investment (lease fee + setup cost)
-                const profitMargin = totalInvestment > 0 ? (netProfitYearly / totalInvestment) * 100 : 0;
+                // ROI based on initial setup cost (one-time investment)
+                const setupROI = initialSetupCost > 0 ? (netProfitYearly / initialSetupCost) * 100 : 0;
                 // Payback period for initial setup cost
                 const setupPayback = netProfitYearly > 0 ? initialSetupCost / netProfitYearly : 0;
 
@@ -5205,14 +5304,16 @@
                 // Update short-term result cards
                 document.getElementById('resultGrossIncome').textContent = formatCurrency(grossIncomeYearly);
                 document.getElementById('resultGrossIncomeMulti').textContent = formatMultiCurrency(grossIncomeYearly);
-                document.getElementById('resultLeaseFee').textContent = formatCurrency(totalInvestment);
-                document.getElementById('resultLeaseFeeMulti').textContent = formatMultiCurrency(totalInvestment);
+                // Show lease fee + setup cost breakdown
+                document.getElementById('resultLeaseFee').textContent = formatCurrency(annualLeaseFee) + ' + ' + formatCurrency(initialSetupCost);
+                document.getElementById('resultLeaseFeeMulti').textContent = t.annualLeaseFeeLabel + ' + ' + (t.initialSetupCost || 'Setup');
                 document.getElementById('resultAnnualProfit').textContent = formatCurrency(netProfitYearly);
                 document.getElementById('resultAnnualProfitMulti').textContent = formatMultiCurrency(netProfitYearly);
-                document.getElementById('resultProfitMargin').textContent = profitMargin.toFixed(1) + '%';
+                // Show ROI on setup cost
+                document.getElementById('resultProfitMargin').textContent = setupROI.toFixed(1) + '%';
 
-                // Update chart for short-term
-                updateChartShortTerm(totalInvestment, grossIncomeYearly, netProfitYearly);
+                // Update chart for short-term (pass initialSetupCost for BEP calculation)
+                updateChartShortTerm(initialSetupCost, grossIncomeYearly, netProfitYearly);
 
             } else {
                 // ========== LONG-TERM MODE ==========
