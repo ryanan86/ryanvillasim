@@ -8,32 +8,33 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4af37;
-            --gold-light: #f4e4bc;
-            --gold-dark: #a68b2c;
-            --gold-gradient: linear-gradient(135deg, #f4e4bc 0%, #d4af37 50%, #a68b2c 100%);
-            --navy: #0f1419;
-            --navy-light: #1a2332;
-            --navy-medium: #243447;
-            --charcoal: #1e2530;
-            --slate: #3d4f61;
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --gold-dark: #9a7b2e;
+            --gold-gradient: linear-gradient(135deg, #c9a84c 0%, #a68b2c 100%);
+            --navy: #0a0e13;
+            --navy-light: #111821;
+            --navy-medium: #1a2230;
+            --charcoal: #151b24;
+            --slate: #4a5d73;
             --gray: #6b7a8f;
-            --light-gray: #e8ecf1;
-            --off-white: #f8f9fb;
+            --light-gray: #dde1e8;
+            --off-white: #f3f4f7;
             --white: #ffffff;
-            --success: #10b981;
+            --success: #22c55e;
             --success-light: #d1fae5;
             --danger: #ef4444;
             --danger-light: #fee2e2;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.18);
-            --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.25);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+            --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.18);
+            --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
         }
 
         * {
@@ -81,12 +82,13 @@
             gap: 8px;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 4px;
             padding: 8px 16px;
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--white);
-            font-size: 13px;
+            font-size: 12px;
+            font-family: var(--mono);
         }
 
         .modal-lang-toggle:hover {
@@ -131,8 +133,8 @@
 
         .lease-option {
             background: var(--glass);
-            border: 2px solid var(--glass-border);
-            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
             padding: 32px 24px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -141,7 +143,7 @@
 
         .lease-option:hover {
             border-color: var(--gold);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-gold);
         }
 
@@ -151,14 +153,19 @@
         }
 
         .lease-option-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gold-gradient);
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            background: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
+        }
+
+        .lease-option-icon svg {
+            color: var(--gold);
         }
 
         .lease-option-icon svg {
@@ -188,19 +195,23 @@
         }
 
         .lease-tag {
-            padding: 4px 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
+            padding: 3px 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 2px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+            font-family: var(--mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .lease-warning {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-top: 16px;
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-top: 12px;
             display: none;
         }
 
@@ -233,18 +244,19 @@
         }
 
         .lease-start-btn {
-            padding: 18px 56px;
-            background: var(--gold-gradient);
+            padding: 16px 48px;
+            background: var(--gold);
             border: none;
-            border-radius: 14px;
-            font-size: 17px;
+            border-radius: 4px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--navy);
             cursor: pointer;
             transition: all 0.3s ease;
             opacity: 0.5;
             pointer-events: none;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .lease-start-btn.active {
@@ -283,11 +295,12 @@
         /* Short-term warning banner in main content */
         .shortterm-warning-banner {
             position: relative;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 16px;
-            padding: 20px 24px;
-            margin-bottom: 32px;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-left: 3px solid #ef4444;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
             display: none;
         }
 
@@ -329,7 +342,7 @@
             width: 36px;
             height: 36px;
             background: rgba(239, 68, 68, 0.2);
-            border-radius: 10px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -376,39 +389,40 @@
         .legal-modal-content {
             max-width: 800px;
             width: 100%;
-            background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
-            border-radius: 24px;
+            background: #ffffff;
+            border-radius: 6px;
             overflow: hidden;
             box-shadow: 0 25px 80px rgba(0,0,0,0.5);
             margin: auto;
+            border: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .legal-modal-header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 28px 32px;
+            background: var(--navy);
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid var(--gold);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .legal-modal-header h3 {
             color: var(--white);
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             font-family: 'Playfair Display', serif;
         }
 
         .legal-close-btn {
-            width: 36px;
-            height: 36px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
             color: var(--white);
             cursor: pointer;
-            font-size: 20px;
-            transition: all 0.3s ease;
+            font-size: 18px;
+            transition: all 0.2s ease;
         }
 
         .legal-close-btn:hover {
@@ -438,11 +452,10 @@
         }
 
         .legal-section {
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             background: var(--white);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            border-radius: 4px;
+            padding: 20px;
             border: 1px solid rgba(0,0,0,0.06);
         }
 
@@ -496,7 +509,7 @@
             border-left: 4px solid var(--gold);
             padding: 16px 20px;
             margin: 16px 0;
-            border-radius: 0 12px 12px 0;
+            border-radius: 0 4px 4px 0;
         }
 
         .legal-highlight p {
@@ -511,7 +524,7 @@
                 padding: 20px 16px;
             }
             .legal-modal-content {
-                border-radius: 20px;
+                border-radius: 6px;
             }
             .legal-modal-header {
                 padding: 20px;
@@ -572,7 +585,7 @@
 
         .sim-modal-content {
             background: var(--white);
-            border-radius: 24px;
+            border-radius: 6px;
             max-width: 560px;
             width: 100%;
             max-height: 85vh;
@@ -580,6 +593,7 @@
             transform: translateY(20px);
             transition: transform 0.3s ease;
             box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .sim-modal.show .sim-modal-content {
@@ -587,29 +601,30 @@
         }
 
         .sim-modal-header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 24px 28px;
+            background: var(--navy);
+            padding: 18px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .sim-modal-header h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 18px;
             color: var(--white);
             margin: 0;
         }
 
         .sim-modal-close {
-            background: rgba(255,255,255,0.1);
-            border: none;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--white);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             transition: all 0.2s;
         }
 
@@ -639,10 +654,10 @@
         .sim-form-group select,
         .sim-form-group textarea {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
-            font-size: 15px;
+            padding: 12px 14px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 14px;
             transition: all 0.2s;
             font-family: inherit;
         }
@@ -668,10 +683,10 @@
 
         .sim-btn {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 4px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -679,26 +694,27 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .sim-btn-primary {
-            background: var(--gold-gradient);
+            background: var(--gold);
             color: var(--navy);
         }
 
         .sim-btn-primary:hover {
-            transform: translateY(-2px);
+            background: var(--gold-dark);
             box-shadow: var(--shadow-gold);
         }
 
         .sim-btn-whatsapp {
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            background: #25D366;
             color: white;
         }
 
         .sim-btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+            background: #1da851;
         }
 
         .sim-btn-secondary {
@@ -720,16 +736,16 @@
         .sim-list-item {
             background: var(--off-white);
             border: 1px solid var(--light-gray);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
+            border-radius: 4px;
+            padding: 14px;
+            margin-bottom: 10px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .sim-list-item:hover {
             border-color: var(--gold);
-            transform: translateX(4px);
+            background: rgba(201, 168, 76, 0.04);
         }
 
         .sim-list-item-header {
@@ -784,13 +800,14 @@
         }
 
         .budget-option {
-            padding: 14px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 14px;
+            font-size: 13px;
+            font-family: var(--mono);
         }
 
         .budget-option:hover {
@@ -804,90 +821,101 @@
 
         /* Consulting CTA Banner */
         .consulting-cta {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            border-radius: 20px;
-            padding: 32px;
-            margin-top: 32px;
+            background: var(--navy-light);
+            border-radius: 4px;
+            padding: 24px;
+            margin-top: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 24px;
+            gap: 20px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
         }
 
         .consulting-cta-content h3 {
             font-family: 'Playfair Display', serif;
             color: var(--white);
-            font-size: 22px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
 
         .consulting-cta-content p {
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
             margin: 0;
         }
 
         .consulting-cta-btn {
-            background: var(--gold-gradient);
+            background: var(--gold);
             color: var(--navy);
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 10px 24px;
+            border-radius: 4px;
             font-weight: 600;
             text-decoration: none;
             white-space: nowrap;
             transition: all 0.2s;
             cursor: pointer;
             border: none;
-            font-size: 15px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .consulting-cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-gold);
+            background: var(--gold-dark);
         }
 
-        /* Operation Mode Selector */
-        .operation-mode-selector {
-            margin-bottom: 20px;
-            padding: 16px;
-            background: var(--off-white);
-            border-radius: 12px;
-        }
+        /* Operation Mode Selector - 3-Mode Card Selection */
+        .operation-mode-selector { margin-bottom: 28px; }
+        .operation-mode-label { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .mode-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+        .mode-card { position: relative; padding: 16px; border: 1px solid var(--light-gray); border-radius: 4px; background: var(--white); cursor: pointer; transition: all 0.2s ease; text-align: left; }
+        .mode-card:hover { border-color: var(--gold); }
+        .mode-card.active { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+        .mode-card.active::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--gold); border-radius: 4px 0 0 4px; }
+        .mode-card-icon { width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 16px; }
+        .mode-card[data-mode="management"] .mode-card-icon { background: rgba(59,130,246,0.12); color: #3b82f6; }
+        .mode-card[data-mode="direct"] .mode-card-icon { background: rgba(16,185,129,0.12); color: #10b981; }
+        .mode-card[data-mode="hybrid"] .mode-card-icon { background: rgba(168,85,247,0.12); color: #a855f7; }
+        .mode-card-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+        .mode-card-subtitle { font-size: 12px; color: var(--gray); margin-bottom: 10px; line-height: 1.5; }
+        .mode-card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+        .mode-card-tag { padding: 2px 6px; background: var(--off-white); border-radius: 2px; font-size: 10px; font-weight: 500; color: var(--slate); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.3px; border: 1px solid var(--light-gray); }
+        .mode-card.active .mode-card-tag { background: rgba(201,168,76,0.1); color: var(--gold-dark); border-color: rgba(201,168,76,0.2); }
+        .mode-detail-section { padding: 16px; background: var(--off-white); border-radius: 4px; border: 1px solid var(--light-gray); display: none; margin-top: 12px; }
+        .mode-detail-section.active { display: block; }
+        .mode-detail-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+        .mode-cost-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .mode-cost-item { display: flex; flex-direction: column; gap: 6px; }
+        .mode-cost-item label { font-size: 12px; font-weight: 600; color: var(--slate); }
+        .mode-cost-item .cost-input-row { display: flex; align-items: center; gap: 6px; }
+        .mode-cost-item input { width: 100%; padding: 10px 12px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 15px; font-weight: 600; background: var(--white); color: var(--navy); font-family: var(--mono); transition: all 0.2s; }
+        .mode-cost-item input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+        .mode-cost-item .cost-unit { font-size: 13px; font-weight: 600; color: var(--slate); white-space: nowrap; }
+        .mode-cost-item .cost-hint { font-size: 11px; color: var(--gray); }
+        .mode-commission-slider { margin-bottom: 16px; }
+        .mode-commission-slider label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--slate); margin-bottom: 8px; }
+        .mode-commission-slider .slider-value { font-size: 18px; font-weight: 700; color: var(--navy); }
+        .mode-commission-slider input[type="range"] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: var(--gold-gradient); border-radius: 3px; outline: none; }
+        .mode-commission-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--white); border: 3px solid var(--gold); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .mode-fixed-costs { padding: 12px 16px; background: var(--white); border-radius: 4px; border: 1px solid var(--light-gray); margin-top: 12px; }
+        .mode-fixed-costs-title { font-size: 12px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mode-fixed-costs input { width: 90px; padding: 8px 10px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 14px; font-weight: 600; background: var(--off-white); color: var(--navy); font-family: var(--mono); }
+        .op-cost-breakdown { margin-top: 20px; padding: 20px; background: var(--off-white); border-radius: 6px; border: 1px solid var(--light-gray); }
+        .op-cost-breakdown-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .op-cost-breakdown-title .mode-badge { padding: 3px 10px; background: var(--gold-gradient); border-radius: 3px; font-size: 11px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; }
+        .op-cost-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .op-cost-row:last-child { border-bottom: none; }
+        .op-cost-row.total { margin-top: 8px; padding-top: 12px; border-top: 2px solid var(--light-gray); border-bottom: none; }
+        .op-cost-label { font-size: 13px; color: var(--slate); }
+        .op-cost-value { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .op-cost-row.total .op-cost-label { font-weight: 700; color: var(--navy); }
+        .op-cost-row.total .op-cost-value { font-size: 16px; color: var(--danger); }
+        @media (max-width: 768px) { .mode-cards { grid-template-columns: 1fr; } .mode-cost-grid { grid-template-columns: 1fr; } }
 
-        .mode-toggle {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .mode-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            background: var(--white);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--slate);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .mode-btn:hover {
-            border-color: var(--gold);
-        }
-
-        .mode-btn.active {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--navy);
-        }
-
-        .mode-hint {
-            font-size: 12px;
-            color: var(--gray);
-            margin: 0;
-        }
+        .mode-toggle { display: none; }
+        .mode-btn { display: none; }
+        .mode-hint { display: none; }
 
         .self-mode-input {
             display: none;
@@ -922,30 +950,36 @@
 
         /* Action buttons for save/load */
         .action-btn.save-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
         .action-btn.save-btn:hover {
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
         }
 
         .action-btn.load-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
         .action-btn.load-btn:hover {
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #60a5fa;
         }
 
         .action-btn.consult-btn {
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-            color: white;
+            background: rgba(37, 211, 102, 0.1);
+            color: #25D366;
+            border-color: rgba(37, 211, 102, 0.3);
         }
 
         .action-btn.consult-btn:hover {
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+            background: rgba(37, 211, 102, 0.2);
+            border-color: #25D366;
         }
 
         /* Ensure body scrolls when modal is hidden */
@@ -955,75 +989,76 @@
 
         body {
             font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 40%, var(--navy-medium) 100%);
+            background: var(--navy);
             min-height: 100vh;
-            padding: 48px 24px;
+            padding: 32px 20px;
             color: var(--charcoal);
-            font-size: 17px;
-            line-height: 1.7;
+            font-size: 15px;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1140px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         /* Premium Header */
         .header {
-            text-align: center;
-            margin-bottom: 56px;
+            text-align: left;
+            margin-bottom: 28px;
             color: var(--white);
             position: relative;
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .header::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 2px;
-            background: var(--gold-gradient);
+            display: none;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 16px;
+            letter-spacing: 3px;
+            margin-bottom: 0;
             display: inline-block;
-            padding: 10px 28px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 6px;
+            padding: 6px 14px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 2px;
+            background: rgba(201, 168, 76, 0.08);
         }
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 32px;
+            font-weight: 800;
             color: var(--white);
-            margin-bottom: 16px;
+            margin-bottom: 0;
             letter-spacing: -0.5px;
         }
 
         .header .subtitle {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 18px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
             font-weight: 400;
             letter-spacing: 0.5px;
+            font-family: var(--mono);
         }
 
         /* Premium Controls */
         .controls {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin: 48px 0;
+            gap: 12px;
+            margin: 24px 0;
         }
 
         .controls-row {
@@ -1045,11 +1080,11 @@
         .user-info-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 6px 14px 6px 6px;
+            border-radius: 4px;
+            padding: 4px 12px 4px 4px;
         }
 
         .user-avatar-small {
@@ -1087,25 +1122,24 @@
 
         .control-group {
             display: flex;
-            background: var(--glass);
-            border-radius: 16px;
-            padding: 6px;
-            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.03);
+            border-radius: 4px;
+            padding: 3px;
             border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
         }
 
         .scenario-btn {
-            padding: 16px 32px;
+            padding: 10px 24px;
             border: none;
             background: transparent;
-            color: rgba(255,255,255,0.6);
-            border-radius: 12px;
+            color: rgba(255,255,255,0.5);
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .scenario-btn:hover {
@@ -1114,44 +1148,41 @@
         }
 
         .scenario-btn.active {
-            background: var(--gold-gradient);
+            background: var(--gold);
             color: var(--navy);
-            box-shadow: var(--shadow-gold);
         }
 
         .action-btn {
-            padding: 16px 28px;
+            padding: 10px 20px;
             border: 1px solid var(--glass-border);
-            background: var(--glass);
-            color: var(--white);
-            border-radius: 14px;
+            background: rgba(255,255,255,0.03);
+            color: rgba(255,255,255,0.7);
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
-            backdrop-filter: blur(20px);
+            gap: 8px;
         }
 
         .action-btn:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.08);
             border-color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            color: var(--white);
         }
 
         .flood-map-btn {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            border: 1px solid #38bdf8;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             text-decoration: none;
+            color: #38bdf8;
         }
 
         .flood-map-btn:hover {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            border-color: #7dd3fc;
-            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
+            background: rgba(14, 165, 233, 0.2);
+            border-color: #38bdf8;
         }
 
         .action-btn svg {
@@ -1163,11 +1194,11 @@
         /* Premium Cards */
         .card {
             background: var(--white);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 6px;
+            padding: 28px 32px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.06);
             position: relative;
             overflow: hidden;
         }
@@ -1177,11 +1208,11 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gold-gradient);
+            bottom: 0;
+            width: 3px;
+            background: var(--gold);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
         }
 
         .card:hover::before {
@@ -1192,41 +1223,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 36px;
-            padding-bottom: 24px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--light-gray);
         }
 
         .card-title {
             font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: var(--navy);
             letter-spacing: -0.3px;
         }
 
         .card-badge {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--gold-dark);
-            background: linear-gradient(135deg, #fdf8e8 0%, #f9f0d4 100%);
-            padding: 10px 20px;
-            border-radius: 100px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            letter-spacing: 0.3px;
+            background: rgba(201, 168, 76, 0.08);
+            padding: 5px 12px;
+            border-radius: 2px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--mono);
         }
 
         /* Premium Exchange Rate Bar */
         .exchange-bar {
             background: var(--white);
-            border-radius: 20px;
-            padding: 28px 36px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 6px;
+            padding: 20px 28px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            border: 1px solid rgba(0,0,0,0.04);
+            gap: 16px;
+            border: 1px solid rgba(0,0,0,0.06);
         }
 
         .exchange-bar-header {
@@ -1269,22 +1302,23 @@
         }
 
         .exchange-item input, .exchange-item select {
-            padding: 14px 18px;
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
-            font-size: 16px;
+            padding: 10px 14px;
+            border: 1px solid var(--light-gray);
+            border-radius: 3px;
+            font-size: 14px;
             font-weight: 600;
             width: 130px;
             background: var(--off-white);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             color: var(--navy);
+            font-family: var(--mono);
         }
 
         .exchange-item input:focus, .exchange-item select:focus {
             outline: none;
             border-color: var(--gold);
             background: var(--white);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
         }
 
         .exchange-status {
@@ -1294,22 +1328,22 @@
         }
 
         .refresh-btn {
-            padding: 14px 28px;
-            border: 2px solid var(--gold);
+            padding: 8px 18px;
+            border: 1px solid var(--gold);
             background: transparent;
             color: var(--gold-dark);
-            border-radius: 12px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .refresh-btn:hover {
             background: var(--gold);
-            color: var(--white);
-            box-shadow: var(--shadow-gold);
+            color: var(--navy);
         }
 
         /* Currency Toggle */
@@ -1321,33 +1355,33 @@
 
         .currency-toggle .control-group {
             background: var(--white);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-md);
+            border: 1px solid var(--light-gray);
         }
 
         .currency-btn {
-            padding: 14px 32px;
+            padding: 8px 24px;
             border: none;
             background: transparent;
             color: var(--gray);
-            border-radius: 10px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
+            font-family: var(--mono);
+            letter-spacing: 0.5px;
         }
 
         .currency-btn.active {
             background: var(--navy);
-            color: var(--white);
-            box-shadow: var(--shadow-sm);
+            color: var(--gold);
         }
 
         /* Premium Form Grid */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 28px;
+            gap: 20px;
         }
 
         .form-group {
@@ -1356,53 +1390,59 @@
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 11px;
             color: var(--slate);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             font-weight: 600;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .form-group input, .form-group select {
-            padding: 18px 22px;
-            border: 2px solid var(--light-gray);
-            border-radius: 14px;
-            font-size: 18px;
+            padding: 12px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 16px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             background: var(--off-white);
             color: var(--navy);
+        }
+
+        .form-group input {
+            font-family: var(--mono);
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--gold);
             background: var(--white);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
         }
 
         .form-group input:disabled {
-            background: linear-gradient(135deg, #fdf8e8 0%, #f9f0d4 100%);
+            background: rgba(201, 168, 76, 0.06);
             color: var(--navy);
             font-weight: 700;
-            border-color: rgba(212, 175, 55, 0.3);
+            border-color: rgba(201, 168, 76, 0.2);
         }
 
         .form-group .helper {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--gray);
-            margin-top: 10px;
-            font-weight: 500;
+            margin-top: 6px;
+            font-weight: 400;
         }
 
         /* Reference Pricing Table */
         .reference-info {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.15));
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 15px;
+            padding: 10px 16px;
+            background: rgba(201, 168, 76, 0.06);
+            border-radius: 3px;
+            margin-bottom: 16px;
+            font-size: 13px;
             color: var(--navy);
+            border-left: 3px solid var(--gold);
         }
 
         .reference-info strong {
@@ -1431,19 +1471,21 @@
 
         .reference-table th:first-child {
             text-align: left;
-            border-radius: 12px 0 0 0;
+            border-radius: 3px 0 0 0;
         }
 
         .reference-table th:last-child {
-            border-radius: 0 12px 0 0;
+            border-radius: 0 3px 0 0;
         }
 
         .reference-table td {
             text-align: center;
-            padding: 14px 12px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--light-gray);
             color: var(--navy);
             font-weight: 600;
+            font-family: var(--mono);
+            font-size: 13px;
         }
 
         .reference-table td:first-child {
@@ -1456,28 +1498,28 @@
         }
 
         .reference-table td.highlight {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.25));
+            background: rgba(201, 168, 76, 0.12);
             color: var(--navy);
             font-weight: 700;
-            border-radius: 8px;
+            font-family: var(--mono);
         }
 
         .reference-note {
-            margin-top: 16px;
-            padding: 12px 16px;
+            margin-top: 12px;
+            padding: 8px 12px;
             background: var(--off-white);
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 2px;
+            font-size: 11px;
             color: var(--gray);
             font-style: italic;
         }
 
         .data-sources {
-            margin-top: 16px;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(26, 54, 93, 0.03), rgba(26, 54, 93, 0.08));
-            border-radius: 12px;
-            border: 1px solid rgba(26, 54, 93, 0.1);
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 3px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .sources-label {
@@ -1497,11 +1539,11 @@
 
         .sources-list a {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 10px;
             background: var(--white);
             border: 1px solid var(--light-gray);
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 2px;
+            font-size: 11px;
             font-weight: 500;
             color: var(--navy);
             text-decoration: none;
@@ -1509,10 +1551,8 @@
         }
 
         .sources-list a:hover {
-            background: var(--gold);
             border-color: var(--gold);
-            color: var(--navy);
-            transform: translateY(-1px);
+            color: var(--gold-dark);
         }
 
         .sources-note {
@@ -1532,22 +1572,22 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 16px;
-            background: linear-gradient(135deg, var(--navy), #1a2744);
+            padding: 6px 14px;
+            background: transparent;
             color: var(--gold);
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-            font-size: 13px;
+            border: 1px solid var(--gold);
+            border-radius: 3px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .fetch-btn:hover {
             background: var(--gold);
             color: var(--navy);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
 
         .fetch-btn:disabled {
@@ -1619,8 +1659,8 @@
 
         .price-table th {
             text-align: left;
-            padding: 18px 20px;
-            font-size: 12px;
+            padding: 12px 16px;
+            font-size: 10px;
             font-weight: 700;
             color: var(--gray);
             text-transform: uppercase;
@@ -1630,11 +1670,11 @@
         }
 
         .price-table th:first-child {
-            border-radius: 12px 0 0 0;
+            border-radius: 3px 0 0 0;
         }
 
         .price-table th:last-child {
-            border-radius: 0 12px 0 0;
+            border-radius: 0 3px 0 0;
         }
 
         .price-table th:not(:first-child) {
@@ -1642,14 +1682,14 @@
         }
 
         .price-table td {
-            padding: 22px 20px;
+            padding: 14px 16px;
             border-bottom: 1px solid var(--light-gray);
             background: var(--white);
             transition: background 0.2s;
         }
 
         .price-table tr:hover td {
-            background: #fafbfc;
+            background: #f8f9fb;
         }
 
         .price-table td:not(:first-child) {
@@ -1657,45 +1697,47 @@
         }
 
         .price-table input {
-            width: 110px;
-            padding: 14px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
+            width: 90px;
+            padding: 8px 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: 3px;
             text-align: center;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 600;
             background: var(--off-white);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             color: var(--navy);
+            font-family: var(--mono);
         }
 
         .price-table input:focus {
             outline: none;
             border-color: var(--gold);
             background: var(--white);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
         }
 
         .calculated-days {
             display: inline-block;
-            width: 60px;
-            padding: 14px 16px;
+            width: 50px;
+            padding: 8px 12px;
             text-align: center;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--navy);
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.15));
-            border-radius: 12px;
-            border: 2px solid var(--gold);
+            background: rgba(201, 168, 76, 0.08);
+            border-radius: 3px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            font-family: var(--mono);
         }
 
         .season-badge {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 16px;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 3px;
+            font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.2px;
         }
@@ -1724,16 +1766,15 @@
         }
 
         .fee-card {
-            background: linear-gradient(180deg, var(--off-white) 0%, #f1f3f6 100%);
-            border-radius: 18px;
-            padding: 28px;
+            background: var(--off-white);
+            border-radius: 4px;
+            padding: 20px;
             border: 1px solid var(--light-gray);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
 
         .fee-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
+            border-color: rgba(201, 168, 76, 0.3);
         }
 
         .fee-card-header {
@@ -1758,22 +1799,23 @@
         }
 
         .fee-input-group input {
-            width: 100px;
-            padding: 14px 16px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
+            width: 80px;
+            padding: 8px 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: 3px;
             text-align: right;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             background: var(--white);
             color: var(--navy);
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-family: var(--mono);
         }
 
         .fee-input-group input:focus {
             outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
         }
 
         .fee-input-group span {
@@ -1790,11 +1832,12 @@
         }
 
         .fee-calculated {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--navy);
-            padding-top: 16px;
-            border-top: 1px dashed var(--light-gray);
+            padding-top: 12px;
+            border-top: 1px solid var(--light-gray);
+            font-family: var(--mono);
         }
 
         /* Checkbox Label */
@@ -1843,28 +1886,30 @@
 
         .input-with-unit input {
             flex: 1;
-            padding: 14px 18px;
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 10px 14px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 16px;
             font-weight: 600;
             background: var(--off-white);
             color: var(--navy);
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-family: var(--mono);
         }
 
         .input-with-unit input:focus {
             outline: none;
             border-color: var(--gold);
             background: var(--white);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.15);
         }
 
         .input-with-unit .unit {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--slate);
-            min-width: 30px;
+            min-width: 24px;
+            font-family: var(--mono);
         }
 
         /* Fee Grid 4 columns */
@@ -1876,10 +1921,10 @@
 
         /* Total ROI Summary */
         .total-roi-summary {
-            margin-top: 32px;
-            padding: 28px;
-            background: linear-gradient(145deg, var(--off-white) 0%, #f1f3f6 100%);
-            border-radius: 16px;
+            margin-top: 24px;
+            padding: 24px;
+            background: var(--off-white);
+            border-radius: 4px;
             border: 1px solid var(--light-gray);
         }
 
@@ -1897,24 +1942,22 @@
         }
 
         .total-roi-row.highlight {
-            margin-top: 16px;
-            padding: 20px 24px;
-            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
-            border-radius: 12px;
+            margin-top: 12px;
+            padding: 16px 20px;
+            background: var(--navy);
+            border-radius: 4px;
             border-bottom: none;
         }
 
         .total-roi-row.highlight .total-roi-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
         }
 
         .total-roi-row.highlight .total-roi-value {
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--gold);
             font-size: 28px;
+            font-family: var(--mono);
         }
 
         .total-roi-label {
@@ -1924,10 +1967,10 @@
         }
 
         .total-roi-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--navy);
-            font-variant-numeric: tabular-nums;
+            font-family: var(--mono);
         }
 
         /* Premium Summary Table */
@@ -1935,20 +1978,20 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 16px;
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--light-gray);
         }
 
         .summary-table th {
             text-align: left;
-            padding: 20px 28px;
-            font-size: 12px;
+            padding: 12px 20px;
+            font-size: 10px;
             font-weight: 700;
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            background: linear-gradient(180deg, var(--off-white) 0%, #f1f3f6 100%);
+            background: var(--off-white);
         }
 
         .summary-table th:not(:first-child) {
@@ -1956,27 +1999,29 @@
         }
 
         .summary-table td {
-            padding: 20px 28px;
+            padding: 14px 20px;
             border-bottom: 1px solid var(--light-gray);
-            font-size: 17px;
+            font-size: 14px;
             background: var(--white);
         }
 
         .summary-table td:not(:first-child) {
             text-align: right;
             font-weight: 700;
-            font-variant-numeric: tabular-nums;
+            font-family: var(--mono);
+            font-size: 14px;
         }
 
         .summary-table tr.category td {
-            background: linear-gradient(180deg, var(--off-white) 0%, #f5f7fa 100%);
+            background: var(--off-white);
             font-weight: 700;
             color: var(--navy);
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .summary-table tr.expense td {
             color: var(--slate);
+            font-size: 13px;
         }
 
         .summary-table tr.expense td:not(:first-child) {
@@ -1984,150 +2029,144 @@
         }
 
         .summary-table tr.net-income td {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            background: var(--navy);
             font-weight: 700;
             color: var(--white);
-            font-size: 20px;
+            font-size: 15px;
             border-bottom: none;
         }
 
         .summary-table tr.net-income td:not(:first-child) {
             color: var(--gold);
+            font-family: var(--mono);
+            font-size: 16px;
         }
 
         /* Premium Results */
         .results-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 40px;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .result-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 32px 24px;
+            background: var(--off-white);
+            border-radius: 4px;
+            padding: 20px 16px;
             text-align: center;
-            border: 2px solid var(--light-gray);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--light-gray);
+            transition: all 0.2s ease;
         }
 
         .result-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: rgba(212, 175, 55, 0.3);
+            border-color: rgba(201, 168, 76, 0.3);
         }
 
         .result-card.highlight {
-            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
-            border: none;
-            box-shadow: var(--shadow-lg);
+            background: var(--navy);
+            border: 1px solid rgba(201, 168, 76, 0.3);
         }
 
         .result-card.highlight:hover {
-            transform: translateY(-6px);
+            border-color: var(--gold);
         }
 
         .result-card.highlight .result-label,
         .result-card.highlight .result-sub {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.5);
         }
 
         .result-card.highlight .result-value {
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--gold);
         }
 
         .result-label {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
             color: var(--gray);
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 16px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
         .result-value {
-            font-size: 34px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--navy);
-            font-variant-numeric: tabular-nums;
+            font-family: var(--mono);
             letter-spacing: -0.5px;
         }
 
         .result-sub {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray);
-            margin-top: 12px;
-            font-weight: 500;
+            margin-top: 8px;
+            font-weight: 400;
+            font-family: var(--mono);
         }
 
         /* Premium Chart Section */
         .chart-container {
             position: relative;
-            height: 380px;
-            margin-top: 32px;
-            padding: 28px;
-            background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%);
-            border-radius: 20px;
+            height: 360px;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7f8fa;
+            border-radius: 4px;
             border: 1px solid var(--light-gray);
         }
 
         .chart-legend {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 28px;
+            gap: 32px;
+            margin-top: 16px;
             flex-wrap: wrap;
-            padding: 20px 28px;
-            background: var(--white);
-            border-radius: 16px;
+            padding: 14px 20px;
+            background: var(--off-white);
+            border-radius: 4px;
             border: 1px solid var(--light-gray);
-            box-shadow: var(--shadow-sm);
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 600;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
             color: var(--slate);
         }
 
         .legend-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
         }
 
         .bep-indicator {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 28px;
-            margin-top: 28px;
-            padding: 36px 48px;
-            background: linear-gradient(145deg, var(--navy) 0%, var(--navy-light) 100%);
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: var(--shadow-lg);
+            gap: 20px;
+            margin-top: 16px;
+            padding: 24px 36px;
+            background: var(--navy);
+            border-radius: 4px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
         }
 
         .bep-indicator .icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            background: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--navy);
-            font-size: 28px;
-            box-shadow: var(--shadow-gold);
+            color: var(--gold);
+            font-size: 20px;
         }
 
         .bep-indicator .text {
@@ -2135,58 +2174,56 @@
         }
 
         .bep-indicator .text .label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
         .bep-indicator .text .value {
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 700;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--gold);
+            font-family: var(--mono);
             letter-spacing: -0.5px;
         }
 
         /* Premium Footer */
         .footer {
             text-align: center;
-            padding: 60px 20px 32px;
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
+            padding: 40px 20px 24px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+            margin-top: 16px;
         }
 
         .footer .brand {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            font-weight: 600;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
         }
 
         .footer .developer {
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 400;
         }
 
         .footer-badge {
             display: inline-block;
-            padding: 8px 20px;
-            margin-bottom: 16px;
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--gold-light);
+            padding: 6px 14px;
+            margin-bottom: 12px;
+            background: rgba(201, 168, 76, 0.06);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.4);
             letter-spacing: 0.3px;
+            font-family: var(--mono);
         }
 
         .footer a {
@@ -2537,28 +2574,26 @@
 
         @media (max-width: 768px) {
             body {
-                font-size: 16px;
-                padding: 20px 16px;
+                font-size: 14px;
+                padding: 16px 12px;
             }
             .container {
                 max-width: 100%;
             }
             .header {
-                margin-bottom: 36px;
-            }
-            .header::before {
-                width: 80px;
-                top: -40px;
+                margin-bottom: 20px;
+                flex-direction: column;
+                gap: 8px;
             }
             .header h1 {
-                font-size: 32px;
+                font-size: 24px;
             }
             .header .subtitle {
-                font-size: 15px;
+                font-size: 12px;
             }
             .controls {
-                gap: 16px;
-                margin: 32px 0;
+                gap: 10px;
+                margin: 20px 0;
             }
             .controls-row {
                 flex-direction: column;
@@ -2570,18 +2605,19 @@
                 flex-wrap: wrap;
             }
             .scenario-btn {
-                padding: 14px 20px;
-                font-size: 14px;
+                padding: 8px 16px;
+                font-size: 12px;
             }
             .action-btn {
                 justify-content: center;
-                padding: 16px 24px;
+                padding: 10px 16px;
+                font-size: 12px;
             }
             .exchange-bar {
                 flex-direction: column;
                 align-items: stretch;
-                padding: 20px;
-                gap: 20px;
+                padding: 16px;
+                gap: 14px;
             }
             .exchange-items {
                 flex-direction: column;
@@ -2599,54 +2635,54 @@
                 margin-bottom: 20px;
             }
             .currency-btn {
-                padding: 14px 24px;
-                font-size: 15px;
+                padding: 8px 18px;
+                font-size: 12px;
             }
             .card {
-                padding: 28px 20px;
-                margin-bottom: 20px;
-                border-radius: 20px;
+                padding: 20px 16px;
+                margin-bottom: 12px;
+                border-radius: 4px;
             }
             .card-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 12px;
-                margin-bottom: 28px;
+                gap: 8px;
+                margin-bottom: 18px;
             }
             .card-title {
-                font-size: 22px;
+                font-size: 18px;
             }
             .form-grid {
-                gap: 20px;
+                gap: 14px;
             }
             .form-group label {
-                font-size: 13px;
+                font-size: 10px;
             }
             .form-group input {
-                padding: 16px 18px;
-                font-size: 17px;
+                padding: 10px 14px;
+                font-size: 15px;
             }
             .price-table {
                 display: block;
                 overflow-x: auto;
             }
             .price-table th, .price-table td {
-                padding: 16px 12px;
+                padding: 10px 10px;
             }
             .price-table input {
-                width: 90px;
-                font-size: 16px;
-                padding: 12px 10px;
+                width: 75px;
+                font-size: 14px;
+                padding: 8px 8px;
             }
             .season-badge {
-                padding: 10px 18px;
-                font-size: 14px;
+                padding: 5px 12px;
+                font-size: 12px;
             }
             .fee-grid {
                 gap: 16px;
             }
             .fee-card {
-                padding: 22px;
+                padding: 16px;
             }
             .fee-card-header {
                 flex-direction: column;
@@ -2676,16 +2712,16 @@
                 margin-top: 28px;
             }
             .result-card {
-                padding: 24px 16px;
+                padding: 16px 12px;
             }
             .result-label {
-                font-size: 11px;
+                font-size: 9px;
             }
             .result-value {
-                font-size: 26px;
+                font-size: 22px;
             }
             .result-sub {
-                font-size: 11px;
+                font-size: 10px;
             }
             .chart-container {
                 height: 280px;
@@ -2701,13 +2737,13 @@
             .bep-indicator {
                 flex-direction: column;
                 text-align: center;
-                padding: 28px 24px;
+                padding: 20px 16px;
             }
             .bep-indicator .text {
                 text-align: center;
             }
             .bep-indicator .text .value {
-                font-size: 24px;
+                font-size: 20px;
             }
             .footer {
                 padding: 36px 16px 24px;
@@ -2738,44 +2774,43 @@
 
         @media (max-width: 480px) {
             body {
-                padding: 16px 12px;
+                padding: 12px 8px;
             }
             .header h1 {
-                font-size: 26px;
-            }
-            .header .logo {
-                font-size: 11px;
-                letter-spacing: 4px;
-            }
-            .scenario-btn {
-                padding: 12px 14px;
-                font-size: 13px;
-            }
-            .card {
-                padding: 22px 16px;
-                border-radius: 18px;
-            }
-            .card-title {
                 font-size: 20px;
             }
-            .form-group input {
-                padding: 14px 16px;
+            .header .logo {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+            .scenario-btn {
+                padding: 7px 12px;
+                font-size: 11px;
+            }
+            .card {
+                padding: 16px 12px;
+            }
+            .card-title {
                 font-size: 16px;
             }
+            .form-group input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
             .price-table input {
-                width: 75px;
-                font-size: 15px;
-                padding: 10px 8px;
+                width: 65px;
+                font-size: 13px;
+                padding: 6px 6px;
             }
             .season-badge {
-                padding: 8px 14px;
-                font-size: 13px;
+                padding: 4px 10px;
+                font-size: 11px;
             }
             .results-grid {
                 grid-template-columns: 1fr;
             }
             .result-value {
-                font-size: 28px;
+                font-size: 24px;
             }
         }
     </style>
@@ -2999,8 +3034,8 @@
                     Have questions about starting an Airbnb in Bali? Scan the QR code to chat with me on WhatsApp!
                 </p>
 
-                <div style="background: #25D366; padding: 24px; border-radius: 16px; display: inline-block; margin-bottom: 20px;">
-                    <div style="background: white; padding: 16px; border-radius: 12px;">
+                <div style="background: #25D366; padding: 24px; border-radius: 6px; display: inline-block; margin-bottom: 20px;">
+                    <div style="background: white; padding: 16px; border-radius: 4px;">
                         <p style="font-weight: 600; color: var(--navy); margin-bottom: 8px; font-size: 16px;">Ryan An</p>
                         <p style="color: var(--gray); font-size: 12px; margin-bottom: 12px;">WhatsApp Contact</p>
                         <img src="whatsapp-qr.jpg" alt="WhatsApp QR Code" style="width: 200px; height: 200px; border-radius: 8px;">
@@ -3185,7 +3220,7 @@
                             <option value="custom">✏️ Custom (Manual Entry)</option>
                         </optgroup>
                     </select>
-                    <input type="text" id="customLocationName" placeholder="Enter location name..." style="display: none; margin-top: 10px; width: 100%; padding: 14px 16px; border: 2px solid var(--light-gray); border-radius: 12px; font-size: 16px; font-weight: 500;" onchange="calculate()">
+                    <input type="text" id="customLocationName" placeholder="Enter location name..." style="display: none; margin-top: 10px; width: 100%; padding: 14px 16px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 16px; font-weight: 500;" onchange="calculate()">
                 </div>
                 <div class="form-group">
                     <label data-i18n="numBedrooms">Bedrooms</label>
@@ -3240,9 +3275,9 @@
             <div class="card-header">
                 <h2 class="card-title" data-i18n="referencePricing">Reference Pricing by Location</h2>
                 <div class="header-actions">
-                    <button class="fetch-btn" onclick="fetchMarketData()" id="fetchBtn">
+                    <button class="fetch-btn" onclick="applyMarketData()" id="fetchBtn">
                         <span class="fetch-icon">↻</span>
-                        <span data-i18n="fetchMarket">Fetch Live Data</span>
+                        <span data-i18n="applyMarketData">Apply Market Data</span>
                     </button>
                     <span class="card-badge" data-i18n="marketAverage">Market Average</span>
                 </div>
@@ -3350,75 +3385,262 @@
 
             <!-- Operation Mode Selector (Short-term only) -->
             <div class="operation-mode-selector shortterm-field" style="display: none;">
-                <div class="mode-toggle">
-                    <button type="button" class="mode-btn active" id="modeAutoBtn" onclick="setOperationMode('auto')" data-i18n="autoOperation">Auto Operation (Outsourced)</button>
-                    <button type="button" class="mode-btn" id="modeSelfBtn" onclick="setOperationMode('self')" data-i18n="selfOperation">Self Operation (DIY)</button>
+                <div class="operation-mode-label" data-i18n="operationMode">Operation Mode</div>
+                <div class="mode-cards">
+                    <div class="mode-card active" data-mode="management" onclick="setOperationMode('management')">
+                        <div class="mode-card-icon">🏢</div>
+                        <div class="mode-card-title" data-i18n="managementCompany">Management Company</div>
+                        <div class="mode-card-subtitle" data-i18n="managementCompanyDesc">Outsource everything to a management company</div>
+                        <div class="mode-card-tags">
+                            <span class="mode-card-tag">15-20%</span>
+                            <span class="mode-card-tag" data-i18n="tagCommission">COMMISSION</span>
+                            <span class="mode-card-tag" data-i18n="tagHandsOff">HANDS-OFF</span>
+                        </div>
+                    </div>
+                    <div class="mode-card" data-mode="direct" onclick="setOperationMode('direct')">
+                        <div class="mode-card-icon">👤</div>
+                        <div class="mode-card-title" data-i18n="directHire">Direct Hire</div>
+                        <div class="mode-card-subtitle" data-i18n="directHireDesc">Hire your own staff, manage directly</div>
+                        <div class="mode-card-tags">
+                            <span class="mode-card-tag" data-i18n="tagNoCommission">NO COMMISSION</span>
+                            <span class="mode-card-tag" data-i18n="tagOwnStaff">OWN STAFF</span>
+                            <span class="mode-card-tag" data-i18n="tagFullControl">FULL CONTROL</span>
+                        </div>
+                    </div>
+                    <div class="mode-card" data-mode="hybrid" onclick="setOperationMode('hybrid')">
+                        <div class="mode-card-icon">🔄</div>
+                        <div class="mode-card-title" data-i18n="hybrid">Hybrid</div>
+                        <div class="mode-card-subtitle" data-i18n="hybridDesc">Booking commission + own staff</div>
+                        <div class="mode-card-tags">
+                            <span class="mode-card-tag">8-12%</span>
+                            <span class="mode-card-tag" data-i18n="tagBookingFee">BOOKING FEE</span>
+                            <span class="mode-card-tag" data-i18n="tagOwnStaff">OWN STAFF</span>
+                        </div>
+                    </div>
                 </div>
-                <p class="mode-hint" id="modeHint" data-i18n="autoModeHint">Costs calculated as % of gross revenue. Suitable for outsourced villa management.</p>
+
+                <!-- Management Mode Detail -->
+                <div class="mode-detail-section active" id="modeDetailManagement">
+                    <div class="mode-detail-title" data-i18n="managementModeSettings">Management Company Settings</div>
+                    <div class="mode-commission-slider">
+                        <label>
+                            <span data-i18n="commissionRate">Commission Rate</span>
+                            <span class="slider-value" id="mgmtCommissionValue">18%</span>
+                        </label>
+                        <input type="range" id="mgmtCommission" min="15" max="20" step="0.5" value="18" oninput="document.getElementById('mgmtCommissionValue').textContent=this.value+'%'; calculate();">
+                    </div>
+                    <div class="mode-fixed-costs">
+                        <div class="mode-fixed-costs-title" data-i18n="additionalFixedCosts">Additional Fixed Costs</div>
+                        <div class="mode-cost-grid">
+                            <div class="mode-cost-item">
+                                <label data-i18n="utilitiesInsurance">Utilities & Insurance</label>
+                                <div class="cost-input-row">
+                                    <span class="cost-unit">$</span>
+                                    <input type="number" id="mgmtFixedCosts" value="300" step="25" onchange="calculate()">
+                                    <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct Hire Mode Detail -->
+                <div class="mode-detail-section" id="modeDetailDirect">
+                    <div class="mode-detail-title" data-i18n="directHireSettings">Direct Hire — Monthly Costs</div>
+                    <div class="mode-cost-grid">
+                        <div class="mode-cost-item">
+                            <label data-i18n="villaManager">Villa Manager</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directManager" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="housekeeper">Housekeeper</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directHousekeeper" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="securityGuard">Security Guard</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directSecurity" value="190" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="gardener">Gardener</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directGardener" value="125" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 2M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="utilities">Utilities (Electric+Water+Gas)</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directUtilities" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="internet">Internet</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directInternet" value="40" step="5" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="maintenance">Maintenance</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directMaintenance" value="125" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="insurance">Insurance</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="directInsurance" value="75" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mode-commission-slider" style="margin-top: 16px;">
+                        <label>
+                            <span data-i18n="otaFees">OTA/Marketing Fees</span>
+                            <span class="slider-value" id="directOtaValue">15%</span>
+                        </label>
+                        <input type="range" id="directOtaPercent" min="10" max="20" step="0.5" value="15" oninput="document.getElementById('directOtaValue').textContent=this.value+'%'; calculate();">
+                    </div>
+                </div>
+
+                <!-- Hybrid Mode Detail -->
+                <div class="mode-detail-section" id="modeDetailHybrid">
+                    <div class="mode-detail-title" data-i18n="hybridSettings">Hybrid — Booking Commission + Own Staff</div>
+                    <div class="mode-commission-slider">
+                        <label>
+                            <span data-i18n="bookingCommission">Booking Commission</span>
+                            <span class="slider-value" id="hybridCommissionValue">10%</span>
+                        </label>
+                        <input type="range" id="hybridCommission" min="8" max="12" step="0.5" value="10" oninput="document.getElementById('hybridCommissionValue').textContent=this.value+'%'; calculate();">
+                    </div>
+                    <div class="mode-cost-grid">
+                        <div class="mode-cost-item">
+                            <label data-i18n="villaManager">Villa Manager</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridManager" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="housekeeper">Housekeeper</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridHousekeeper" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="securityGuard">Security Guard</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridSecurity" value="190" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 3M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="gardener">Gardener</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridGardener" value="125" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                            <span class="cost-hint">IDR 2M</span>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="utilities">Utilities (Electric+Water+Gas)</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridUtilities" value="200" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="internet">Internet</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridInternet" value="40" step="5" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="maintenance">Maintenance</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridMaintenance" value="125" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                        <div class="mode-cost-item">
+                            <label data-i18n="insurance">Insurance</label>
+                            <div class="cost-input-row">
+                                <span class="cost-unit">$</span>
+                                <input type="number" id="hybridInsurance" value="75" step="25" onchange="calculate()">
+                                <span class="cost-unit" data-i18n="perMonth">/mo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="fee-grid">
                 <div class="fee-card">
                     <div class="fee-card-header">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="otaEnabled" checked onchange="calculate()">
-                            <span class="fee-card-title" data-i18n="otaCommission">OTA Commission</span>
-                        </label>
+                        <span class="fee-card-title" data-i18n="taxPhr">Tax (PPh + PPN)</span>
                         <div class="fee-input-group">
-                            <input type="number" id="otaPercent" value="15" step="0.1" onchange="calculate()">
+                            <input type="number" id="taxPercent" value="12.5" step="0.1" onchange="calculate()">
                             <span>%</span>
                         </div>
                     </div>
-                    <div class="fee-description" data-i18n="otaList">Booking.com, Airbnb, Agoda, Expedia commission fees</div>
-                    <div class="fee-calculated" id="otaCalc">$0 / year</div>
-                </div>
-                <div class="fee-card">
-                    <div class="fee-card-header">
-                        <span class="fee-card-title" data-i18n="villaExpenses">Property Expenses</span>
-                        <!-- Percent input (Auto mode) -->
-                        <div class="fee-input-group auto-mode-input">
-                            <input type="number" id="villaExpensesPercent" value="15" step="0.1" onchange="calculate()">
-                            <span>%</span>
-                        </div>
-                        <!-- USD Monthly input (Self mode) -->
-                        <div class="fee-input-group self-mode-input" style="display: none;">
-                            <span>$</span>
-                            <input type="number" id="villaExpensesUSD" value="500" step="50" onchange="updatePercentFromUSD('villaExpenses')">
-                            <span data-i18n="perMonth">/mo</span>
-                        </div>
-                    </div>
-                    <div class="fee-description" data-i18n="villaExpensesList">Cleaning, pool maintenance, laundry, utilities, internet, repairs, insurance, gardening</div>
-                    <div class="fee-calculated" id="villaExpensesCalc">$0 / year</div>
-                </div>
-                <div class="fee-card">
-                    <div class="fee-card-header">
-                        <span class="fee-card-title" data-i18n="managementMarketing">Management</span>
-                        <!-- Percent input (Auto mode) -->
-                        <div class="fee-input-group auto-mode-input">
-                            <input type="number" id="managementMarketingPercent" value="15" step="0.1" onchange="calculate()">
-                            <span>%</span>
-                        </div>
-                        <!-- USD Monthly input (Self mode) -->
-                        <div class="fee-input-group self-mode-input" style="display: none;">
-                            <span>$</span>
-                            <input type="number" id="managementMarketingUSD" value="500" step="50" onchange="updatePercentFromUSD('managementMarketing')">
-                            <span data-i18n="perMonth">/mo</span>
-                        </div>
-                    </div>
-                    <div class="fee-description" data-i18n="managementList">Property management, guest services, booking management</div>
-                    <div class="fee-calculated" id="managementMarketingCalc">$0 / year</div>
-                </div>
-                <div class="fee-card">
-                    <div class="fee-card-header">
-                        <span class="fee-card-title" data-i18n="taxPhr">Withholding Tax</span>
-                        <div class="fee-input-group">
-                            <input type="number" id="taxPercent" value="10" step="0.1" onchange="calculate()" disabled>
-                            <span>%</span>
-                        </div>
-                    </div>
-                    <div class="fee-description" data-i18n="taxList">Fixed 10% per Indonesian regulation PP 34/2017 (Pajak Penghasilan)</div>
+                    <div class="fee-description" data-i18n="taxList">PPh 2.5% + PPN 10% = 12.5% per Indonesian regulation</div>
                     <div class="fee-calculated" id="taxCalc">$0 / year</div>
                 </div>
+                <div class="fee-card">
+                    <div class="fee-card-header">
+                        <span class="fee-card-title" data-i18n="pondokWisata">Pondok Wisata License</span>
+                        <div class="fee-input-group">
+                            <span>$</span>
+                            <input type="number" id="pondokWisataCost" value="1000" step="100" onchange="calculate()">
+                        </div>
+                    </div>
+                    <div class="fee-description" data-i18n="pondokWisataDesc">One-time setup, renewed every 5 years</div>
+                    <div class="fee-calculated" id="pondokWisataCalc">$200 / year</div>
+                </div>
+            </div>
+
+            <!-- Operation Cost Breakdown -->
+            <div class="op-cost-breakdown" id="opCostBreakdown">
+                <div class="op-cost-breakdown-title">
+                    <span data-i18n="operationCostBreakdown">Operation Cost Breakdown</span>
+                    <span class="mode-badge" id="opCostModeBadge">MANAGEMENT</span>
+                </div>
+                <div id="opCostBreakdownBody"></div>
             </div>
         </div>
 
@@ -3719,70 +3941,26 @@
             localStorage.setItem('shorttermWarningDismissed', 'true');
         }
 
-        // Operation Mode: Auto vs Self
-        let operationMode = 'auto'; // 'auto' or 'self'
+        // Operation Mode: management / direct / hybrid
+        let operationMode = 'management';
 
         function setOperationMode(mode) {
             operationMode = mode;
-            const t = translations[currentLang];
 
-            // Update button states
-            document.getElementById('modeAutoBtn').classList.toggle('active', mode === 'auto');
-            document.getElementById('modeSelfBtn').classList.toggle('active', mode === 'self');
-
-            // Update hint text
-            const hintEl = document.getElementById('modeHint');
-            if (mode === 'auto') {
-                hintEl.textContent = t.autoModeHint || 'Costs calculated as % of gross revenue. Suitable for outsourced villa management.';
-            } else {
-                hintEl.textContent = t.selfModeHint || 'Enter your actual monthly costs in USD. Percentage will be auto-calculated.';
-            }
-
-            // Toggle input visibility
-            document.querySelectorAll('.auto-mode-input').forEach(el => {
-                el.style.display = mode === 'auto' ? 'flex' : 'none';
-            });
-            document.querySelectorAll('.self-mode-input').forEach(el => {
-                el.style.display = mode === 'self' ? 'flex' : 'none';
+            // Update card active states
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.classList.toggle('active', card.dataset.mode === mode);
             });
 
-            // If switching to self mode, update percentages from USD inputs
-            if (mode === 'self') {
-                updatePercentFromUSD('villaExpenses');
-                updatePercentFromUSD('managementMarketing');
-            }
+            // Show/hide detail sections
+            document.getElementById('modeDetailManagement').classList.toggle('active', mode === 'management');
+            document.getElementById('modeDetailDirect').classList.toggle('active', mode === 'direct');
+            document.getElementById('modeDetailHybrid').classList.toggle('active', mode === 'hybrid');
 
             calculate();
         }
 
-        function updatePercentFromUSD(costType) {
-            // Get monthly USD value
-            const monthlyUSD = parseFloat(document.getElementById(costType + 'USD').value) || 0;
-            const annualUSD = monthlyUSD * 12;
-
-            // Get gross income to calculate percentage
-            const peakDays = parseFloat(document.getElementById('peakDays').textContent) || 0;
-            const peakPrice = parseFloat(document.getElementById('peakPrice').value) || 0;
-            const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100 || 0;
-            const highDays = parseFloat(document.getElementById('highDays').textContent) || 0;
-            const highPrice = parseFloat(document.getElementById('highPrice').value) || 0;
-            const highOccupancy = parseFloat(document.getElementById('highOccupancy').value) / 100 || 0;
-            const lowDays = parseFloat(document.getElementById('lowDays').textContent) || 0;
-            const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
-            const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
-
-            const grossIncomeYearly = (peakDays * peakPrice * peakOccupancy) +
-                                     (highDays * highPrice * highOccupancy) +
-                                     (lowDays * lowPrice * lowOccupancy);
-
-            // Calculate percentage
-            const percent = grossIncomeYearly > 0 ? (annualUSD / grossIncomeYearly) * 100 : 0;
-
-            // Update the percentage input
-            document.getElementById(costType + 'Percent').value = percent.toFixed(1);
-
-            calculate();
-        }
+        // updatePercentFromUSD removed - now using 3-mode operation cost system
 
         function showLegalModal() {
             document.getElementById('legalModal').classList.add('show');
@@ -3865,7 +4043,7 @@
                 referencePricing: "Reference Pricing by Location",
                 marketAverage: "Market Average",
                 selectedLocation: "Selected:",
-                fetchMarket: "Fetch Live Data",
+                fetchMarket: "Apply Market Data",
                 referenceNote: "* Prices are average nightly rates (USD) for premium villas in each area",
                 dataSources: "Data Sources:",
                 sourcesNote: "2025 Q1 market data, premium private pool villas (4.5+ rating)",
@@ -3990,11 +4168,44 @@
                 saveSimulation: "Save",
                 loadSimulation: "Load",
                 askQuestions: "Ask Questions",
+                fetchMarket: "Apply Market Data",
+                applyMarketData: "Apply Market Data",
                 // Operation Mode
-                autoOperation: "Auto Operation (Outsourced)",
-                selfOperation: "Self Operation (DIY)",
-                autoModeHint: "Costs calculated as % of gross revenue. Suitable for outsourced villa management.",
-                selfModeHint: "Enter your actual monthly costs in USD. Percentage will be auto-calculated.",
+                operationMode: "Operation Mode",
+                managementCompany: "Management Company",
+                managementCompanyDesc: "Outsource everything to a management company",
+                directHire: "Direct Hire",
+                directHireDesc: "Hire your own staff, manage directly",
+                hybrid: "Hybrid",
+                hybridDesc: "Booking commission + own staff",
+                commissionRate: "Commission Rate",
+                villaManager: "Villa Manager",
+                housekeeper: "Housekeeper",
+                securityGuard: "Security Guard",
+                gardener: "Gardener",
+                utilities: "Utilities (Electric+Water+Gas)",
+                internet: "Internet",
+                maintenance: "Maintenance",
+                insurance: "Insurance",
+                otaFees: "OTA/Marketing Fees",
+                operationCostBreakdown: "Operation Cost Breakdown",
+                totalOperatingCost: "Total Operating Cost",
+                managementModeSettings: "Management Company Settings",
+                directHireSettings: "Direct Hire — Monthly Costs",
+                hybridSettings: "Hybrid — Booking Commission + Own Staff",
+                additionalFixedCosts: "Additional Fixed Costs",
+                utilitiesInsurance: "Utilities & Insurance",
+                bookingCommission: "Booking Commission",
+                tagCommission: "COMMISSION",
+                tagHandsOff: "HANDS-OFF",
+                tagNoCommission: "NO COMMISSION",
+                tagOwnStaff: "OWN STAFF",
+                tagFullControl: "FULL CONTROL",
+                tagBookingFee: "BOOKING FEE",
+                taxPhr: "Tax (PPh + PPN)",
+                taxList: "PPh 2.5% + PPN 10% = 12.5% per Indonesian regulation",
+                pondokWisata: "Pondok Wisata License",
+                pondokWisataDesc: "One-time setup, renewed every 5 years",
                 perMonth: "/mo",
                 saveModalTitle: "Save Simulation",
                 simulationName: "Simulation Name",
@@ -4040,7 +4251,7 @@
                 referencePricing: "지역별 시세 참고표",
                 marketAverage: "시장 평균",
                 selectedLocation: "선택:",
-                fetchMarket: "실시간 데이터",
+                fetchMarket: "시장 데이터 적용",
                 referenceNote: "* 각 지역 프리미엄 빌라의 평균 1박 요금 (USD)",
                 dataSources: "데이터 출처:",
                 sourcesNote: "2025년 1분기 시장 데이터, 프리미엄 프라이빗 풀빌라 (평점 4.5+)",
@@ -4169,11 +4380,44 @@
                 saveSimulation: "저장",
                 loadSimulation: "불러오기",
                 askQuestions: "문의하기",
+                fetchMarket: "시장 데이터 적용",
+                applyMarketData: "시장 데이터 적용",
                 // Operation Mode
-                autoOperation: "자동 운영 (위탁)",
-                selfOperation: "자체 운영 (직접)",
-                autoModeHint: "총 수입 대비 %로 비용 계산. 빌라 관리 위탁 시 적합.",
-                selfModeHint: "실제 월 비용을 USD로 입력하세요. %가 자동 계산됩니다.",
+                operationMode: "운영 방식",
+                managementCompany: "외주 관리",
+                managementCompanyDesc: "관리 회사에 모든 운영을 위탁",
+                directHire: "직접 고용",
+                directHireDesc: "직원을 직접 고용하고 관리",
+                hybrid: "하이브리드",
+                hybridDesc: "예약 수수료 + 자체 직원",
+                commissionRate: "수수료율",
+                villaManager: "빌라 매니저",
+                housekeeper: "하우스키퍼",
+                securityGuard: "보안 경비",
+                gardener: "정원사",
+                utilities: "공과금 (전기+수도+가스)",
+                internet: "인터넷",
+                maintenance: "유지보수",
+                insurance: "보험",
+                otaFees: "OTA/마케팅 수수료",
+                operationCostBreakdown: "운영비 상세 내역",
+                totalOperatingCost: "총 운영 비용",
+                managementModeSettings: "관리 회사 설정",
+                directHireSettings: "직접 고용 — 월간 비용",
+                hybridSettings: "하이브리드 — 예약 수수료 + 자체 직원",
+                additionalFixedCosts: "추가 고정 비용",
+                utilitiesInsurance: "공과금 및 보험",
+                bookingCommission: "예약 수수료",
+                tagCommission: "수수료",
+                tagHandsOff: "위탁 관리",
+                tagNoCommission: "수수료 없음",
+                tagOwnStaff: "자체 직원",
+                tagFullControl: "완전 통제",
+                tagBookingFee: "예약 수수료",
+                taxPhr: "세금 (PPh + PPN)",
+                taxList: "PPh 2.5% + PPN 10% = 12.5% 인도네시아 규정",
+                pondokWisata: "Pondok Wisata 라이선스",
+                pondokWisataDesc: "1회 설정, 5년마다 갱신",
                 perMonth: "/월",
                 saveModalTitle: "시뮬레이션 저장",
                 simulationName: "시뮬레이션 이름",
@@ -4486,14 +4730,6 @@
             calculate();
         }
 
-        // Xotelo API location keys for Bali areas
-        const xoteloLocationKeys = {
-            seminyak: 'g469404',
-            canggu: 'g1646547',
-            ubud: 'g297701',
-            sanur: 'g664666'
-        };
-
         // Premium villa pricing based on 2025 market research
         // Sources: AirDNA, Bali Villa Realty, The Bali Homes, Villa Bali Sale
         // Target: Top 15% luxury private pool villas (4.8+ rating, modern design)
@@ -4557,128 +4793,29 @@
             updateLocationDefaults();
         }
 
-        async function fetchMarketData() {
+        function applyMarketData() {
             const btn = document.getElementById('fetchBtn');
             const status = document.getElementById('fetchStatus');
             const dataSource = document.getElementById('dataSource');
             const location = document.getElementById('villaLocation').value;
-            const locationKey = xoteloLocationKeys[location];
-            const t = translations[currentLang];
 
-            // Show loading state
-            btn.classList.add('loading');
-            btn.disabled = true;
+            // Apply built-in market research data
+            useEstimatedData(location);
+
+            // Show success
             status.style.display = 'block';
-            status.className = 'fetch-status loading';
+            status.className = 'fetch-status success';
             status.textContent = currentLang === 'en'
-                ? '⏳ Fetching live data from TripAdvisor/OTAs...'
-                : '⏳ TripAdvisor/OTA에서 실시간 데이터 가져오는 중...';
+                ? '✓ 2025 Q1 market research data applied'
+                : '✓ 2025년 1분기 시장 조사 데이터 적용됨';
 
-            try {
-                // Fetch accommodation list from Xotelo API
-                const listUrl = `https://data.xotelo.com/api/list?location_key=${locationKey}&limit=50&sort=best_value`;
+            dataSource.textContent = currentLang === 'en' ? '(Market Research)' : '(시장 조사)';
+            dataSource.className = 'data-source';
 
-                const response = await fetch(listUrl);
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                // Filter for premium villas (rating >= 4.5, with pool mention)
-                const premiumVillas = (data.result || []).filter(hotel => {
-                    const rating = parseFloat(hotel.rating) || 0;
-                    const name = (hotel.name || '').toLowerCase();
-                    const hasPool = name.includes('villa') || name.includes('pool');
-                    return rating >= 4.0 && hasPool;
-                });
-
-                if (premiumVillas.length === 0) {
-                    throw new Error(currentLang === 'en'
-                        ? 'No premium villas found in this area'
-                        : '이 지역에서 프리미엄 빌라를 찾을 수 없습니다');
-                }
-
-                // Calculate average prices by bedroom estimate (based on price range)
-                const priceRanges = premiumVillas.map(v => ({
-                    min: v.price_range?.min || 0,
-                    max: v.price_range?.max || 0,
-                    avg: ((v.price_range?.min || 0) + (v.price_range?.max || 0)) / 2
-                })).filter(p => p.avg > 0);
-
-                if (priceRanges.length > 0) {
-                    // Sort by price to estimate bedroom categories
-                    priceRanges.sort((a, b) => a.avg - b.avg);
-                    const len = priceRanges.length;
-
-                    // Estimate prices by quartiles (1BR=low, 2BR=mid-low, 3BR=mid-high, 4BR=high)
-                    const q1 = Math.floor(len * 0.25);
-                    const q2 = Math.floor(len * 0.5);
-                    const q3 = Math.floor(len * 0.75);
-
-                    const avg1BR = priceRanges.slice(0, q1).reduce((s, p) => s + p.avg, 0) / Math.max(q1, 1);
-                    const avg2BR = priceRanges.slice(q1, q2).reduce((s, p) => s + p.avg, 0) / Math.max(q2 - q1, 1);
-                    const avg3BR = priceRanges.slice(q2, q3).reduce((s, p) => s + p.avg, 0) / Math.max(q3 - q2, 1);
-                    const avg4BR = priceRanges.slice(q3).reduce((s, p) => s + p.avg, 0) / Math.max(len - q3, 1);
-
-                    // Update locationPricing with live data (apply seasonal multipliers)
-                    const locData = locationPricing[location];
-                    const seasonMultiplier = { peak: 1.3, high: 1.0, low: 0.75 };
-
-                    ['1', '2', '3', '4'].forEach((br, idx) => {
-                        const basePrice = [avg1BR, avg2BR, avg3BR, avg4BR][idx];
-                        if (basePrice > 0) {
-                            locData[br].peak = Math.round(basePrice * seasonMultiplier.peak);
-                            locData[br].high = Math.round(basePrice * seasonMultiplier.high);
-                            locData[br].low = Math.round(basePrice * seasonMultiplier.low);
-                        }
-                    });
-
-                    // Update UI
-                    updateReferenceTable();
-                    updateLocationDefaults();
-
-                    // Show success
-                    status.className = 'fetch-status success';
-                    status.textContent = currentLang === 'en'
-                        ? `✓ Updated with ${premiumVillas.length} premium villas data`
-                        : `✓ ${premiumVillas.length}개 프리미엄 빌라 데이터로 업데이트됨`;
-
-                    dataSource.textContent = currentLang === 'en' ? '(Live Data)' : '(실시간)';
-                    dataSource.className = 'data-source live';
-                } else {
-                    throw new Error(currentLang === 'en'
-                        ? 'No price data available'
-                        : '가격 데이터를 사용할 수 없습니다');
-                }
-
-            } catch (error) {
-                console.error('Fetch error:', error);
-
-                // Fallback to estimated data based on market research
-                useEstimatedData(location);
-
-                status.className = 'fetch-status success';
-                status.textContent = currentLang === 'en'
-                    ? '✓ Using market research data (API unavailable)'
-                    : '✓ 시장 조사 데이터 사용 중 (API 사용 불가)';
-
-                dataSource.textContent = currentLang === 'en' ? '(Estimated)' : '(추정치)';
-                dataSource.className = 'data-source';
-            } finally {
-                btn.classList.remove('loading');
-                btn.disabled = false;
-
-                // Hide status after 5 seconds
-                setTimeout(() => {
-                    status.style.display = 'none';
-                }, 5000);
-            }
+            // Hide status after 5 seconds
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
         }
 
         function exportPDF() {
@@ -4841,10 +4978,8 @@
             document.getElementById('lowPrice').value = scenario.lowPrice;
             document.getElementById('lowOccupancy').value = scenario.lowOccupancy;
 
-            document.getElementById('otaPercent').value = scenario.ota;
-            document.getElementById('villaExpensesPercent').value = scenario.villaExpenses;
-            document.getElementById('managementMarketingPercent').value = scenario.managementMarketing;
-            // Tax is fixed at 10% per PP 34/2017
+            // Scenario cost settings are now handled by operation mode
+            // Tax defaults to 12.5% (PPh 2.5% + PPN 10%)
 
             document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -4879,9 +5014,9 @@
 
             // Create gradient for cumulative income line
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, 'rgba(212, 175, 55, 0.5)');
-            gradient.addColorStop(0.5, 'rgba(212, 175, 55, 0.2)');
-            gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+            gradient.addColorStop(0, 'rgba(201, 168, 76, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(201, 168, 76, 0.1)');
+            gradient.addColorStop(1, 'rgba(201, 168, 76, 0)');
 
             roiChart = new Chart(ctx, {
                 type: 'line',
@@ -4891,26 +5026,26 @@
                         {
                             label: t.cumulativeIncome,
                             data: cumulativeData,
-                            borderColor: '#d4af37',
+                            borderColor: '#c9a84c',
                             backgroundColor: gradient,
-                            borderWidth: 4,
+                            borderWidth: 2.5,
                             fill: true,
-                            tension: 0.4,
-                            pointRadius: 6,
-                            pointBackgroundColor: '#d4af37',
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#c9a84c',
                             pointBorderColor: '#fff',
-                            pointBorderWidth: 3,
-                            pointHoverRadius: 10,
-                            pointHoverBackgroundColor: '#d4af37',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 7,
+                            pointHoverBackgroundColor: '#c9a84c',
                             pointHoverBorderColor: '#fff',
-                            pointHoverBorderWidth: 4
+                            pointHoverBorderWidth: 3
                         },
                         {
                             label: t.initialInvestment,
                             data: investmentLine,
-                            borderColor: 'rgba(239, 68, 68, 0.85)',
-                            borderWidth: 3,
-                            borderDash: [12, 6],
+                            borderColor: 'rgba(239, 68, 68, 0.7)',
+                            borderWidth: 2,
+                            borderDash: [8, 4],
                             fill: false,
                             pointRadius: 0,
                             tension: 0
@@ -4929,19 +5064,19 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(15, 20, 25, 0.95)',
-                            titleColor: '#d4af37',
-                            titleFont: { size: 16, weight: 'bold' },
-                            bodyColor: '#fff',
-                            bodyFont: { size: 15 },
-                            padding: 18,
-                            cornerRadius: 12,
-                            borderColor: 'rgba(212, 175, 55, 0.3)',
+                            backgroundColor: 'rgba(10, 14, 19, 0.95)',
+                            titleColor: '#c9a84c',
+                            titleFont: { size: 13, weight: 'bold', family: "'JetBrains Mono', monospace" },
+                            bodyColor: '#e2e8f0',
+                            bodyFont: { size: 12, family: "'JetBrains Mono', monospace" },
+                            padding: 14,
+                            cornerRadius: 4,
+                            borderColor: 'rgba(201, 168, 76, 0.2)',
                             borderWidth: 1,
                             displayColors: true,
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            boxPadding: 6,
+                            boxWidth: 10,
+                            boxHeight: 10,
+                            boxPadding: 4,
                             callbacks: {
                                 label: function(context) {
                                     return ' ' + context.dataset.label + ': ' + formatCurrency(context.raw);
@@ -4952,45 +5087,49 @@
                     scales: {
                         x: {
                             grid: {
-                                display: false
-                            },
-                            border: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#718096',
-                                font: {
-                                    size: 14,
-                                    weight: 500
-                                },
-                                padding: 12
-                            },
-                            title: {
-                                display: true,
-                                text: currentLang === 'en' ? 'Year' : '년차',
-                                color: '#4a5568',
-                                font: {
-                                    size: 15,
-                                    weight: 600
-                                },
-                                padding: { top: 16 }
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: 'rgba(226, 232, 240, 0.6)',
+                                color: 'rgba(0, 0, 0, 0.04)',
                                 drawBorder: false
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#718096',
+                                color: '#8896a6',
                                 font: {
-                                    size: 14,
-                                    weight: 500
+                                    size: 11,
+                                    weight: 500,
+                                    family: "'JetBrains Mono', monospace"
                                 },
-                                padding: 12,
+                                padding: 8
+                            },
+                            title: {
+                                display: true,
+                                text: currentLang === 'en' ? 'Year' : '년차',
+                                color: '#6b7a8f',
+                                font: {
+                                    size: 11,
+                                    weight: 600,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: { top: 12 }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#8896a6',
+                                font: {
+                                    size: 11,
+                                    weight: 500,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: 8,
                                 callback: function(value) {
                                     if (value >= 1000000) {
                                         return '$' + (value / 1000000).toFixed(1) + 'M';
@@ -5003,12 +5142,13 @@
                             title: {
                                 display: true,
                                 text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)',
-                                color: '#4a5568',
+                                color: '#6b7a8f',
                                 font: {
-                                    size: 15,
-                                    weight: 600
+                                    size: 11,
+                                    weight: 600,
+                                    family: "'JetBrains Mono', monospace"
                                 },
-                                padding: { bottom: 16 }
+                                padding: { bottom: 12 }
                             }
                         }
                     },
@@ -5076,45 +5216,121 @@
                         {
                             label: currentLang === 'en' ? 'Cumulative Profit' : '누적 수익',
                             data: profitData,
-                            backgroundColor: netProfit >= 0 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)',
-                            borderRadius: 6
+                            backgroundColor: netProfit >= 0 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)',
+                            borderColor: netProfit >= 0 ? 'rgba(16, 185, 129, 1)' : 'rgba(239, 68, 68, 1)',
+                            borderWidth: 1,
+                            borderRadius: 3
                         },
                         {
                             type: 'line',
                             label: currentLang === 'en' ? 'Initial Setup Cost' : '초기 세팅 비용',
                             data: setupLine,
-                            borderColor: 'rgba(212, 175, 55, 1)',
-                            borderWidth: 3,
+                            borderColor: 'rgba(201, 168, 76, 0.9)',
+                            borderWidth: 2,
                             borderDash: [8, 4],
                             pointRadius: 0,
-                            fill: false
+                            fill: false,
+                            tension: 0
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
                     plugins: {
                         legend: {
-                            position: 'top'
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 14, 19, 0.95)',
+                            titleColor: '#c9a84c',
+                            titleFont: { size: 13, weight: 'bold', family: "'JetBrains Mono', monospace" },
+                            bodyColor: '#e2e8f0',
+                            bodyFont: { size: 12, family: "'JetBrains Mono', monospace" },
+                            padding: 14,
+                            cornerRadius: 4,
+                            borderColor: 'rgba(201, 168, 76, 0.2)',
+                            borderWidth: 1,
+                            displayColors: true,
+                            boxWidth: 10,
+                            boxHeight: 10,
+                            boxPadding: 4,
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.dataset.label + ': ' + formatCurrency(context.raw);
+                                }
+                            }
                         }
                     },
                     scales: {
                         x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.04)',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#8896a6',
+                                font: {
+                                    size: 11,
+                                    weight: 500,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: 8
+                            },
                             title: {
                                 display: true,
-                                text: currentLang === 'en' ? 'Year' : '년차'
+                                text: currentLang === 'en' ? 'Year' : '년차',
+                                color: '#6b7a8f',
+                                font: {
+                                    size: 11,
+                                    weight: 600,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: { top: 12 }
                             }
                         },
                         y: {
-                            title: {
-                                display: true,
-                                text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)'
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
                             },
                             ticks: {
+                                color: '#8896a6',
+                                font: {
+                                    size: 11,
+                                    weight: 500,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: 8,
                                 callback: function(value) {
-                                    return '$' + value.toLocaleString();
+                                    if (value >= 1000000) {
+                                        return '$' + (value / 1000000).toFixed(1) + 'M';
+                                    } else if (value >= 1000) {
+                                        return '$' + (value / 1000).toFixed(0) + 'K';
+                                    }
+                                    return '$' + value;
                                 }
+                            },
+                            title: {
+                                display: true,
+                                text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)',
+                                color: '#6b7a8f',
+                                font: {
+                                    size: 11,
+                                    weight: 600,
+                                    family: "'JetBrains Mono', monospace"
+                                },
+                                padding: { bottom: 12 }
                             }
                         }
                     }
@@ -5231,13 +5447,6 @@
             const lowPrice = parseFloat(document.getElementById('lowPrice').value) || 0;
             const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100 || 0;
 
-            // Cost percentages
-            const otaEnabled = document.getElementById('otaEnabled').checked;
-            const otaPercent = otaEnabled ? (parseFloat(document.getElementById('otaPercent').value) / 100 || 0) : 0;
-            const villaExpensesPercent = parseFloat(document.getElementById('villaExpensesPercent').value) / 100 || 0;
-            const managementMarketingPercent = parseFloat(document.getElementById('managementMarketingPercent').value) / 100 || 0;
-            const taxPercent = 0.10; // Fixed 10% per PP 34/2017
-
             // Calculate gross income
             const peakIncome = peakDays * peakPrice * peakOccupancy;
             const highIncome = highDays * highPrice * highOccupancy;
@@ -5254,35 +5463,128 @@
             document.getElementById('avgOccupancy').value = avgOccupancy.toFixed(1) + '%';
             document.getElementById('avgNightPrice').value = formatCurrency(avgNightPrice, 'USD');
 
-            // Calculate costs
-            const otaYearly = grossIncomeYearly * otaPercent;
-            const otaMonthly = otaYearly / 12;
-            const villaExpensesYearly = grossIncomeYearly * villaExpensesPercent;
-            const villaExpensesMonthly = villaExpensesYearly / 12;
-            const managementMarketingYearly = grossIncomeYearly * managementMarketingPercent;
-            const managementMarketingMonthly = managementMarketingYearly / 12;
+            // Tax calculation (PPh 2.5% + PPN 10% = 12.5%)
+            const taxPercent = (parseFloat(document.getElementById('taxPercent').value) || 12.5) / 100;
             const taxYearly = grossIncomeYearly * taxPercent;
             const taxMonthly = taxYearly / 12;
 
-            // Update cost displays
-            document.getElementById('otaCalc').textContent = otaEnabled ? `${formatCurrency(otaYearly)} / year` : '-';
-            document.getElementById('villaExpensesCalc').textContent = `${formatCurrency(villaExpensesYearly)} / year`;
-            document.getElementById('managementMarketingCalc').textContent = `${formatCurrency(managementMarketingYearly)} / year`;
-            document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
+            // Pondok Wisata license (one-time $1000, renewed every 5 years = $200/yr)
+            const pondokCost = parseFloat(document.getElementById('pondokWisataCost').value) || 1000;
+            const pondokYearly = pondokCost / 5;
+            document.getElementById('pondokWisataCalc').textContent = `${formatCurrency(pondokYearly)} / year`;
 
-            // Calculate total operating costs
-            const totalCostsYearly = otaYearly + villaExpensesYearly + managementMarketingYearly + taxYearly;
+            // ===== OPERATION MODE COST CALCULATION =====
+            let operatingCostYearly = 0;
+            let breakdownHTML = '';
+            const modeLabels = {
+                management: t.managementCompany || 'Management Company',
+                direct: t.directHire || 'Direct Hire',
+                hybrid: t.hybrid || 'Hybrid'
+            };
+
+            // Helper to get input value by id
+            const getVal = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+
+            if (operationMode === 'management') {
+                // Management: commission% of gross + fixed monthly costs
+                const commPct = getVal('mgmtCommission') / 100;
+                const fixedMonthly = getVal('mgmtFixedCosts');
+                const commissionYearly = grossIncomeYearly * commPct;
+                const fixedYearly = fixedMonthly * 12;
+                operatingCostYearly = commissionYearly + fixedYearly;
+
+                breakdownHTML = `
+                    <div class="op-cost-row"><span class="op-cost-label">${t.commissionRate || 'Commission'} (${(commPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(commissionYearly)}/yr</span></div>
+                    <div class="op-cost-row"><span class="op-cost-label">${t.utilitiesInsurance || 'Utilities & Insurance'} ($${fixedMonthly}/mo)</span><span class="op-cost-value">${formatCurrency(fixedYearly)}/yr</span></div>
+                    <div class="op-cost-row total"><span class="op-cost-label">${t.totalOperatingCost || 'Total Operating Cost'}</span><span class="op-cost-value">${formatCurrency(operatingCostYearly)}/yr</span></div>
+                `;
+            } else if (operationMode === 'direct') {
+                // Direct: sum monthly staff/costs + OTA% of gross
+                const staffCosts = {
+                    manager: getVal('directManager'),
+                    housekeeper: getVal('directHousekeeper'),
+                    security: getVal('directSecurity'),
+                    gardener: getVal('directGardener'),
+                    utilities: getVal('directUtilities'),
+                    internet: getVal('directInternet'),
+                    maintenance: getVal('directMaintenance'),
+                    insurance: getVal('directInsurance')
+                };
+                const staffLabels = {
+                    manager: t.villaManager || 'Villa Manager',
+                    housekeeper: t.housekeeper || 'Housekeeper',
+                    security: t.securityGuard || 'Security Guard',
+                    gardener: t.gardener || 'Gardener',
+                    utilities: t.utilities || 'Utilities',
+                    internet: t.internet || 'Internet',
+                    maintenance: t.maintenance || 'Maintenance',
+                    insurance: t.insurance || 'Insurance'
+                };
+                const totalStaffMonthly = Object.values(staffCosts).reduce((a, b) => a + b, 0);
+                const totalStaffYearly = totalStaffMonthly * 12;
+                const otaPct = getVal('directOtaPercent') / 100;
+                const otaYearly = grossIncomeYearly * otaPct;
+                operatingCostYearly = totalStaffYearly + otaYearly;
+
+                breakdownHTML = '';
+                for (const [key, val] of Object.entries(staffCosts)) {
+                    breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${staffLabels[key]} ($${val}/mo)</span><span class="op-cost-value">${formatCurrency(val * 12)}/yr</span></div>`;
+                }
+                breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${t.otaFees || 'OTA/Marketing Fees'} (${(otaPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(otaYearly)}/yr</span></div>`;
+                breakdownHTML += `<div class="op-cost-row total"><span class="op-cost-label">${t.totalOperatingCost || 'Total Operating Cost'}</span><span class="op-cost-value">${formatCurrency(operatingCostYearly)}/yr</span></div>`;
+
+            } else if (operationMode === 'hybrid') {
+                // Hybrid: booking commission% of gross + monthly staff costs
+                const commPct = getVal('hybridCommission') / 100;
+                const commissionYearly = grossIncomeYearly * commPct;
+                const staffCosts = {
+                    manager: getVal('hybridManager'),
+                    housekeeper: getVal('hybridHousekeeper'),
+                    security: getVal('hybridSecurity'),
+                    gardener: getVal('hybridGardener'),
+                    utilities: getVal('hybridUtilities'),
+                    internet: getVal('hybridInternet'),
+                    maintenance: getVal('hybridMaintenance'),
+                    insurance: getVal('hybridInsurance')
+                };
+                const staffLabels = {
+                    manager: t.villaManager || 'Villa Manager',
+                    housekeeper: t.housekeeper || 'Housekeeper',
+                    security: t.securityGuard || 'Security Guard',
+                    gardener: t.gardener || 'Gardener',
+                    utilities: t.utilities || 'Utilities',
+                    internet: t.internet || 'Internet',
+                    maintenance: t.maintenance || 'Maintenance',
+                    insurance: t.insurance || 'Insurance'
+                };
+                const totalStaffMonthly = Object.values(staffCosts).reduce((a, b) => a + b, 0);
+                const totalStaffYearly = totalStaffMonthly * 12;
+                operatingCostYearly = commissionYearly + totalStaffYearly;
+
+                breakdownHTML = `<div class="op-cost-row"><span class="op-cost-label">${t.bookingCommission || 'Booking Commission'} (${(commPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(commissionYearly)}/yr</span></div>`;
+                for (const [key, val] of Object.entries(staffCosts)) {
+                    breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${staffLabels[key]} ($${val}/mo)</span><span class="op-cost-value">${formatCurrency(val * 12)}/yr</span></div>`;
+                }
+                breakdownHTML += `<div class="op-cost-row total"><span class="op-cost-label">${t.totalOperatingCost || 'Total Operating Cost'}</span><span class="op-cost-value">${formatCurrency(operatingCostYearly)}/yr</span></div>`;
+            }
+
+            // Update breakdown display
+            document.getElementById('opCostBreakdownBody').innerHTML = breakdownHTML;
+            document.getElementById('opCostModeBadge').textContent = modeLabels[operationMode].toUpperCase();
+
+            // Total costs = operating + tax + pondok license
+            const totalCostsYearly = operatingCostYearly + taxYearly + pondokYearly;
+
+            // Update cost displays
+            document.getElementById('taxCalc').textContent = `${formatCurrency(taxYearly)} / year`;
 
             // Build summary table
             let tableHTML = '';
             tableHTML += `<tr class="category"><td>${t.grossIncome}</td><td>${formatCurrency(grossIncomeMonthly)}</td><td>${formatCurrency(grossIncomeYearly)}</td></tr>`;
 
-            if (otaEnabled) {
-                tableHTML += `<tr class="expense"><td>${t.otaCommission || 'OTA Commission'} (${(otaPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(otaMonthly)}</td><td>-${formatCurrency(otaYearly)}</td></tr>`;
-            }
-            tableHTML += `<tr class="expense"><td>${t.villaExpenses} (${(villaExpensesPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(villaExpensesMonthly)}</td><td>-${formatCurrency(villaExpensesYearly)}</td></tr>`;
-            tableHTML += `<tr class="expense"><td>${t.managementMarketing || 'Management'} (${(managementMarketingPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(managementMarketingMonthly)}</td><td>-${formatCurrency(managementMarketingYearly)}</td></tr>`;
-            tableHTML += `<tr class="expense"><td>${t.taxPhr || 'Tax'} (10% - PP 34/2017)</td><td>-${formatCurrency(taxMonthly)}</td><td>-${formatCurrency(taxYearly)}</td></tr>`;
+            tableHTML += `<tr class="expense"><td>${modeLabels[operationMode]} (${t.operationMode || 'Operation'})</td><td>-${formatCurrency(operatingCostYearly / 12)}</td><td>-${formatCurrency(operatingCostYearly)}</td></tr>`;
+            tableHTML += `<tr class="expense"><td>${t.taxPhr || 'Tax'} (${(taxPercent * 100).toFixed(1)}%)</td><td>-${formatCurrency(taxMonthly)}</td><td>-${formatCurrency(taxYearly)}</td></tr>`;
+            tableHTML += `<tr class="expense"><td>${t.pondokWisata || 'Pondok Wisata'}</td><td>-${formatCurrency(pondokYearly / 12)}</td><td>-${formatCurrency(pondokYearly)}</td></tr>`;
 
             if (isShortTerm) {
                 // ========== SHORT-TERM MODE ==========
@@ -5451,11 +5753,13 @@
                 lowPrice: document.getElementById('lowPrice').value,
                 lowOccupancy: document.getElementById('lowOccupancy').value,
 
-                // Costs
-                otaEnabled: document.getElementById('otaEnabled').checked,
-                otaPercent: document.getElementById('otaPercent').value,
-                villaExpensesPercent: document.getElementById('villaExpensesPercent').value,
-                managementMarketingPercent: document.getElementById('managementMarketingPercent').value,
+                // Costs - Operation Mode
+                operationMode: operationMode,
+                taxPercent: document.getElementById('taxPercent').value,
+                pondokWisataCost: document.getElementById('pondokWisataCost').value,
+                mgmtCommission: document.getElementById('mgmtCommission')?.value,
+                mgmtFixedCosts: document.getElementById('mgmtFixedCosts')?.value,
+                directOtaPercent: document.getElementById('directOtaPercent')?.value,
 
                 // Growth
                 growthResaleEnabled: document.getElementById('growthResaleEnabled').checked,
@@ -5512,11 +5816,13 @@
             document.getElementById('lowPrice').value = data.lowPrice || 220;
             document.getElementById('lowOccupancy').value = data.lowOccupancy || 50;
 
-            // Costs
-            document.getElementById('otaEnabled').checked = data.otaEnabled !== false;
-            document.getElementById('otaPercent').value = data.otaPercent || 15;
-            document.getElementById('villaExpensesPercent').value = data.villaExpensesPercent || 15;
-            document.getElementById('managementMarketingPercent').value = data.managementMarketingPercent || 15;
+            // Costs - Operation Mode
+            if (data.operationMode) setOperationMode(data.operationMode);
+            if (data.taxPercent) document.getElementById('taxPercent').value = data.taxPercent;
+            if (data.pondokWisataCost) document.getElementById('pondokWisataCost').value = data.pondokWisataCost;
+            if (data.mgmtCommission && document.getElementById('mgmtCommission')) document.getElementById('mgmtCommission').value = data.mgmtCommission;
+            if (data.mgmtFixedCosts && document.getElementById('mgmtFixedCosts')) document.getElementById('mgmtFixedCosts').value = data.mgmtFixedCosts;
+            if (data.directOtaPercent && document.getElementById('directOtaPercent')) document.getElementById('directOtaPercent').value = data.directOtaPercent;
 
             // Growth
             if (document.getElementById('growthResaleEnabled')) {
@@ -5675,12 +5981,14 @@
                 background: var(--navy);
                 color: white;
                 padding: 14px 28px;
-                border-radius: 12px;
-                font-size: 14px;
+                border-radius: 4px;
+                font-size: 13px;
                 font-weight: 500;
+                font-family: var(--mono);
                 z-index: 99999;
                 animation: toastIn 0.3s ease;
                 box-shadow: var(--shadow-lg);
+                border-left: 3px solid var(--gold);
             `;
             toast.textContent = message;
             document.body.appendChild(toast);
