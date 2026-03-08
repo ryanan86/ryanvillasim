@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <style>
         :root {
             /* Primary: Warm Teal (tropical, sophisticated) */
@@ -138,7 +139,7 @@
         }
 
         .lease-modal-logo {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             font-size: 11px;
             font-weight: 600;
             color: var(--accent);
@@ -148,7 +149,7 @@
         }
 
         .lease-modal-title {
-            font-family: 'DM Serif Display', Georgia, serif;
+            font-family: 'DM Serif Display', 'Pretendard Variable', Georgia, serif;
             font-size: 36px;
             font-weight: 400;
             color: #1c1917;
@@ -453,7 +454,7 @@
             color: #1c1917;
             font-size: 18px;
             font-weight: 600;
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             letter-spacing: -0.02em;
         }
 
@@ -654,7 +655,7 @@
         }
 
         .sim-modal-header h3 {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             font-size: 18px;
             font-weight: 600;
             color: #1c1917;
@@ -882,7 +883,7 @@
         }
 
         .consulting-cta-content h3 {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             color: #1c1917;
             font-size: 18px;
             font-weight: 600;
@@ -1057,7 +1058,7 @@
         }
 
         body {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             background: var(--bg-app);
             background-image: none;
             min-height: 100vh;
@@ -1094,7 +1095,7 @@
         }
 
         .logo {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             font-size: 11px;
             font-weight: 600;
             color: var(--gold);
@@ -1109,7 +1110,7 @@
         }
 
         .header h1 {
-            font-family: 'DM Serif Display', Georgia, serif;
+            font-family: 'DM Serif Display', 'Pretendard Variable', Georgia, serif;
             font-size: 28px;
             font-weight: 400;
             color: #1c1917;
@@ -1301,7 +1302,7 @@
         }
 
         .card-title {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             font-size: 18px;
             font-weight: 600;
             color: #1c1917;
@@ -1317,7 +1318,7 @@
             border-radius: 6px;
             border: 1px solid rgba(13, 148, 136, 0.15);
             letter-spacing: 0;
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
         }
 
         /* Premium Exchange Rate Bar */
@@ -2293,7 +2294,7 @@
         }
 
         .footer .brand {
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: 'DM Sans', 'Pretendard Variable', -apple-system, sans-serif;
             font-size: 16px;
             font-weight: 600;
             color: #1c1917;
@@ -5043,47 +5044,74 @@
             }
         };
 
-        function useEstimatedData(location) {
-            const locData = locationPricing[location];
-            const defaultData = defaultPricing[location];
-
-            // Reset to default estimated values
-            ['1', '2', '3', '4'].forEach(br => {
-                locData[br].peak = defaultData[br].peak;
-                locData[br].high = defaultData[br].high;
-                locData[br].low = defaultData[br].low;
-                locData[br].purchase = defaultData[br].purchase;
-            });
-            locData.occupancy = { ...defaultData.occupancy };
-
-            // Update UI
-            updateReferenceTable();
-            updateLocationDefaults();
-        }
-
         function applyMarketData() {
             const btn = document.getElementById('fetchBtn');
             const status = document.getElementById('fetchStatus');
-            const dataSource = document.getElementById('dataSource');
             const location = document.getElementById('villaLocation').value;
+            const bedroom = document.getElementById('nbBedroom').value;
 
-            // Apply built-in market research data
-            useEstimatedData(location);
+            if (location === 'custom') {
+                status.style.display = 'block';
+                status.className = 'fetch-status warning';
+                status.textContent = currentLang === 'en'
+                    ? '⚠ Select a location first (not Custom)'
+                    : '⚠ 먼저 지역을 선택하세요 (커스텀 제외)';
+                setTimeout(() => { status.style.display = 'none'; }, 3000);
+                return;
+            }
+
+            const locData = locationPricing[location];
+            if (!locData) return;
+
+            const brData = locData[bedroom];
+            const occData = locData.occupancy;
+
+            // Apply seasonal pricing
+            document.getElementById('peakPrice').value = brData.peak;
+            document.getElementById('highPrice').value = brData.high;
+            document.getElementById('lowPrice').value = brData.low;
+
+            // Apply occupancy rates
+            document.getElementById('peakOccupancy').value = occData.peak;
+            document.getElementById('highOccupancy').value = occData.high;
+            document.getElementById('lowOccupancy').value = occData.low;
+
+            // Apply purchase price (long-term mode)
+            const buyingPriceEl = document.getElementById('buyingPrice');
+            if (buyingPriceEl) {
+                buyingPriceEl.value = brData.purchase.toLocaleString();
+            }
+
+            // Visual feedback - briefly highlight changed inputs
+            const inputIds = ['peakPrice', 'highPrice', 'lowPrice', 'peakOccupancy', 'highOccupancy', 'lowOccupancy', 'buyingPrice'];
+            inputIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.transition = 'background 0.3s, border-color 0.3s';
+                    el.style.background = '#ccfbf1';
+                    el.style.borderColor = '#0d9488';
+                    setTimeout(() => {
+                        el.style.background = '';
+                        el.style.borderColor = '';
+                    }, 1500);
+                }
+            });
+
+            // Recalculate
+            calculate();
+
+            // Update reference table
+            updateReferenceTable();
 
             // Show success
+            const locationName = currentLang === 'ko' ? locData.name.ko : locData.name.en;
             status.style.display = 'block';
             status.className = 'fetch-status success';
             status.textContent = currentLang === 'en'
-                ? '✓ 2025 Q1 market research data applied'
-                : '✓ 2025년 1분기 시장 조사 데이터 적용됨';
+                ? `✓ Market data applied: ${locationName} ${bedroom}BR`
+                : `✓ 시장 데이터 적용됨: ${locationName} ${bedroom}BR`;
 
-            dataSource.textContent = currentLang === 'en' ? '(Market Research)' : '(시장 조사)';
-            dataSource.className = 'data-source';
-
-            // Hide status after 5 seconds
-            setTimeout(() => {
-                status.style.display = 'none';
-            }, 5000);
+            setTimeout(() => { status.style.display = 'none'; }, 5000);
         }
 
         function exportPDF() {
