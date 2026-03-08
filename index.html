@@ -8,37 +8,48 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4a853;
-            --gold-light: #f0ddb8;
-            --gold-dark: #b08c3a;
-            --gold-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            --navy: #0f172a;
-            --navy-light: #f8f9fa;
-            --navy-medium: #f1f5f9;
-            --charcoal: #1e293b;
-            --slate: #64748b;
-            --gray: #94a3b8;
-            --light-gray: #e5e7eb;
-            --off-white: #f8fafc;
-            --white: #ffffff;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --danger: #ef4444;
-            --danger-light: #fee2e2;
-            --accent: #2563eb;
-            --accent-light: #dbeafe;
-            --accent-dark: #1d4ed8;
+            --bg-app: #F7F9FC;
+            --surface: #FFFFFF;
+            --border-subtle: #E2E8F0;
+            --border-focus: #94A3B8;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-tertiary: #94A3B8;
+            --accent: #635BFF;
+            --accent-hover: #5851DF;
+            --accent-light: #F0EFFF;
+            --success: #059669;
+            --success-light: #ECFDF5;
+            --danger: #E11D48;
+            --danger-light: #FFF1F2;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --mono: 'JetBrains Mono', 'SF Mono', monospace;
+            /* Legacy aliases for compatibility */
+            --gold: #635BFF;
+            --gold-light: #F0EFFF;
+            --gold-dark: #5851DF;
+            --gold-gradient: linear-gradient(135deg, #635BFF 0%, #5851DF 100%);
+            --navy: #0F172A;
+            --navy-light: #F7F9FC;
+            --navy-medium: #F1F5F9;
+            --charcoal: #0F172A;
+            --slate: #475569;
+            --gray: #94A3B8;
+            --light-gray: #E2E8F0;
+            --off-white: #F7F9FC;
+            --white: #FFFFFF;
+            --danger-old: #E11D48;
+            --accent-dark: #5851DF;
             --glass: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(0, 0, 0, 0.06);
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
-            --shadow-gold: 0 4px 20px rgba(37, 99, 235, 0.15);
-            --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            --shadow-gold: 0 4px 20px rgba(99, 91, 255, 0.15);
         }
 
         * {
@@ -54,10 +65,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f0f2f5;
-            background-image:
-                radial-gradient(ellipse at 30% 10%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 90%, rgba(15, 23, 42, 0.02) 0%, transparent 50%);
+            background: #F7F9FC;
+            background-image: none;
             z-index: 9999;
             display: flex;
             align-items: flex-start;
@@ -110,22 +119,22 @@
         }
 
         .lease-modal-logo {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--gold);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             margin-bottom: 16px;
         }
 
         .lease-modal-title {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--navy);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: #0F172A;
             margin-bottom: 12px;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .lease-modal-subtitle {
@@ -143,9 +152,9 @@
         }
 
         .lease-option {
-            background: var(--white);
-            border: 1.5px solid var(--light-gray);
-            border-radius: 14px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
             padding: 32px 26px;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -155,13 +164,13 @@
 
         .lease-option:hover {
             border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
+            transform: none;
+            box-shadow: var(--shadow-md);
         }
 
         .lease-option.selected {
-            border-color: var(--accent);
-            background: var(--accent-light);
+            border-color: #635BFF;
+            background: #F0EFFF;
         }
 
         .lease-option-icon {
@@ -209,14 +218,14 @@
 
         .lease-tag {
             padding: 4px 10px;
-            background: var(--off-white);
-            border: 1px solid var(--light-gray);
+            background: #F7F9FC;
+            border: 1px solid #E2E8F0;
             border-radius: 6px;
             font-size: 11px;
             color: #475569;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
+            text-transform: none;
+            letter-spacing: 0;
         }
 
         .lease-warning {
@@ -258,17 +267,18 @@
 
         .lease-start-btn {
             padding: 16px 48px;
-            background: var(--accent);
+            background: #0F172A;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             font-size: 15px;
-            font-weight: 600;
-            color: var(--white);
+            font-weight: 500;
+            color: #FFFFFF;
             cursor: pointer;
             transition: all 0.25s ease;
             opacity: 0.4;
             pointer-events: none;
-            letter-spacing: 0.5px;
+            letter-spacing: 0;
+            text-transform: none;
         }
 
         .lease-start-btn.active {
@@ -277,9 +287,9 @@
         }
 
         .lease-start-btn.active:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-gold);
-            background: var(--accent-dark);
+            transform: none;
+            box-shadow: var(--shadow-sm);
+            background: #000000;
         }
 
         .lease-legal-link {
@@ -420,10 +430,10 @@
         }
 
         .legal-modal-header h3 {
-            color: var(--navy);
+            color: #0F172A;
             font-size: 18px;
-            font-weight: 700;
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-weight: 600;
+            font-family: 'DM Sans', -apple-system, sans-serif;
             letter-spacing: -0.02em;
         }
 
@@ -519,7 +529,7 @@
         }
 
         .legal-highlight {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.05) 0%, rgba(99, 91, 255, 0.1) 100%);
             border-left: 4px solid var(--accent);
             padding: 16px 20px;
             margin: 16px 0;
@@ -624,10 +634,10 @@
         }
 
         .sim-modal-header h3 {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-family: 'DM Sans', -apple-system, sans-serif;
             font-size: 18px;
-            font-weight: 700;
-            color: var(--navy);
+            font-weight: 600;
+            color: #0F172A;
             margin: 0;
             letter-spacing: -0.02em;
         }
@@ -670,20 +680,21 @@
         .sim-form-group select,
         .sim-form-group textarea {
             width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #dde1e7;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             font-size: 14px;
             transition: all 0.2s ease;
             font-family: inherit;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .sim-form-group input:focus,
         .sim-form-group select:focus,
         .sim-form-group textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .sim-form-group textarea {
@@ -701,28 +712,29 @@
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            text-transform: none;
+            letter-spacing: 0;
         }
 
         .sim-btn-primary {
-            background: var(--accent);
-            color: var(--white);
+            background: #0F172A;
+            color: #FFFFFF;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .sim-btn-primary:hover {
-            background: var(--accent-dark);
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-            transform: translateY(-1px);
+            background: #000000;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            transform: none;
         }
 
         .sim-btn-whatsapp {
@@ -762,7 +774,7 @@
 
         .sim-list-item:hover {
             border-color: var(--accent);
-            background: rgba(37, 99, 235, 0.04);
+            background: rgba(99, 91, 255, 0.04);
         }
 
         .sim-list-item-header {
@@ -833,7 +845,7 @@
 
         .budget-option.selected {
             border-color: var(--accent);
-            background: rgba(37, 99, 235, 0.06);
+            background: rgba(99, 91, 255, 0.06);
         }
 
         /* Consulting CTA Banner */
@@ -850,10 +862,10 @@
         }
 
         .consulting-cta-content h3 {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
-            color: var(--navy);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            color: #0F172A;
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 4px;
             letter-spacing: -0.02em;
         }
@@ -865,11 +877,11 @@
         }
 
         .consulting-cta-btn {
-            background: var(--accent);
-            color: var(--white);
+            background: #0F172A;
+            color: #FFFFFF;
             padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 6px;
+            font-weight: 500;
             text-decoration: none;
             white-space: nowrap;
             transition: all 0.2s;
@@ -879,9 +891,9 @@
         }
 
         .consulting-cta-btn:hover {
-            background: var(--accent-dark);
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-            transform: translateY(-1px);
+            background: #000000;
+            box-shadow: none;
+            transform: none;
         }
 
         /* Operation Mode Selector - 3-Mode Card Selection */
@@ -889,9 +901,9 @@
         .operation-mode-label { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
         .mode-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
         .mode-card { position: relative; padding: 16px; border: 1px solid var(--light-gray); border-radius: 10px; background: var(--white); cursor: pointer; transition: all 0.2s ease; text-align: left; }
-        .mode-card:hover { border-color: var(--accent); }
-        .mode-card.active { border-color: var(--accent); background: rgba(37,99,235,0.04); }
-        .mode-card.active::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--accent); border-radius: 4px 0 0 4px; }
+        .mode-card:hover { border-color: #94A3B8; }
+        .mode-card.active { border-color: #635BFF; background: #F0EFFF; }
+        .mode-card.active::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: #635BFF; border-radius: 4px 0 0 4px; }
         .mode-card-icon { width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 16px; }
         .mode-card[data-mode="management"] .mode-card-icon { background: rgba(59,130,246,0.12); color: #3b82f6; }
         .mode-card[data-mode="direct"] .mode-card-icon { background: rgba(16,185,129,0.12); color: #10b981; }
@@ -899,8 +911,8 @@
         .mode-card-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
         .mode-card-subtitle { font-size: 12px; color: var(--gray); margin-bottom: 10px; line-height: 1.5; }
         .mode-card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-        .mode-card-tag { padding: 2px 6px; background: var(--off-white); border-radius: 2px; font-size: 10px; font-weight: 500; color: var(--slate); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.3px; border: 1px solid var(--light-gray); }
-        .mode-card.active .mode-card-tag { background: rgba(37,99,235,0.08); color: var(--accent); border-color: rgba(37,99,235,0.2); }
+        .mode-card-tag { padding: 2px 6px; background: #F7F9FC; border-radius: 4px; font-size: 10px; font-weight: 500; color: #475569; font-family: var(--mono); text-transform: none; letter-spacing: 0; border: 1px solid #E2E8F0; }
+        .mode-card.active .mode-card-tag { background: rgba(99,91,255,0.08); color: #635BFF; border-color: rgba(99,91,255,0.2); }
         .mode-detail-section { padding: 16px; background: var(--off-white); border-radius: 4px; border: 1px solid var(--light-gray); display: none; margin-top: 12px; }
         .mode-detail-section.active { display: block; }
         .mode-detail-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
@@ -908,21 +920,21 @@
         .mode-cost-item { display: flex; flex-direction: column; gap: 6px; }
         .mode-cost-item label { font-size: 12px; font-weight: 600; color: var(--slate); }
         .mode-cost-item .cost-input-row { display: flex; align-items: center; gap: 6px; }
-        .mode-cost-item input { width: 100%; padding: 10px 12px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 15px; font-weight: 600; background: var(--white); color: var(--navy); font-family: var(--mono); transition: all 0.2s; }
-        .mode-cost-item input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .mode-cost-item input { width: 100%; padding: 10px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 15px; font-weight: 600; background: #FFFFFF; color: #0F172A; font-family: var(--mono); transition: all 0.2s; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); }
+        .mode-cost-item input:focus { outline: none; border-color: #635BFF; box-shadow: 0 0 0 3px #F0EFFF; }
         .mode-cost-item .cost-unit { font-size: 13px; font-weight: 600; color: var(--slate); white-space: nowrap; }
         .mode-cost-item .cost-hint { font-size: 11px; color: var(--gray); }
         .mode-commission-slider { margin-bottom: 16px; }
         .mode-commission-slider label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--slate); margin-bottom: 8px; }
         .mode-commission-slider .slider-value { font-size: 18px; font-weight: 700; color: var(--navy); }
-        .mode-commission-slider input[type="range"] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); border-radius: 3px; outline: none; }
-        .mode-commission-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--white); border: 3px solid var(--accent); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .mode-commission-slider input[type="range"] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: linear-gradient(135deg, #635BFF 0%, #5851DF 100%); border-radius: 3px; outline: none; }
+        .mode-commission-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; border: 3px solid #635BFF; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
         .mode-fixed-costs { padding: 12px 16px; background: var(--white); border-radius: 4px; border: 1px solid var(--light-gray); margin-top: 12px; }
-        .mode-fixed-costs-title { font-size: 12px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .mode-fixed-costs-title { font-size: 12px; font-weight: 500; color: #94A3B8; text-transform: none; letter-spacing: 0; margin-bottom: 8px; }
         .mode-fixed-costs input { width: 90px; padding: 8px 10px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 14px; font-weight: 600; background: var(--off-white); color: var(--navy); font-family: var(--mono); }
         .op-cost-breakdown { margin-top: 20px; padding: 20px; background: var(--off-white); border-radius: 6px; border: 1px solid var(--light-gray); }
         .op-cost-breakdown-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-        .op-cost-breakdown-title .mode-badge { padding: 3px 10px; background: var(--accent); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.5px; }
+        .op-cost-breakdown-title .mode-badge { padding: 3px 10px; background: #635BFF; border-radius: 6px; font-size: 11px; font-weight: 500; color: #FFFFFF; text-transform: none; letter-spacing: 0; }
         .op-cost-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .op-cost-row:last-child { border-bottom: none; }
         .op-cost-row.total { margin-top: 8px; padding-top: 12px; border-top: 2px solid var(--light-gray); border-bottom: none; }
@@ -930,7 +942,22 @@
         .op-cost-value { font-size: 14px; font-weight: 700; color: var(--navy); }
         .op-cost-row.total .op-cost-label { font-weight: 700; color: var(--navy); }
         .op-cost-row.total .op-cost-value { font-size: 16px; color: var(--danger); }
-        @media (max-width: 768px) { .mode-cards { grid-template-columns: 1fr; } .mode-cost-grid { grid-template-columns: 1fr; } }
+        .ota-channel-section { margin-top: 12px; padding: 12px 16px; background: var(--white); border-radius: 4px; border: 1px solid var(--light-gray); }
+        .ota-channel-section-title { font-size: 12px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .ota-channel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .ota-channel { display: flex; flex-direction: column; gap: 6px; }
+        .ota-channel-name { font-size: 12px; font-weight: 700; color: var(--navy); }
+        .ota-channel-row { display: flex; align-items: center; gap: 4px; }
+        .ota-channel-row label { font-size: 11px; font-weight: 500; color: var(--slate); min-width: 32px; }
+        .ota-channel-row input { width: 60px; padding: 6px 8px; border: 2px solid var(--light-gray); border-radius: 4px; font-size: 13px; font-weight: 600; background: var(--off-white); color: var(--navy); font-family: var(--mono); text-align: right; }
+        .ota-channel-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .ota-channel-row .ota-unit { font-size: 12px; font-weight: 600; color: var(--slate); }
+        .ota-weighted-total { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: center; }
+        .ota-weighted-label { font-size: 12px; font-weight: 600; color: var(--slate); }
+        .ota-weighted-value { font-size: 16px; font-weight: 700; color: var(--navy); }
+        .ota-mix-warning { font-size: 11px; color: var(--danger); font-weight: 500; margin-top: 4px; display: none; }
+        .ota-mix-warning.show { display: block; }
+        @media (max-width: 768px) { .mode-cards { grid-template-columns: 1fr; } .mode-cost-grid { grid-template-columns: 1fr; } .ota-channel-grid { grid-template-columns: 1fr; } }
 
         .mode-toggle { display: none; }
         .mode-btn { display: none; }
@@ -969,36 +996,39 @@
 
         /* Action buttons for save/load */
         .action-btn.save-btn {
-            background: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
-            border-color: rgba(34, 197, 94, 0.3);
+            background: #FFFFFF;
+            color: #475569;
+            border-color: #E2E8F0;
         }
 
         .action-btn.save-btn:hover {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: #22c55e;
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
         }
 
         .action-btn.load-btn {
-            background: rgba(59, 130, 246, 0.1);
-            color: #60a5fa;
-            border-color: rgba(59, 130, 246, 0.3);
+            background: #FFFFFF;
+            color: #475569;
+            border-color: #E2E8F0;
         }
 
         .action-btn.load-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #60a5fa;
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
         }
 
         .action-btn.consult-btn {
-            background: rgba(37, 211, 102, 0.1);
-            color: #25D366;
-            border-color: rgba(37, 211, 102, 0.3);
+            background: #FFFFFF;
+            color: #475569;
+            border-color: #E2E8F0;
         }
 
         .action-btn.consult-btn:hover {
-            background: rgba(37, 211, 102, 0.2);
-            border-color: #25D366;
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
         }
 
         /* Ensure body scrolls when modal is hidden */
@@ -1007,14 +1037,12 @@
         }
 
         body {
-            font-family: 'Pretendard Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
-            background: #f0f2f5;
-            background-image:
-                radial-gradient(ellipse at 20% 0%, rgba(37, 99, 235, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(15, 23, 42, 0.02) 0%, transparent 50%);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F7F9FC;
+            background-image: none;
             min-height: 100vh;
             padding: 32px 20px;
-            color: var(--charcoal);
+            color: #0F172A;
             font-size: 15px;
             line-height: 1.65;
             -webkit-font-smoothing: antialiased;
@@ -1046,27 +1074,27 @@
         }
 
         .logo {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-family: 'DM Sans', -apple-system, sans-serif;
             font-size: 11px;
-            font-weight: 700;
-            color: var(--gold);
+            font-weight: 600;
+            color: #635BFF;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 0;
             display: inline-block;
             padding: 6px 14px;
-            border: 1px solid rgba(212, 168, 83, 0.3);
+            border: 1px solid rgba(99, 91, 255, 0.2);
             border-radius: 6px;
-            background: rgba(212, 168, 83, 0.08);
+            background: rgba(99, 91, 255, 0.04);
         }
 
         .header h1 {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-family: 'DM Serif Display', Georgia, serif;
             font-size: 28px;
-            font-weight: 800;
-            color: var(--navy);
+            font-weight: 400;
+            color: #0F172A;
             margin-bottom: 0;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .header .subtitle {
@@ -1155,31 +1183,32 @@
             padding: 10px 24px;
             border: none;
             background: transparent;
-            color: var(--slate);
-            border-radius: 8px;
+            color: #475569;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 500;
             transition: all 0.2s ease;
             letter-spacing: 0;
+            text-transform: none;
         }
 
         .scenario-btn:hover {
-            color: var(--navy);
-            background: var(--off-white);
+            color: #0F172A;
+            background: #F7F9FC;
         }
 
         .scenario-btn.active {
-            background: var(--navy);
-            color: var(--white);
+            background: #0F172A;
+            color: #FFFFFF;
         }
 
         .action-btn {
             padding: 10px 20px;
-            border: 1px solid var(--light-gray);
-            background: var(--white);
-            color: var(--slate);
-            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+            background: #FFFFFF;
+            color: #475569;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 500;
@@ -1190,23 +1219,24 @@
         }
 
         .action-btn:hover {
-            background: var(--off-white);
-            border-color: var(--accent);
-            color: var(--navy);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
-            transform: translateY(-1px);
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
+            box-shadow: none;
+            transform: none;
         }
 
         .flood-map-btn {
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
             text-decoration: none;
-            color: #38bdf8;
+            color: #475569;
         }
 
         .flood-map-btn:hover {
-            background: rgba(14, 165, 233, 0.2);
-            border-color: #38bdf8;
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
         }
 
         .action-btn svg {
@@ -1217,15 +1247,15 @@
 
         /* Premium Cards */
         .card {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 30px 32px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0,0,0,0.05);
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            border: 1px solid #E2E8F0;
             position: relative;
             overflow: hidden;
-            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            transition: box-shadow 0.25s ease;
         }
 
         .card::before {
@@ -1237,50 +1267,50 @@
         }
 
         .card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04);
-            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
+            transform: none;
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 28px;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         .card-title {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--navy);
-            letter-spacing: -0.025em;
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0F172A;
+            letter-spacing: -0.02em;
         }
 
         .card-badge {
             font-size: 11px;
             font-weight: 600;
-            color: var(--accent);
-            background: var(--accent-light);
+            color: #635BFF;
+            background: #F0EFFF;
             padding: 5px 12px;
             border-radius: 6px;
             border: none;
             letter-spacing: 0;
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-family: 'DM Sans', -apple-system, sans-serif;
         }
 
         /* Premium Exchange Rate Bar */
         .exchange-bar {
-            background: var(--white);
-            border-radius: 14px;
+            background: #FFFFFF;
+            border-radius: 12px;
             padding: 22px 28px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
             display: flex;
             flex-direction: column;
             gap: 16px;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
         }
 
         .exchange-bar-header {
@@ -1324,23 +1354,24 @@
         }
 
         .exchange-item input, .exchange-item select {
-            padding: 10px 14px;
-            border: 1.5px solid #dde1e7;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             font-size: 14px;
             font-weight: 600;
             width: 130px;
-            background: var(--off-white);
+            background: #FFFFFF;
             transition: all 0.2s ease;
-            color: var(--navy);
+            color: #0F172A;
             font-family: var(--mono);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .exchange-item input:focus, .exchange-item select:focus {
             outline: none;
-            border-color: var(--accent);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .exchange-status {
@@ -1351,21 +1382,22 @@
 
         .refresh-btn {
             padding: 8px 18px;
-            border: 1px solid var(--accent);
-            background: transparent;
-            color: var(--accent);
-            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+            background: #FFFFFF;
+            color: #475569;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s ease;
         }
 
         .refresh-btn:hover {
-            background: var(--accent);
-            color: var(--white);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
-            transform: translateY(-1px);
+            background: #F8FAFC;
+            color: #0F172A;
+            border-color: #94A3B8;
+            box-shadow: none;
+            transform: none;
         }
 
         /* Currency Toggle */
@@ -1412,23 +1444,24 @@
         }
 
         .form-group label {
-            font-size: 12px;
+            font-size: 13px;
             color: #475569;
             margin-bottom: 7px;
-            font-weight: 600;
-            letter-spacing: 0.4px;
-            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0;
+            text-transform: none;
         }
 
         .form-group input, .form-group select {
-            padding: 12px 16px;
-            border: 1.5px solid #dde1e7;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 10px 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
             transition: all 0.2s ease;
-            background: var(--off-white);
-            color: var(--navy);
+            background: #FFFFFF;
+            color: #0F172A;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .form-group input {
@@ -1437,16 +1470,16 @@
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: var(--accent);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .form-group input:disabled {
-            background: rgba(37, 99, 235, 0.04);
-            color: var(--navy);
+            background: #F7F9FC;
+            color: #0F172A;
             font-weight: 700;
-            border-color: rgba(37, 99, 235, 0.15);
+            border-color: #E2E8F0;
         }
 
         .form-group .helper {
@@ -1460,7 +1493,7 @@
         /* Reference Pricing Table */
         .reference-info {
             padding: 10px 16px;
-            background: rgba(37, 99, 235, 0.04);
+            background: rgba(99, 91, 255, 0.04);
             border-radius: 8px;
             margin-bottom: 16px;
             font-size: 13px;
@@ -1482,14 +1515,14 @@
 
         .reference-table th {
             text-align: center;
-            padding: 14px 12px;
+            padding: 12px 12px;
             font-size: 12px;
-            font-weight: 700;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--light-gray);
-            background: var(--off-white);
+            font-weight: 500;
+            color: #475569;
+            text-transform: none;
+            letter-spacing: 0;
+            border-bottom: 1px solid #94A3B8;
+            background: transparent;
         }
 
         .reference-table th:first-child {
@@ -1521,8 +1554,8 @@
         }
 
         .reference-table td.highlight {
-            background: rgba(37, 99, 235, 0.06);
-            color: var(--navy);
+            background: #F0EFFF;
+            color: #0F172A;
             font-weight: 700;
             font-family: var(--mono);
         }
@@ -1547,10 +1580,10 @@
 
         .sources-label {
             font-size: 12px;
-            font-weight: 700;
-            color: var(--navy);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #0F172A;
+            text-transform: none;
+            letter-spacing: 0;
         }
 
         .sources-list {
@@ -1596,19 +1629,20 @@
             align-items: center;
             gap: 6px;
             padding: 6px 14px;
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
+            background: #FFFFFF;
+            color: #475569;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .fetch-btn:hover {
-            background: var(--accent);
-            color: var(--white);
+            background: #F8FAFC;
+            color: #0F172A;
+            border-color: #94A3B8;
         }
 
         .fetch-btn:disabled {
@@ -1640,9 +1674,9 @@
         }
 
         .fetch-status.loading {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.1));
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.05), rgba(99, 91, 255, 0.1));
             color: var(--accent);
-            border: 1px solid rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(99, 91, 255, 0.2);
         }
 
         .fetch-status.success {
@@ -1681,13 +1715,13 @@
         .price-table th {
             text-align: left;
             padding: 12px 16px;
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            border-bottom: 2px solid var(--light-gray);
-            background: var(--off-white);
+            font-size: 12px;
+            font-weight: 500;
+            color: #475569;
+            text-transform: none;
+            letter-spacing: 0;
+            border-bottom: 1px solid #94A3B8;
+            background: transparent;
         }
 
         .price-table th:first-child {
@@ -1720,22 +1754,23 @@
         .price-table input {
             width: 90px;
             padding: 8px 12px;
-            border: 1px solid var(--light-gray);
-            border-radius: 3px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             text-align: center;
             font-size: 15px;
             font-weight: 600;
-            background: var(--off-white);
+            background: #FFFFFF;
             transition: all 0.2s ease;
-            color: var(--navy);
+            color: #0F172A;
             font-family: var(--mono);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .price-table input:focus {
             outline: none;
-            border-color: var(--accent);
-            background: var(--white);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .calculated-days {
@@ -1745,10 +1780,10 @@
             text-align: center;
             font-size: 15px;
             font-weight: 700;
-            color: var(--navy);
-            background: rgba(37, 99, 235, 0.06);
+            color: #0F172A;
+            background: #F0EFFF;
             border-radius: 6px;
-            border: 1px solid rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(99, 91, 255, 0.15);
             font-family: var(--mono);
         }
 
@@ -1795,7 +1830,7 @@
         }
 
         .fee-card:hover {
-            border-color: rgba(37, 99, 235, 0.2);
+            border-color: rgba(99, 91, 255, 0.2);
         }
 
         .fee-card-header {
@@ -1822,21 +1857,22 @@
         .fee-input-group input {
             width: 80px;
             padding: 8px 12px;
-            border: 1.5px solid #dde1e7;
-            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             text-align: right;
             font-size: 16px;
             font-weight: 700;
-            background: var(--white);
-            color: var(--navy);
+            background: #FFFFFF;
+            color: #0F172A;
             transition: all 0.2s ease;
             font-family: var(--mono);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .fee-input-group input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .fee-input-group span {
@@ -1872,7 +1908,7 @@
         .checkbox-label input[type="checkbox"] {
             width: 20px;
             height: 20px;
-            accent-color: var(--accent);
+            accent-color: #635BFF;
             cursor: pointer;
         }
 
@@ -1920,9 +1956,9 @@
 
         .input-with-unit input:focus {
             outline: none;
-            border-color: var(--accent);
-            background: var(--white);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+            border-color: #635BFF;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px #F0EFFF;
         }
 
         .input-with-unit .unit {
@@ -1999,20 +2035,21 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 10px;
+            border-radius: 0;
             overflow: hidden;
-            border: 1px solid var(--light-gray);
+            border: none;
         }
 
         .summary-table th {
             text-align: left;
-            padding: 14px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #6b7a8d;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            background: var(--off-white);
+            padding: 12px 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #475569;
+            text-transform: none;
+            letter-spacing: 0;
+            background: transparent;
+            border-bottom: 1px solid #94A3B8;
         }
 
         .summary-table th:not(:first-child) {
@@ -2021,16 +2058,16 @@
 
         .summary-table td {
             padding: 14px 20px;
-            border-bottom: 1px solid var(--light-gray);
+            border-bottom: 1px solid #E2E8F0;
             font-size: 14px;
-            background: var(--white);
+            background: #FFFFFF;
         }
 
         .summary-table td:not(:first-child) {
             text-align: right;
             font-weight: 700;
-            font-family: var(--mono);
-            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
         }
 
         .summary-table tr.category td {
@@ -2050,16 +2087,17 @@
         }
 
         .summary-table tr.net-income td {
-            background: var(--navy);
+            background: #FFFFFF;
             font-weight: 700;
-            color: var(--white);
+            color: #0F172A;
             font-size: 15px;
             border-bottom: none;
+            border-top: 2px solid #0F172A;
         }
 
         .summary-table tr.net-income td:not(:first-child) {
-            color: var(--white);
-            font-family: var(--mono);
+            color: #0F172A;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 16px;
         }
 
@@ -2072,27 +2110,28 @@
         }
 
         .result-card {
-            background: var(--off-white);
-            border-radius: 10px;
-            padding: 22px 18px;
-            text-align: center;
-            border: 1px solid var(--light-gray);
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+            border: 1px solid #E2E8F0;
             transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .result-card:hover {
-            border-color: rgba(37, 99, 235, 0.2);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+            border-color: #E2E8F0;
+            box-shadow: var(--shadow-md);
         }
 
         .result-card.highlight {
-            background: var(--navy);
-            border: 1px solid transparent;
-            border-radius: 10px;
+            background: #635BFF;
+            border-color: #635BFF;
+            border-radius: 12px;
         }
 
         .result-card.highlight:hover {
-            border-color: rgba(255,255,255,0.1);
+            border-color: #5851DF;
         }
 
         .result-card.highlight .result-label,
@@ -2105,20 +2144,20 @@
         }
 
         .result-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #6b7a8d;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-bottom: 12px;
         }
 
         .result-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--navy);
-            font-family: var(--mono);
-            letter-spacing: -0.5px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #0F172A;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.02em;
         }
 
         .result-sub {
@@ -2223,10 +2262,10 @@
         }
 
         .footer .brand {
-            font-family: 'Pretendard Variable', 'Inter', sans-serif;
+            font-family: 'DM Sans', -apple-system, sans-serif;
             font-size: 16px;
-            font-weight: 700;
-            color: var(--navy);
+            font-weight: 600;
+            color: #0F172A;
             margin-bottom: 10px;
             letter-spacing: -0.02em;
         }
@@ -2990,7 +3029,7 @@
                     </ul>
                 </div>
 
-                <div class="legal-highlight" style="background: rgba(37, 99, 235, 0.06); border-color: var(--accent);">
+                <div class="legal-highlight" style="background: rgba(99, 91, 255, 0.06); border-color: var(--accent);">
                     <p style="color: var(--navy);" data-i18n="legalDisclaimer"><strong>Disclaimer:</strong> This information is compiled from Indonesian laws and regulations for educational purposes only and does not constitute legal, tax, or investment advice. Laws and regulations are subject to change and interpretation may vary. Always consult with licensed Indonesian legal counsel (Advokat), certified tax consultant (Konsultan Pajak Bersertifikat), and registered notary (PPAT) before making any investment decisions. Last updated: January 2024.</p>
                 </div>
             </div>
@@ -3415,7 +3454,7 @@
                         <div class="mode-card-title" data-i18n="managementCompany">Management Company</div>
                         <div class="mode-card-subtitle" data-i18n="managementCompanyDesc">Outsource everything to a management company</div>
                         <div class="mode-card-tags">
-                            <span class="mode-card-tag">15-20%</span>
+                            <span class="mode-card-tag">0-30%</span>
                             <span class="mode-card-tag" data-i18n="tagCommission">COMMISSION</span>
                             <span class="mode-card-tag" data-i18n="tagHandsOff">HANDS-OFF</span>
                         </div>
@@ -3450,7 +3489,56 @@
                             <span data-i18n="commissionRate">Commission Rate</span>
                             <span class="slider-value" id="mgmtCommissionValue">18%</span>
                         </label>
-                        <input type="range" id="mgmtCommission" min="15" max="20" step="0.5" value="18" oninput="document.getElementById('mgmtCommissionValue').textContent=this.value+'%'; calculate();">
+                        <input type="range" id="mgmtCommission" min="0" max="30" step="0.5" value="18" oninput="document.getElementById('mgmtCommissionValue').textContent=this.value+'%'; calculate();">
+                    </div>
+                    <div class="ota-channel-section">
+                        <div class="ota-channel-section-title" data-i18n="bookingChannelMix">Booking Channel Mix</div>
+                        <div class="ota-channel-grid">
+                            <div class="ota-channel">
+                                <div class="ota-channel-name">Airbnb</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="mgmtAirbnbMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="mgmtAirbnbFee" value="3" min="0" max="25" step="0.5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="bookingAgoda">Booking.com / Agoda</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="mgmtBookingMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="mgmtBookingFee" value="15" min="0" max="25" step="0.5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="directWebsite">Direct Website</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="mgmtDirectMix" value="20" min="0" max="100" step="5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="mgmtDirectFee" value="0" min="0" max="10" step="0.5" onchange="updateOtaTotal('mgmt'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ota-mix-warning" id="mgmtMixWarning" data-i18n="mixWarning">Mix total must equal 100%</div>
+                        <div class="ota-weighted-total">
+                            <span class="ota-weighted-label" data-i18n="weightedOtaFee">Weighted OTA Fee</span>
+                            <span class="ota-weighted-value" id="mgmtOtaTotal">7.2%</span>
+                        </div>
                     </div>
                     <div class="mode-fixed-costs">
                         <div class="mode-fixed-costs-title" data-i18n="additionalFixedCosts">Additional Fixed Costs</div>
@@ -3540,12 +3628,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mode-commission-slider" style="margin-top: 16px;">
-                        <label>
-                            <span data-i18n="otaFees">OTA/Marketing Fees</span>
-                            <span class="slider-value" id="directOtaValue">15%</span>
-                        </label>
-                        <input type="range" id="directOtaPercent" min="10" max="20" step="0.5" value="15" oninput="document.getElementById('directOtaValue').textContent=this.value+'%'; calculate();">
+                    <div class="ota-channel-section" style="margin-top: 12px;">
+                        <div class="ota-channel-section-title" data-i18n="bookingChannelMix">Booking Channel Mix</div>
+                        <div class="ota-channel-grid">
+                            <div class="ota-channel">
+                                <div class="ota-channel-name">Airbnb</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="directAirbnbMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="directAirbnbFee" value="3" min="0" max="25" step="0.5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="bookingAgoda">Booking.com / Agoda</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="directBookingMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="directBookingFee" value="15" min="0" max="25" step="0.5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="directWebsite">Direct Website</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="directDirectMix" value="20" min="0" max="100" step="5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="directDirectFee" value="0" min="0" max="10" step="0.5" onchange="updateOtaTotal('direct'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ota-mix-warning" id="directMixWarning" data-i18n="mixWarning">Mix total must equal 100%</div>
+                        <div class="ota-weighted-total">
+                            <span class="ota-weighted-label" data-i18n="weightedOtaFee">Weighted OTA Fee</span>
+                            <span class="ota-weighted-value" id="directOtaTotal">7.2%</span>
+                        </div>
                     </div>
                 </div>
 
@@ -3627,6 +3757,55 @@
                                 <input type="number" id="hybridInsurance" value="75" step="25" onchange="calculate()">
                                 <span class="cost-unit" data-i18n="perMonth">/mo</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="ota-channel-section" style="margin-top: 12px;">
+                        <div class="ota-channel-section-title" data-i18n="bookingChannelMix">Booking Channel Mix</div>
+                        <div class="ota-channel-grid">
+                            <div class="ota-channel">
+                                <div class="ota-channel-name">Airbnb</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="hybridAirbnbMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="hybridAirbnbFee" value="3" min="0" max="25" step="0.5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="bookingAgoda">Booking.com / Agoda</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="hybridBookingMix" value="40" min="0" max="100" step="5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="hybridBookingFee" value="15" min="0" max="25" step="0.5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                            <div class="ota-channel">
+                                <div class="ota-channel-name" data-i18n="directWebsite">Direct Website</div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="bookingMixPct">Mix</label>
+                                    <input type="number" id="hybridDirectMix" value="20" min="0" max="100" step="5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                                <div class="ota-channel-row">
+                                    <label data-i18n="channelFee">Fee</label>
+                                    <input type="number" id="hybridDirectFee" value="0" min="0" max="10" step="0.5" onchange="updateOtaTotal('hybrid'); calculate();">
+                                    <span class="ota-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ota-mix-warning" id="hybridMixWarning" data-i18n="mixWarning">Mix total must equal 100%</div>
+                        <div class="ota-weighted-total">
+                            <span class="ota-weighted-label" data-i18n="weightedOtaFee">Weighted OTA Fee</span>
+                            <span class="ota-weighted-value" id="hybridOtaTotal">7.2%</span>
                         </div>
                     </div>
                 </div>
@@ -3815,7 +3994,7 @@
 
             <div class="chart-legend">
                 <div class="legend-item">
-                    <div class="legend-dot" style="background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);"></div>
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #8B85FF 0%, #635BFF 100%);"></div>
                     <span data-i18n="cumulativeIncome">Cumulative Net Income</span>
                 </div>
                 <div class="legend-item">
@@ -3823,7 +4002,7 @@
                     <span data-i18n="initialInvestment">Initial Investment</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-dot" style="background: linear-gradient(135deg, #93bbfb 0%, #2563eb 50%, #1d4ed8 100%);"></div>
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #A5A0FF 0%, #635BFF 50%, #5851DF 100%);"></div>
                     <span data-i18n="bepPoint">Break-Even Point (BEP)</span>
                 </div>
             </div>
@@ -3962,6 +4141,27 @@
         function dismissShorttermWarning() {
             document.getElementById('shorttermWarning').classList.remove('show');
             localStorage.setItem('shorttermWarningDismissed', 'true');
+        }
+
+        // OTA Channel Mix helper
+        function getWeightedOtaRate(prefix) {
+            const airbnbMix = parseFloat(document.getElementById(prefix + 'AirbnbMix')?.value) || 0;
+            const airbnbFee = parseFloat(document.getElementById(prefix + 'AirbnbFee')?.value) || 0;
+            const bookingMix = parseFloat(document.getElementById(prefix + 'BookingMix')?.value) || 0;
+            const bookingFee = parseFloat(document.getElementById(prefix + 'BookingFee')?.value) || 0;
+            const directMix = parseFloat(document.getElementById(prefix + 'DirectMix')?.value) || 0;
+            const directFee = parseFloat(document.getElementById(prefix + 'DirectFee')?.value) || 0;
+            const totalMix = airbnbMix + bookingMix + directMix;
+            const weightedRate = (airbnbMix * airbnbFee + bookingMix * bookingFee + directMix * directFee) / (totalMix > 0 ? totalMix : 100);
+            return { weightedRate, totalMix };
+        }
+
+        function updateOtaTotal(prefix) {
+            const { weightedRate, totalMix } = getWeightedOtaRate(prefix);
+            const totalEl = document.getElementById(prefix + 'OtaTotal');
+            const warnEl = document.getElementById(prefix + 'MixWarning');
+            if (totalEl) totalEl.textContent = weightedRate.toFixed(1) + '%';
+            if (warnEl) warnEl.classList.toggle('show', Math.abs(totalMix - 100) > 0.1);
         }
 
         // Operation Mode: management / direct / hybrid
@@ -4210,7 +4410,14 @@
                 internet: "Internet",
                 maintenance: "Maintenance",
                 insurance: "Insurance",
-                otaFees: "OTA/Marketing Fees",
+                otaFees: "OTA/Platform Fees",
+                bookingChannelMix: "Booking Channel Mix",
+                bookingAgoda: "Booking.com / Agoda",
+                directWebsite: "Direct Website",
+                channelFee: "Fee",
+                bookingMixPct: "Mix",
+                weightedOtaFee: "Weighted OTA Fee",
+                mixWarning: "Mix total must equal 100%",
                 operationCostBreakdown: "Operation Cost Breakdown",
                 totalOperatingCost: "Total Operating Cost",
                 managementModeSettings: "Management Company Settings",
@@ -4422,7 +4629,14 @@
                 internet: "인터넷",
                 maintenance: "유지보수",
                 insurance: "보험",
-                otaFees: "OTA/마케팅 수수료",
+                otaFees: "OTA/플랫폼 수수료",
+                bookingChannelMix: "예약 채널 비율",
+                bookingAgoda: "부킹닷컴 / 아고다",
+                directWebsite: "자체 홈페이지",
+                channelFee: "수수료",
+                bookingMixPct: "비율",
+                weightedOtaFee: "가중 OTA 수수료",
+                mixWarning: "비율 합계가 100%여야 합니다",
                 operationCostBreakdown: "운영비 상세 내역",
                 totalOperatingCost: "총 운영 비용",
                 managementModeSettings: "관리 회사 설정",
@@ -5037,9 +5251,9 @@
 
             // Create gradient for cumulative income line
             const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
-            gradient.addColorStop(0.5, 'rgba(37, 99, 235, 0.06)');
-            gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+            gradient.addColorStop(0, 'rgba(99, 91, 255, 0.1)');
+            gradient.addColorStop(0.5, 'rgba(99, 91, 255, 0.04)');
+            gradient.addColorStop(1, 'rgba(99, 91, 255, 0.01)');
 
             roiChart = new Chart(ctx, {
                 type: 'line',
@@ -5049,17 +5263,17 @@
                         {
                             label: t.cumulativeIncome,
                             data: cumulativeData,
-                            borderColor: '#2563eb',
+                            borderColor: '#635BFF',
                             backgroundColor: gradient,
                             borderWidth: 2.5,
                             fill: true,
                             tension: 0.3,
                             pointRadius: 4,
-                            pointBackgroundColor: '#2563eb',
+                            pointBackgroundColor: '#635BFF',
                             pointBorderColor: '#fff',
                             pointBorderWidth: 2,
                             pointHoverRadius: 7,
-                            pointHoverBackgroundColor: '#2563eb',
+                            pointHoverBackgroundColor: '#635BFF',
                             pointHoverBorderColor: '#fff',
                             pointHoverBorderWidth: 3
                         },
@@ -5094,7 +5308,7 @@
                             bodyFont: { size: 12, family: "'JetBrains Mono', monospace" },
                             padding: 14,
                             cornerRadius: 4,
-                            borderColor: 'rgba(37, 99, 235, 0.2)',
+                            borderColor: 'rgba(99, 91, 255, 0.2)',
                             borderWidth: 1,
                             displayColors: true,
                             boxWidth: 10,
@@ -5110,14 +5324,14 @@
                     scales: {
                         x: {
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.04)',
+                                color: '#E2E8F0',
                                 drawBorder: false
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#8896a6',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 500,
@@ -5128,7 +5342,7 @@
                             title: {
                                 display: true,
                                 text: currentLang === 'en' ? 'Year' : '년차',
-                                color: '#6b7a8f',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 600,
@@ -5139,14 +5353,14 @@
                         },
                         y: {
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.05)',
+                                color: '#E2E8F0',
                                 drawBorder: false
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#8896a6',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 500,
@@ -5165,7 +5379,7 @@
                             title: {
                                 display: true,
                                 text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)',
-                                color: '#6b7a8f',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 600,
@@ -5248,7 +5462,7 @@
                             type: 'line',
                             label: currentLang === 'en' ? 'Initial Setup Cost' : '초기 세팅 비용',
                             data: setupLine,
-                            borderColor: 'rgba(37, 99, 235, 0.7)',
+                            borderColor: 'rgba(99, 91, 255, 0.7)',
                             borderWidth: 2,
                             borderDash: [8, 4],
                             pointRadius: 0,
@@ -5276,7 +5490,7 @@
                             bodyFont: { size: 12, family: "'JetBrains Mono', monospace" },
                             padding: 14,
                             cornerRadius: 4,
-                            borderColor: 'rgba(37, 99, 235, 0.2)',
+                            borderColor: 'rgba(99, 91, 255, 0.2)',
                             borderWidth: 1,
                             displayColors: true,
                             boxWidth: 10,
@@ -5292,14 +5506,14 @@
                     scales: {
                         x: {
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.04)',
+                                color: '#E2E8F0',
                                 drawBorder: false
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#8896a6',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 500,
@@ -5310,7 +5524,7 @@
                             title: {
                                 display: true,
                                 text: currentLang === 'en' ? 'Year' : '년차',
-                                color: '#6b7a8f',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 600,
@@ -5321,14 +5535,14 @@
                         },
                         y: {
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.05)',
+                                color: '#E2E8F0',
                                 drawBorder: false
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#8896a6',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 500,
@@ -5347,7 +5561,7 @@
                             title: {
                                 display: true,
                                 text: currentLang === 'en' ? 'Amount (USD)' : '금액 (USD)',
-                                color: '#6b7a8f',
+                                color: '#475569',
                                 font: {
                                     size: 11,
                                     weight: 600,
@@ -5509,15 +5723,20 @@
             const getVal = (id) => parseFloat(document.getElementById(id)?.value) || 0;
 
             if (operationMode === 'management') {
-                // Management: commission% of gross + fixed monthly costs
+                // Management: commission% of gross + OTA fees + fixed monthly costs
                 const commPct = getVal('mgmtCommission') / 100;
                 const fixedMonthly = getVal('mgmtFixedCosts');
                 const commissionYearly = grossIncomeYearly * commPct;
                 const fixedYearly = fixedMonthly * 12;
-                operatingCostYearly = commissionYearly + fixedYearly;
+                const { weightedRate: mgmtOtaRate } = getWeightedOtaRate('mgmt');
+                const mgmtOtaPct = mgmtOtaRate / 100;
+                const mgmtOtaYearly = grossIncomeYearly * mgmtOtaPct;
+                updateOtaTotal('mgmt');
+                operatingCostYearly = commissionYearly + mgmtOtaYearly + fixedYearly;
 
                 breakdownHTML = `
                     <div class="op-cost-row"><span class="op-cost-label">${t.commissionRate || 'Commission'} (${(commPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(commissionYearly)}/yr</span></div>
+                    <div class="op-cost-row"><span class="op-cost-label">${t.otaFees || 'OTA/Platform Fees'} (${mgmtOtaRate.toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(mgmtOtaYearly)}/yr</span></div>
                     <div class="op-cost-row"><span class="op-cost-label">${t.utilitiesInsurance || 'Utilities & Insurance'} ($${fixedMonthly}/mo)</span><span class="op-cost-value">${formatCurrency(fixedYearly)}/yr</span></div>
                     <div class="op-cost-row total"><span class="op-cost-label">${t.totalOperatingCost || 'Total Operating Cost'}</span><span class="op-cost-value">${formatCurrency(operatingCostYearly)}/yr</span></div>
                 `;
@@ -5545,15 +5764,17 @@
                 };
                 const totalStaffMonthly = Object.values(staffCosts).reduce((a, b) => a + b, 0);
                 const totalStaffYearly = totalStaffMonthly * 12;
-                const otaPct = getVal('directOtaPercent') / 100;
-                const otaYearly = grossIncomeYearly * otaPct;
+                const { weightedRate: directOtaRate } = getWeightedOtaRate('direct');
+                const directOtaPct = directOtaRate / 100;
+                const otaYearly = grossIncomeYearly * directOtaPct;
+                updateOtaTotal('direct');
                 operatingCostYearly = totalStaffYearly + otaYearly;
 
                 breakdownHTML = '';
                 for (const [key, val] of Object.entries(staffCosts)) {
                     breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${staffLabels[key]} ($${val}/mo)</span><span class="op-cost-value">${formatCurrency(val * 12)}/yr</span></div>`;
                 }
-                breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${t.otaFees || 'OTA/Marketing Fees'} (${(otaPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(otaYearly)}/yr</span></div>`;
+                breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${t.otaFees || 'OTA/Platform Fees'} (${directOtaRate.toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(otaYearly)}/yr</span></div>`;
                 breakdownHTML += `<div class="op-cost-row total"><span class="op-cost-label">${t.totalOperatingCost || 'Total Operating Cost'}</span><span class="op-cost-value">${formatCurrency(operatingCostYearly)}/yr</span></div>`;
 
             } else if (operationMode === 'hybrid') {
@@ -5582,9 +5803,14 @@
                 };
                 const totalStaffMonthly = Object.values(staffCosts).reduce((a, b) => a + b, 0);
                 const totalStaffYearly = totalStaffMonthly * 12;
-                operatingCostYearly = commissionYearly + totalStaffYearly;
+                const { weightedRate: hybridOtaRate } = getWeightedOtaRate('hybrid');
+                const hybridOtaPct = hybridOtaRate / 100;
+                const hybridOtaYearly = grossIncomeYearly * hybridOtaPct;
+                updateOtaTotal('hybrid');
+                operatingCostYearly = commissionYearly + hybridOtaYearly + totalStaffYearly;
 
                 breakdownHTML = `<div class="op-cost-row"><span class="op-cost-label">${t.bookingCommission || 'Booking Commission'} (${(commPct*100).toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(commissionYearly)}/yr</span></div>`;
+                breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${t.otaFees || 'OTA/Platform Fees'} (${hybridOtaRate.toFixed(1)}%)</span><span class="op-cost-value">${formatCurrency(hybridOtaYearly)}/yr</span></div>`;
                 for (const [key, val] of Object.entries(staffCosts)) {
                     breakdownHTML += `<div class="op-cost-row"><span class="op-cost-label">${staffLabels[key]} ($${val}/mo)</span><span class="op-cost-value">${formatCurrency(val * 12)}/yr</span></div>`;
                 }
@@ -5782,7 +6008,25 @@
                 pondokWisataCost: document.getElementById('pondokWisataCost').value,
                 mgmtCommission: document.getElementById('mgmtCommission')?.value,
                 mgmtFixedCosts: document.getElementById('mgmtFixedCosts')?.value,
-                directOtaPercent: document.getElementById('directOtaPercent')?.value,
+                // OTA channel data for all modes
+                mgmtAirbnbMix: document.getElementById('mgmtAirbnbMix')?.value,
+                mgmtAirbnbFee: document.getElementById('mgmtAirbnbFee')?.value,
+                mgmtBookingMix: document.getElementById('mgmtBookingMix')?.value,
+                mgmtBookingFee: document.getElementById('mgmtBookingFee')?.value,
+                mgmtDirectMix: document.getElementById('mgmtDirectMix')?.value,
+                mgmtDirectFee: document.getElementById('mgmtDirectFee')?.value,
+                directAirbnbMix: document.getElementById('directAirbnbMix')?.value,
+                directAirbnbFee: document.getElementById('directAirbnbFee')?.value,
+                directBookingMix: document.getElementById('directBookingMix')?.value,
+                directBookingFee: document.getElementById('directBookingFee')?.value,
+                directDirectMix: document.getElementById('directDirectMix')?.value,
+                directDirectFee: document.getElementById('directDirectFee')?.value,
+                hybridAirbnbMix: document.getElementById('hybridAirbnbMix')?.value,
+                hybridAirbnbFee: document.getElementById('hybridAirbnbFee')?.value,
+                hybridBookingMix: document.getElementById('hybridBookingMix')?.value,
+                hybridBookingFee: document.getElementById('hybridBookingFee')?.value,
+                hybridDirectMix: document.getElementById('hybridDirectMix')?.value,
+                hybridDirectFee: document.getElementById('hybridDirectFee')?.value,
 
                 // Growth
                 growthResaleEnabled: document.getElementById('growthResaleEnabled').checked,
@@ -5845,7 +6089,12 @@
             if (data.pondokWisataCost) document.getElementById('pondokWisataCost').value = data.pondokWisataCost;
             if (data.mgmtCommission && document.getElementById('mgmtCommission')) document.getElementById('mgmtCommission').value = data.mgmtCommission;
             if (data.mgmtFixedCosts && document.getElementById('mgmtFixedCosts')) document.getElementById('mgmtFixedCosts').value = data.mgmtFixedCosts;
-            if (data.directOtaPercent && document.getElementById('directOtaPercent')) document.getElementById('directOtaPercent').value = data.directOtaPercent;
+            // Restore OTA channel data for all modes
+            const otaFields = ['mgmtAirbnbMix','mgmtAirbnbFee','mgmtBookingMix','mgmtBookingFee','mgmtDirectMix','mgmtDirectFee',
+                'directAirbnbMix','directAirbnbFee','directBookingMix','directBookingFee','directDirectMix','directDirectFee',
+                'hybridAirbnbMix','hybridAirbnbFee','hybridBookingMix','hybridBookingFee','hybridDirectMix','hybridDirectFee'];
+            otaFields.forEach(f => { if (data[f] && document.getElementById(f)) document.getElementById(f).value = data[f]; });
+            ['mgmt','direct','hybrid'].forEach(p => updateOtaTotal(p));
 
             // Growth
             if (document.getElementById('growthResaleEnabled')) {
