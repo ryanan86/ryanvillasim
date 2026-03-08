@@ -807,41 +807,75 @@
                 }
             }
 
-            // Use JSONP to avoid CORS issues
-            const callbackName = 'handleStatusCallback_' + Date.now();
-            const script = document.createElement('script');
+            // Try fetch first (Apps Script supports CORS with redirect follow)
+            const url = `${CONFIG.APPS_SCRIPT_URL}?action=checkStatus&email=${encodeURIComponent(currentUser.email)}`;
 
-            window[callbackName] = function(data) {
-                localStorage.setItem('ryanVillaStatus', JSON.stringify({
-                    data: data,
-                    timestamp: Date.now()
-                }));
-                handleStatusResponse(data);
-                // Cleanup
-                delete window[callbackName];
-                script.remove();
-            };
+            fetch(url, { redirect: 'follow' })
+                .then(res => res.text())
+                .then(text => {
+                    // Apps Script may return JSONP or plain JSON depending on callback param
+                    // Try parsing as JSON first
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch(e) {
+                        // Try extracting JSON from JSONP: callbackName({...})
+                        const match = text.match(/\{[\s\S]*\}/);
+                        if (match) {
+                            data = JSON.parse(match[0]);
+                        }
+                    }
 
-            script.src = `${CONFIG.APPS_SCRIPT_URL}?action=checkStatus&email=${encodeURIComponent(currentUser.email)}&callback=${callbackName}`;
+                    if (data) {
+                        localStorage.setItem('ryanVillaStatus', JSON.stringify({
+                            data: data,
+                            timestamp: Date.now()
+                        }));
+                        handleStatusResponse(data);
+                    } else {
+                        console.error('Could not parse response:', text);
+                        fallbackToJSONP();
+                    }
+                })
+                .catch(err => {
+                    console.warn('Fetch failed, trying JSONP fallback:', err);
+                    fallbackToJSONP();
+                });
 
-            script.onerror = function() {
-                console.error('Status check error');
-                hideLoading();
-                showRequestForm();
-                delete window[callbackName];
-                script.remove();
-            };
+            function fallbackToJSONP() {
+                const callbackName = 'handleStatusCallback_' + Date.now();
+                const script = document.createElement('script');
 
-            // Timeout fallback
-            setTimeout(() => {
-                if (window[callbackName]) {
+                window[callbackName] = function(data) {
+                    localStorage.setItem('ryanVillaStatus', JSON.stringify({
+                        data: data,
+                        timestamp: Date.now()
+                    }));
+                    handleStatusResponse(data);
+                    delete window[callbackName];
+                    script.remove();
+                };
+
+                script.src = `${CONFIG.APPS_SCRIPT_URL}?action=checkStatus&email=${encodeURIComponent(currentUser.email)}&callback=${callbackName}`;
+
+                script.onerror = function() {
+                    console.error('JSONP also failed');
                     hideLoading();
                     showRequestForm();
                     delete window[callbackName];
-                }
-            }, 10000);
+                    script.remove();
+                };
 
-            document.body.appendChild(script);
+                setTimeout(() => {
+                    if (window[callbackName]) {
+                        hideLoading();
+                        showRequestForm();
+                        delete window[callbackName];
+                    }
+                }, 10000);
+
+                document.body.appendChild(script);
+            }
         }
 
         function handleStatusResponse(data) {
@@ -875,7 +909,6 @@
             btn.disabled = true;
             btn.textContent = '...';
 
-            // Use URL parameters for Apps Script compatibility
             const params = new URLSearchParams({
                 action: 'submitRequest',
                 email: currentUser.email,
@@ -888,52 +921,32 @@
                 timestamp: new Date().toISOString()
             });
 
-            // Use script tag injection for cross-origin (JSONP-style)
-            const script = document.createElement('script');
-            script.src = CONFIG.APPS_SCRIPT_URL + '?' + params.toString() + '&callback=handleSubmitResponse';
+            const submitUrl = CONFIG.APPS_SCRIPT_URL + '?' + params.toString();
 
-            // Define callback
-            window.handleSubmitResponse = function(response) {
+            function onSubmitSuccess() {
                 showToast(t.toastSubmitted, 'success');
                 localStorage.setItem('ryanVillaStatus', JSON.stringify({
                     data: { status: 'pending' },
                     timestamp: Date.now()
                 }));
-                setTimeout(() => {
-                    showPendingStatus();
-                }, 1500);
-                // Cleanup
-                delete window.handleSubmitResponse;
-            };
+                setTimeout(() => { showPendingStatus(); }, 1500);
+            }
 
-            // Handle timeout/error
-            script.onerror = function() {
-                // Even on error, assume it worked (Apps Script sometimes doesn't return properly)
-                showToast(t.toastSubmitted, 'success');
-                localStorage.setItem('ryanVillaStatus', JSON.stringify({
-                    data: { status: 'pending' },
-                    timestamp: Date.now()
-                }));
-                setTimeout(() => {
-                    showPendingStatus();
-                }, 1500);
-            };
-
-            // Timeout fallback
-            setTimeout(() => {
-                if (btn.disabled) {
-                    showToast(t.toastSubmitted, 'success');
-                    localStorage.setItem('ryanVillaStatus', JSON.stringify({
-                        data: { status: 'pending' },
-                        timestamp: Date.now()
-                    }));
-                    setTimeout(() => {
-                        showPendingStatus();
-                    }, 1500);
-                }
-            }, 3000);
-
-            document.body.appendChild(script);
+            // Try fetch first, fallback to JSONP
+            fetch(submitUrl, { redirect: 'follow' })
+                .then(() => onSubmitSuccess())
+                .catch(() => {
+                    // Fallback: JSONP
+                    const script = document.createElement('script');
+                    script.src = submitUrl + '&callback=handleSubmitResponse';
+                    window.handleSubmitResponse = function() {
+                        onSubmitSuccess();
+                        delete window.handleSubmitResponse;
+                    };
+                    script.onerror = function() { onSubmitSuccess(); };
+                    setTimeout(() => { if (btn.disabled) onSubmitSuccess(); }, 3000);
+                    document.body.appendChild(script);
+                });
         }
 
         // ============================================
